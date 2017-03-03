@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="maM-by-HUG" customClass="FourWebView">
+            <rect key="frame" x="0.0" y="0.0" width="382" height="334"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQZ-Kv-tSr">
+                    <rect key="frame" x="0.0" y="0.0" width="382" height="334"/>
+                    <color key="backgroundColor" red="0.28958413004875183" green="0.31462949514389038" blue="0.32950475811958313" alpha="1" colorSpace="calibratedRGB"/>
+                </webView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="uQZ-Kv-tSr" firstAttribute="top" secondItem="maM-by-HUG" secondAttribute="top" id="7md-oC-J5s"/>
+                <constraint firstAttribute="bottom" secondItem="uQZ-Kv-tSr" secondAttribute="bottom" id="cKC-my-VNZ"/>
+                <constraint firstItem="uQZ-Kv-tSr" firstAttribute="leading" secondItem="maM-by-HUG" secondAttribute="leading" id="ics-fT-3EJ"/>
+                <constraint firstAttribute="trailing" secondItem="uQZ-Kv-tSr" secondAttribute="trailing" id="tqa-ZP-MMC"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="webView" destination="uQZ-Kv-tSr" id="O9u-hU-o7s"/>
+            </connections>
+            <point key="canvasLocation" x="174" y="-42"/>
+        </view>
+    </objects>
+</document>

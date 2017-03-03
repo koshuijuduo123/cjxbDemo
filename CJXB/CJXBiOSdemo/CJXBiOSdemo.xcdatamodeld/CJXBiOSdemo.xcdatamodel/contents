@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15G31" minimumToolsVersion="Automatic">
+    <entity name="CarEntity" representedClassName="CarEntity" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fkje" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hphm" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hpzl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lz" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mm" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wfjfs" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="MessageEntity" representedClassName="MessageEntity" syncable="YES">
+        <attribute name="dabh" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fzjg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ljjf" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="qfrq" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sfzmhm" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="syrq" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xb" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xm" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="yxqs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="yxqz" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zjcx" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zt" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="WeiZhangEntity" representedClassName="WeiZhangEntity" syncable="YES">
+        <attribute name="clbj" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fkje" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hphm" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hpzl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pageNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wfbh" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wfdz" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wfjfs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wfsj" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wfxw" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wfxwdm" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CarEntity" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="WeiZhangEntity" positionX="-63" positionY="45" width="128" height="210"/>
+        <element name="MessageEntity" positionX="-63" positionY="99" width="128" height="225"/>
+    </elements>
+</model>

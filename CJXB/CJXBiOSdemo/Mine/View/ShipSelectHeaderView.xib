@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ShipSelectHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="498" height="112"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e8x-un-Ugc">
+                    <rect key="frame" x="20" y="5" width="209" height="102"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="可用的">
+                        <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="clickedTheButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="sjt-nU-YTM"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd2-cd-HN1">
+                    <rect key="frame" x="270" y="5" width="208" height="102"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="失效的">
+                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="clickedTheButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="ngh-I1-e9h"/>
+                    </connections>
+                </button>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAA-bi-hsK">
+                    <rect key="frame" x="249" y="5" width="1" height="102"/>
+                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="fT8-Wa-vd2"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQf-Kt-sbB">
+                    <rect key="frame" x="20" y="105" width="209" height="5"/>
+                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="5" id="4Fp-5X-kzT"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="0.0965477195945946" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="YQf-Kt-sbB" firstAttribute="width" secondItem="e8x-un-Ugc" secondAttribute="width" id="3lf-ge-yAI"/>
+                <constraint firstItem="wAA-bi-hsK" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="4Ms-up-yxA"/>
+                <constraint firstItem="e8x-un-Ugc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="6KK-PM-qBx"/>
+                <constraint firstItem="wAA-bi-hsK" firstAttribute="leading" secondItem="e8x-un-Ugc" secondAttribute="trailing" constant="20" id="OMH-oB-IOJ"/>
+                <constraint firstAttribute="bottom" secondItem="Xd2-cd-HN1" secondAttribute="bottom" constant="5" id="SL1-P0-pG7"/>
+                <constraint firstAttribute="bottom" secondItem="YQf-Kt-sbB" secondAttribute="bottom" constant="2" id="UAB-kM-aZN"/>
+                <constraint firstItem="e8x-un-Ugc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="VVd-KB-iaM"/>
+                <constraint firstItem="YQf-Kt-sbB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Xpu-oi-O5w"/>
+                <constraint firstItem="Xd2-cd-HN1" firstAttribute="leading" secondItem="wAA-bi-hsK" secondAttribute="trailing" constant="20" id="fMP-d4-bLY"/>
+                <constraint firstAttribute="trailing" secondItem="Xd2-cd-HN1" secondAttribute="trailing" constant="20" id="j7o-dj-SaH"/>
+                <constraint firstItem="Xd2-cd-HN1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="jUv-u6-1aO"/>
+                <constraint firstAttribute="bottom" secondItem="wAA-bi-hsK" secondAttribute="bottom" constant="5" id="pkN-LQ-CyP"/>
+                <constraint firstAttribute="bottom" secondItem="e8x-un-Ugc" secondAttribute="bottom" constant="5" id="xAx-2T-th6"/>
+                <constraint firstItem="wAA-bi-hsK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="xZy-xI-hk9"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="left" destination="Xpu-oi-O5w" id="k8a-ia-Jb6"/>
+                <outlet property="lineView" destination="YQf-Kt-sbB" id="6Ye-05-R6d"/>
+                <outlet property="routeButton" destination="Xd2-cd-HN1" id="i3y-bQ-PHQ"/>
+                <outlet property="summaryButton" destination="e8x-un-Ugc" id="cgr-yY-RpG"/>
+            </connections>
+            <point key="canvasLocation" x="198" y="207"/>
+        </view>
+    </objects>
+</document>

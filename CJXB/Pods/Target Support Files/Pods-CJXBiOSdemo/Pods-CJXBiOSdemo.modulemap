@@ -1,0 +1,6 @@
+framework module Pods_CJXBiOSdemo {
+  umbrella header "Pods-CJXBiOSdemo-umbrella.h"
+
+  export *
+  module * { export * }
+}
