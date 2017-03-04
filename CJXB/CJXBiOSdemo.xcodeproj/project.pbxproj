@@ -138,6 +138,8 @@
 		B05FD6BC1D76DD4C003CDBCE /* hdt@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B05FD6AE1D76DD4C003CDBCE /* hdt@3x.png */; };
 		B05FD6BD1D76DD4C003CDBCE /* hsj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B05FD6AF1D76DD4C003CDBCE /* hsj@2x.png */; };
 		B05FD6BE1D76DD4C003CDBCE /* hsj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B05FD6B01D76DD4C003CDBCE /* hsj@3x.png */; };
+		B085FBB01E6AB2A500D3EB2A /* CarsInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085FBAE1E6AB2A500D3EB2A /* CarsInfoViewController.m */; };
+		B085FBB11E6AB2A500D3EB2A /* CarsInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B085FBAF1E6AB2A500D3EB2A /* CarsInfoViewController.xib */; };
 		B0863C511E5EB73400481B95 /* MyCarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0863C501E5EB73400481B95 /* MyCarModel.m */; };
 		B0863C541E5EE96000481B95 /* CarXiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0863C531E5EE96000481B95 /* CarXiModel.m */; };
 		B09A9A4B1D7FFCD9002689B5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09A9A4A1D7FFCD9002689B5 /* AVFoundation.framework */; };
@@ -658,6 +660,9 @@
 		B05FD6AE1D76DD4C003CDBCE /* hdt@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdt@3x.png"; sourceTree = "<group>"; };
 		B05FD6AF1D76DD4C003CDBCE /* hsj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hsj@2x.png"; sourceTree = "<group>"; };
 		B05FD6B01D76DD4C003CDBCE /* hsj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hsj@3x.png"; sourceTree = "<group>"; };
+		B085FBAD1E6AB2A500D3EB2A /* CarsInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsInfoViewController.h; sourceTree = "<group>"; };
+		B085FBAE1E6AB2A500D3EB2A /* CarsInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsInfoViewController.m; sourceTree = "<group>"; };
+		B085FBAF1E6AB2A500D3EB2A /* CarsInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarsInfoViewController.xib; sourceTree = "<group>"; };
 		B0863C4F1E5EB73400481B95 /* MyCarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCarModel.h; sourceTree = "<group>"; };
 		B0863C501E5EB73400481B95 /* MyCarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCarModel.m; sourceTree = "<group>"; };
 		B0863C521E5EE96000481B95 /* CarXiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarXiModel.h; sourceTree = "<group>"; };
@@ -2931,6 +2936,9 @@
 				B04EE7701E5D67920032BA7D /* CarsXingViewController.h */,
 				B04EE7711E5D67920032BA7D /* CarsXingViewController.m */,
 				B04EE7721E5D67920032BA7D /* CarsXingViewController.xib */,
+				B085FBAD1E6AB2A500D3EB2A /* CarsInfoViewController.h */,
+				B085FBAE1E6AB2A500D3EB2A /* CarsInfoViewController.m */,
+				B085FBAF1E6AB2A500D3EB2A /* CarsInfoViewController.xib */,
 				B0C984911D8BD9E300086E7E /* MyDianJuanViewcontrollerViewController.h */,
 				B0C984921D8BD9E300086E7E /* MyDianJuanViewcontrollerViewController.m */,
 				B0C984931D8BD9E300086E7E /* MyDianJuanViewcontrollerViewController.xib */,
@@ -3247,6 +3255,7 @@
 				B0FE0EF11D7D06F1004F7CA6 /* 未选中状态@2x.png in Resources */,
 				B0FE0EEE1D7D0560004F7CA6 /* MessageViewController.xib in Resources */,
 				B0A2545D1DDB105C00EEA050 /* UMComFeedsTableViewCell.xib in Resources */,
+				B085FBB11E6AB2A500D3EB2A /* CarsInfoViewController.xib in Resources */,
 				B005BDEF1DC6EA3400EAC91F /* 中雨转晴.png in Resources */,
 				B05FD6BD1D76DD4C003CDBCE /* hsj@2x.png in Resources */,
 				B005BDF51DC6EA3400EAC91F /* 大雪.png in Resources */,
@@ -3460,6 +3469,7 @@
 				B0A2542A1DDB105C00EEA050 /* UMComProgressView.m in Sources */,
 				B0B3A3F31D80F49000A34F5D /* MyMD5.m in Sources */,
 				B0A2546D1DDB105C00EEA050 /* UMComMicLikeUserTableViewCell.m in Sources */,
+				B085FBB01E6AB2A500D3EB2A /* CarsInfoViewController.m in Sources */,
 				B0A254591DDB105C00EEA050 /* UMComLocationView.m in Sources */,
 				B0A254531DDB105C00EEA050 /* UMComFriendTableViewCell.m in Sources */,
 				B0C329CF1D6E7EEC00EB589E /* AppDelegate.m in Sources */,

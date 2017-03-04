@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LoginDataModel.h"
+#import "MyCarModel.h"
 #import "MapModel.h"
 @interface UserDefault : NSObject
 
@@ -22,11 +23,13 @@
 
 //保存用户信息
 +(void)saveUserInfo:(LoginDataModel *)model;
+//保存车辆信息
++(void)saveCarInfo:(MyCarModel *)model;
 
 //获取用户信息
 +(LoginDataModel *)getUserInfo;
-
-
+//获取车辆信息
++(MyCarModel *)getMyCarInfo;
 //判断用户是否登录
 
 +(BOOL)isLogin;
@@ -34,7 +37,8 @@
 
 //清除用户信息
 +(void)clearUserData;
-
+//清除车辆信息
++(void)clearMyCarData;
 //存取uid
 //+(void)setDianZiJuanDate:(NSString *)dateStr;
 

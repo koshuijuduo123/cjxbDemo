@@ -21,7 +21,7 @@
 
 @implementation CarXing
 +(NSDictionary *)replacedKeyFromPropertyName{
-    return @{@"carXingId":@"id"};
+    return @{@"carXingId":@"id",@"carDang":@"description"};
 }
 
 @end

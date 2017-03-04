@@ -22,4 +22,5 @@
 /** 名字  */
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic,copy)NSString *carXiId;
+@property(nonatomic,copy)NSString *imgurl;
 @end

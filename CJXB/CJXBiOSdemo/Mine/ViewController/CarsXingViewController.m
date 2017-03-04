@@ -11,6 +11,7 @@
 #import "NetworkManger.h"
 #import "CarXingModel.h"
 #import "MyCarModel.h"
+#import "CarsInfoViewController.h"
 @interface CarsXingViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *coreView;
@@ -109,7 +110,10 @@ static NSString * const JGCell = @"CarXingCell";
     CarXing *carXing = model.speclist[indexPath.row];
     MyCarModel *myModel = [MyCarModel shareInstance];
     myModel.carXing = carXing.name;
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    myModel.carDang = carXing.carDang;
+    myModel.carPrice = carXing.price;
+    CarsInfoViewController *carInfoVC = [[CarsInfoViewController alloc]init];
+    [self.navigationController pushViewController:carInfoVC animated:YES];
     
 }
 

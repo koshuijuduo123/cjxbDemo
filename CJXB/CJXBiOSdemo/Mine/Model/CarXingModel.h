@@ -24,4 +24,6 @@
 /** 名字  */
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic,copy)NSString *carXingId;
+@property(nonatomic,copy)NSString *price;
+@property(nonatomic,copy)NSString *carDang;
 @end

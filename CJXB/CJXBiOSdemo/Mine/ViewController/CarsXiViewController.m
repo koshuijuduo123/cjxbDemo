@@ -116,6 +116,7 @@ static NSString * const JGCell = @"CarXiCell";
     carXingVC.carXingid = carXi.carXiId;
     MyCarModel *myModel = [MyCarModel shareInstance];
     myModel.carName = carXi.name;
+    myModel.carPhotosImgUrl = carXi.imgurl;
     [self.navigationController pushViewController:carXingVC animated:YES];
 }
 

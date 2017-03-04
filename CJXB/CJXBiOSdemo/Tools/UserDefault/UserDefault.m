@@ -18,7 +18,7 @@
 
 
 static LoginDataModel *model = nil;
-
+static MyCarModel *myModel = nil;
 @implementation UserDefault
 +(void)initDefaults{
     if ([UserDefault getLunchTimes] == nil) {
@@ -55,9 +55,18 @@ static LoginDataModel *model = nil;
     
     //NSUserDefault不是立即写入内存,需要我们手动同步一下
     [userDefaults synchronize];
-    
-    
 }
+
+//保存车辆信息
++(void)saveCarInfo:(MyCarModel *)model{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+    [userDefaults setObject:data forKey:@"myCar_Data"];
+    [userDefaults synchronize];
+}
+
+
+
 
 //获取用户信息
 +(LoginDataModel *)getUserInfo{
@@ -73,6 +82,20 @@ static LoginDataModel *model = nil;
     }
     
     return model;
+}
+
+//获取车辆信息
++(MyCarModel *)getMyCarInfo{
+    if (myModel==nil) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSData *data = [userDefaults objectForKey:@"myCar_Data"];
+        if (data) {
+            myModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        }else{
+            return nil;
+        }
+    }
+    return myModel;
 }
 
 
@@ -95,6 +118,13 @@ static LoginDataModel *model = nil;
     
     
     
+}
+
+//清除车辆信息
++(void)clearMyCarData{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"myCar_Data"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    myModel = nil;
 }
 
 
