@@ -306,7 +306,7 @@
     
     
     
-    webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44)];
+    webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44-6)];
     [webVC.view addSubview:webVC.webView];
     
     [webVC.view bringSubviewToFront:webVC.backView];

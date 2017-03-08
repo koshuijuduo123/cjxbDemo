@@ -26,6 +26,16 @@
                         <constraint firstAttribute="height" constant="40" id="jRN-nj-i6S"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="idU-dQ-AMQ">
+                    <rect key="frame" x="241" y="4" width="40" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="LJz-lE-TkC"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="分类.png"/>
+                    <connections>
+                        <action selector="umMessageAction:" destination="TU1-cr-izO" eventType="touchUpInside" id="Cw1-bo-hsS"/>
+                    </connections>
+                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帮友之家" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOt-Fh-5o3">
                     <rect key="frame" x="60" y="50" width="166" height="77"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="0.40387457770270269" colorSpace="calibratedWhite"/>
@@ -43,16 +53,6 @@
                         </mask>
                     </variation>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="idU-dQ-AMQ">
-                    <rect key="frame" x="241" y="4" width="40" height="32"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="40" id="LJz-lE-TkC"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="分类.png"/>
-                    <connections>
-                        <action selector="umMessageAction:" destination="TU1-cr-izO" eventType="touchUpInside" id="Cw1-bo-hsS"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>

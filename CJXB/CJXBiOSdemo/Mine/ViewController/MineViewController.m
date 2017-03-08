@@ -10,7 +10,7 @@
 #import "MinTouView.h"
 #import "LoginViewController.h"
 
-
+#import "MessageEntity.h"
 #import "FuwuViewController.h"
 #import "AppDelegate.h"
 #import "MyCarViewController.h"
@@ -51,7 +51,8 @@
 @property(nonatomic,assign)BOOL isNotice;
 
 @property(nonatomic,assign)NSInteger vip;
-
+@property(nonatomic,strong)NSString *rcount;//我的电子券数量
+@property(nonatomic,strong)UILabel *rcountLab; //我的电子券个数显示lab
 @end
 static NSString *const idemter = @"cell";
 @implementation MineViewController
@@ -76,9 +77,11 @@ static NSString *const idemter = @"cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.rcount = @"0";
+    self.rcountLab = [[UILabel alloc]init];
     [self setNavibar];
     [self body];
-    
+    [self myDianZiQuanCount];
     UIView *footView = [[UIView alloc]initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footView;
     
@@ -87,11 +90,6 @@ static NSString *const idemter = @"cell";
         
         [self hsUpdateApp];
     });
-    
-    
-    
-
-    
 }
 
 -(void)setNavibar{
@@ -129,7 +127,7 @@ static NSString *const idemter = @"cell";
             
             
             if (cookies.count) {
-                //LoginDataModel *model = [UserDefault getUserInfo];
+                [self myDianZiQuanCount];
                 [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"getuserinfo"} finish:^(id responseObject) {
                     
                     LoginDataModel *model = [[LoginDataModel alloc]init];
@@ -203,6 +201,22 @@ static NSString *const idemter = @"cell";
     
     
     return img;
+}
+
+
+-(void)myDianZiQuanCount{
+    
+    [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/coupon/couponshandler.ashx" parmDic:@{@"exec":@"getmylist",@"p":@"1",@"s":@"0"} finish:^(id responseObject) {
+        NSDictionary *dic = [NSDictionary dictionaryWithDictionary:responseObject];
+        self.rcount =[NSString stringWithFormat:@"%@",dic[@"rcount"]];
+        //刷新指定
+        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+    } enError:^(NSError *error) {
+        
+    }];
+
 }
 
 
@@ -378,8 +392,8 @@ static NSString *const idemter = @"cell";
     
     //注册cell
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:idemter];
-    self.arr1 = @[@"我的爱车",@"我的驾驶证"];
-    self.arr2 = @[@"个人信息",@"合作商户",@"帮友之家"];
+    self.arr1 = @[@"保养爱车",@"我的驾驶证"];
+    self.arr2 = @[@"个人信息",@"周边商户",@"帮友之家"];
     
     self.imageArray1 = @[@"我的爱车",@"驾驶证"];
     self.imageArray2 = @[@"个人信息",@"合作",@"朋友圈"];
@@ -611,11 +625,6 @@ static NSString *const idemter = @"cell";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:idemter forIndexPath:indexPath];
     
-    
-   
-
-    
-    
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (indexPath.section==0) {
@@ -623,11 +632,15 @@ static NSString *const idemter = @"cell";
         cell.imageView.image = [UIImage imageNamed:@"电子券"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
+        _rcountLab.font = [UIFont boldSystemFontOfSize:14];
+        [_rcountLab sizeToFit];
+        _rcountLab.backgroundColor = [UIColor clearColor];
         
-        
-        
-        
-        
+        _rcountLab.backgroundColor = [UIColor clearColor];
+        _rcountLab.textColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0];
+        _rcountLab.text = [NSString stringWithFormat:@"共有%@张",self.rcount];
+        _rcountLab.frame =CGRectMake(size_width -_rcountLab.frame.size.width - 30, 15, _rcountLab.frame.size.width, _rcountLab.frame.size.height);
+        [cell.contentView addSubview:_rcountLab];
     }
     
     if (indexPath.section==1) {
@@ -638,17 +651,19 @@ static NSString *const idemter = @"cell";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         if (indexPath.row==0) {
-            UILabel *label = [[UILabel alloc] init]; //定义一个在cell最右边显示的label
-            label.text = @"添加车型";
-            label.font = [UIFont boldSystemFontOfSize:14];
-            [label sizeToFit];
-            label.backgroundColor = [UIColor clearColor];
-            label.frame =CGRectMake(size_width -label.frame.size.width - 30, 15, label.frame.size.width, label.frame.size.height);
-            [cell.contentView addSubview:label];
-            label.backgroundColor = [UIColor clearColor];
-            label.textColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0];
-
+            [cell.contentView addSubview:[self creatCellInLabel:@"选择车型"]];
         }
+        if (indexPath.row==1) {
+            AppDelegate *app = CJXBAPP;
+            if ([app searchMessageEntity].count) {
+                NSArray *arr = [app searchMessageEntity];
+                MessageEntity *entity = [arr firstObject];
+                NSString *carUserName =[NSString stringWithFormat:@"%@的驾驶证",entity.xm];
+                [cell.contentView addSubview:[self creatCellInLabel:carUserName]];
+                }
+        }
+        
+        
         
     }
     
@@ -660,9 +675,15 @@ static NSString *const idemter = @"cell";
         
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        
-        
+        if (indexPath.row==0) {
+            [cell.contentView addSubview:[self creatCellInLabel:@"更换头像姓名等"]];
+        }
+        if (indexPath.row==1) {
+            [cell.contentView addSubview:[self creatCellInLabel:@"周边汽车服务一览"]];
+        }
+        if (indexPath.row==2) {
+            [cell.contentView addSubview:[self creatCellInLabel:@"车友动态随时掌握"]];
+        }
         
         /*
         if (indexPath.row==3) {
@@ -841,8 +862,8 @@ static NSString *const idemter = @"cell";
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, 10)];
-    view.backgroundColor = [UIColor darkGrayColor];
-    view.alpha = 0.2;
+    view.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
+   
     return view;
 }
 
@@ -983,6 +1004,21 @@ static NSString *const idemter = @"cell";
     
 }
 */
+
+-(UILabel *)creatCellInLabel:(NSString *)string{
+    UILabel *label = [[UILabel alloc] init]; //定义一个在cell最右边显示的label
+    label.text = string;
+    label.font = [UIFont boldSystemFontOfSize:14];
+    [label sizeToFit];
+    label.backgroundColor = [UIColor clearColor];
+    label.frame =CGRectMake(size_width -label.frame.size.width - 30, 15, label.frame.size.width, label.frame.size.height);
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0];
+    return label;
+}
+
+
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"Login" object:nil];
 

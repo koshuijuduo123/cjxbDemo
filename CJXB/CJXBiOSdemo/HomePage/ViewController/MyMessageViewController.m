@@ -41,8 +41,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     _button.backgroundColor = [UIColor colorWithRed:0/255.0 green:153/255.0 blue:255/255.0 alpha:1.0];
     
@@ -149,10 +147,7 @@
     
     AppDelegate *app = CJXBAPP;
     NSArray *arr = [app searchMessageEntity];
-    //NSLog(@"我的小数组%@",arr);
     MessageEntity *entity = [arr firstObject];
-    
-    
     foundView.CarNameLab.text =[NSString stringWithFormat:@"%@的驾驶证",entity.xm];
     
     if ([entity.zt isEqualToString:@"A"]) {

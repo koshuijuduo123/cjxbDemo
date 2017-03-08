@@ -533,7 +533,7 @@ static NSString *const identider = @"cell";
     
     //创建tableView的HeaderView
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, h)];
-    headerView.backgroundColor = [UIColor colorWithRed:10/255.0 green:10/255.0 blue:10/255.0 alpha:0.1];
+    headerView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
     //给tableView添加自定义的headerView
     self.tableView.tableHeaderView = headerView;
     headerView.tag = 1024;
@@ -899,7 +899,7 @@ static NSString *const identider = @"cell";
         
         self.tableView.tableFooterView = footerView;
         
-        footerView.backgroundColor = [UIColor colorWithRed:10/255.0 green:10/255.0 blue:10/255.0 alpha:0.1];
+        footerView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
         
         
         
@@ -1095,7 +1095,7 @@ static NSString *const identider = @"cell";
     
     NSDictionary *dict =self.dataSourceArray[indexPath.row];
     
-     webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44)];
+     webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44-6)];
     NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
     
     

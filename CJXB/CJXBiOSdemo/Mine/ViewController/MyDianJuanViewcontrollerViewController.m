@@ -36,6 +36,8 @@
 @property(nonatomic,strong)NSMutableDictionary *paramDic;//参数字典
 
 @property(nonatomic,strong)NSString *sCount;//判断失效不失效的参数
+@property(nonatomic,strong)NSMutableDictionary *dictArrObj;//去重数据字典
+@property(nonatomic,strong)NSMutableArray *soureArr;//转接数组
 @end
 
 @implementation MyDianJuanViewcontrollerViewController
@@ -52,7 +54,18 @@
     }
     return _paramDic;
 }
-
+-(NSMutableArray *)soureArr{
+    if (!_soureArr) {
+        self.soureArr = [NSMutableArray array];
+    }
+    return _soureArr;
+}
+-(NSMutableDictionary *)dictArrObj{
+    if (!_dictArrObj) {
+        self.dictArrObj = [NSMutableDictionary dictionary];
+    }
+    return _dictArrObj;
+}
 
 -(NSMutableArray *)dataSourceArr{
     if (!_dataSourceArr) {
@@ -113,13 +126,18 @@
         if (index==KSummaryButton_Tag) {
             _isSummary = YES;
             weakSelf.sCount = @"0";
+            [weakSelf.dictArrObj removeAllObjects];
             [weakSelf.dataSourceArr removeAllObjects];
+            [weakSelf.soureArr removeAllObjects];
+            
             [weakSelf loadData];
         }else if (index==KRouteButton_Tag){
             _isSummary = NO;
             weakSelf.sCount = @"1";
-            
+            [weakSelf.dictArrObj removeAllObjects];
             [weakSelf.dataSourceArr removeAllObjects];
+            [weakSelf.soureArr removeAllObjects];
+            
             [weakSelf loadData];
         }
         
@@ -182,39 +200,33 @@
         if (!_isUp) {
         //清空之前的数据
         [self.dataSourceArr removeAllObjects];
+        [self.soureArr removeAllObjects];
+        [self.dictArrObj removeAllObjects];
         }
         
-         NSMutableDictionary *dicts = [NSMutableDictionary dictionary];
         
-        for (NSDictionary *dict in arr) {
-            if (![self.dataSourceArr containsObject:dict]) {
-               [self.dataSourceArr addObject:dict];
+         NSMutableDictionary *dicts = [NSMutableDictionary dictionary];
+       for (NSDictionary *dict in arr) {
+            if (![self.soureArr containsObject:dict]) {
                 [dicts setObject:@"0" forKey:dict[@"couponid"]];
+                [self.dictArrObj setObject:dict forKey:dict[@"couponid"]];
+                
+                [self.soureArr addObject:dict];
             }
             
         }
         
-        
-        
-        for (NSDictionary *dic in self.dataSourceArr) {
+        self.dataSourceArr =[NSMutableArray arrayWithArray:_dictArrObj.allValues];
+        for (NSDictionary *dic in self.soureArr) {
           NSString   *numbers = [dicts objectForKey:dic[@"couponid"]];
             NSInteger nums =  [numbers integerValue]+1;
                 [dicts setObject:[NSString stringWithFormat:@"%ld",nums] forKey:dic[@"couponid"]];
-                
-           
-            
-            
-            
         }
         
-//        [self.dataSourceArr enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//            if ([obj isEqualToString:@"opq012"]) {
-//                NSLog(@"%@-索引%d",obj, (int)idx);
-//            }
-//        }];
+        
         self.couponidDic = [NSMutableDictionary dictionaryWithDictionary:dicts];
-        //NSLog(@"%@",self.dataSourceArr);
-        NSLog(@"allalalala%@",_couponidDic);
+        
+        
         [self.tableView reloadData];
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
@@ -312,7 +324,11 @@
         cell.jfCountLab.backgroundColor =[UIColor orangeColor];
         cell.jfCountLab.textColor = [UIColor whiteColor];
         cell.syCountLab.hidden = NO;
-        cell.syCountLab.text = [NSString stringWithFormat:@" 剩：%@个",dict[@"sycount"]];
+        
+        
+        cell.syCountLab.text = [NSString stringWithFormat:@" 剩余：%@个",[NSString stringWithFormat:@"%@",self.couponidDic[dict[@"couponid"]]]];
+           
+        // cell.syCountLab.text = [NSString stringWithFormat:@" 剩：%@个",dict[@"sycount"]];
         
         NSString *string1 = [NSString stringWithFormat:@"%@",dict[@"type"]];
         

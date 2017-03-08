@@ -22,7 +22,7 @@
                         <constraint firstAttribute="height" constant="50" id="3QW-yP-Wc7"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="添加此车型" backgroundImage="咨询.png">
+                    <state key="normal" title="保养此车型" backgroundImage="咨询.png">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
