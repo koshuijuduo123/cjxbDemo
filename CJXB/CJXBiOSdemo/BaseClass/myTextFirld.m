@@ -13,7 +13,7 @@
 -(void)setHeight{
     
     CGRect rect = self.frame;
-    rect.size.height = 40;
+    rect.size.height = 50;
     self.frame = rect;
     
     
@@ -36,6 +36,7 @@
     [super drawRect:rect];
     [self setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     self.tintColor = self.textColor; //设置光标颜色和文字颜色一样
+    
 }
 
 - (BOOL)becomeFirstResponder {

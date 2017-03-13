@@ -17,14 +17,9 @@ typedef void (^WebBack)();
 @property(nonatomic,copy)NSString *titleLab; //分享标题
 
 @property(nonatomic,copy)UIImage *titleImg; //分享图片
-
-//@property(nonatomic,strong)UIWebView *webView; //属性webView
-
-//@property(nonatomic,strong)IMYWebView *webView2;//签到
-
-
+@property(nonatomic,copy)NSString *imgUrl;//图片url
 @property(nonatomic,strong)IMYWebView *webView;
-
+@property(nonatomic,assign)BOOL shareHiddnBtn;//是否隐藏导航栏分享按钮
 
 @property(nonatomic,assign)BOOL isUIWebView;//使用的是UIwebView
 

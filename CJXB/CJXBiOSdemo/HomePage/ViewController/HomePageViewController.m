@@ -243,13 +243,25 @@ static NSString *const identider = @"cell";
         bageView.badgeText =nil;
     }else{
         
+        if (unReadNotice.totalNotiCount>[bageView.badgeText integerValue]) {
+            //系统声音
+            //AudioServicesPlaySystemSound(1007);
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"notice" ofType:@"m4r"];
+            //组装并播放音效
+            SystemSoundID soundID;
+            NSURL *filePath = [NSURL fileURLWithPath:path isDirectory:NO];
+            AudioServicesCreateSystemSoundID((__bridge CFURLRef)filePath, &soundID);
+            AudioServicesPlaySystemSound(soundID);
+            
+        }
+        
         bageView.badgeText =[NSString stringWithFormat:@"%ld",(long)unReadNotice.totalNotiCount];
+        
     }
     
     [bageView setNeedsLayout];
      }];
 }
-
 
 
 
@@ -1092,7 +1104,7 @@ static NSString *const identider = @"cell";
        
     
     webVC.hidesBottomBarWhenPushed = YES;
-    
+    webVC.shareHiddnBtn = YES;
     NSDictionary *dict =self.dataSourceArray[indexPath.row];
     
      webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44-6)];
@@ -1217,11 +1229,12 @@ static NSString *const identider = @"cell";
     if ([dic[@"id"] integerValue]==2198) {
         webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
         webVC.isUIWebView = YES;
-        
+        webVC.shareHiddnBtn = YES;
         [webVC.view addSubview:webVC.webView];
 
         string5 = [NSString stringWithFormat:@"http://d.eqxiu.com/s/b9z0nK6Y?eqrcode=1&userid=%@&from=timeline&isappinstalled=1",model.myid];
         webVC.title = @"最新活动";
+        
     }else if ([dic[@"id"] integerValue]==1818) {
         webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
         webVC.isUIWebView = YES;
@@ -1235,7 +1248,7 @@ static NSString *const identider = @"cell";
     }else if (![dic[@"jumpurl"] isKindOfClass:[NSNull class]]){
         webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
         webVC.isUIWebView = YES;
-        
+        webVC.shareHiddnBtn = YES;
         [webVC.view addSubview:webVC.webView];
         
         if ([dic[@"jumpurl"] hasSuffix:@"?"]) {
@@ -1245,9 +1258,11 @@ static NSString *const identider = @"cell";
             string5 = [NSString stringWithFormat:@"%@?userid=%@&from=timeline&isappinstalled=1",dic[@"jumpurl"],model.myid];
         }
         webVC.title = @"最新活动";
-    }else{
         
+    }else{
+        webVC.shareHiddnBtn = YES;
         webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44)];
+        
         [webVC.view addSubview:webVC.webView];
         
         [webVC.view sendSubviewToBack:webVC.webView];
@@ -1255,6 +1270,7 @@ static NSString *const identider = @"cell";
         string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",dic[@"id"],model.myid];
         
         webVC.qiandao = @"YES";
+        
     }
     
     
@@ -1349,8 +1365,7 @@ static NSString *const identider = @"cell";
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Login" object:nil];
     
-    
-    
+        
     [self.tableView removeJElasticPullToRefreshView];
 }
 

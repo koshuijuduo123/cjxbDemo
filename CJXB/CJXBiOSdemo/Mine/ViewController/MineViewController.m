@@ -34,6 +34,7 @@
 #import "IMYWebView.h"
 #import "UMComDiscoverViewController.h"
 #import "CarsPinPaiViewController.h"
+#import "MyNewsViewController.h"
 @interface MineViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -81,10 +82,11 @@ static NSString *const idemter = @"cell";
     self.rcountLab = [[UILabel alloc]init];
     [self setNavibar];
     [self body];
-    [self myDianZiQuanCount];
+    
     UIView *footView = [[UIView alloc]initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footView;
-    
+    //设置cell分割线颜色
+    [_tableView setSeparatorColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -271,7 +273,8 @@ static NSString *const idemter = @"cell";
     
     //注册信息修改通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SaveAction:) name:@"Save" object:nil];
-    
+    //注册电子券数量通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CountAction:) name:@"Count" object:nil];
     
     
     self.touView = [[MinTouView alloc]initWithFrame:CGRectMake(0, imageView.height, size_width, 60)];
@@ -285,7 +288,7 @@ static NSString *const idemter = @"cell";
         
         NSNotification *notification = [NSNotification notificationWithName:@"Login" object:nil userInfo:dic];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
-        
+        [self myDianZiQuanCount];
         
     }
     
@@ -392,10 +395,10 @@ static NSString *const idemter = @"cell";
     
     //注册cell
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:idemter];
-    self.arr1 = @[@"保养爱车",@"我的驾驶证"];
+    self.arr1 = @[@"保养爱车",@"我的驾驶证",@"收藏文章"];
     self.arr2 = @[@"个人信息",@"周边商户",@"帮友之家"];
     
-    self.imageArray1 = @[@"我的爱车",@"驾驶证"];
+    self.imageArray1 = @[@"我的爱车",@"驾驶证",@"我的收藏"];
     self.imageArray2 = @[@"个人信息",@"合作",@"朋友圈"];
     
 
@@ -546,7 +549,9 @@ static NSString *const idemter = @"cell";
         [self body];
 }
 
-
+-(void)CountAction:(NSNotification *)notification{
+    [self myDianZiQuanCount];
+}
 
 
 -(void)SaveAction:(NSNotification *)notification{
@@ -662,7 +667,9 @@ static NSString *const idemter = @"cell";
                 [cell.contentView addSubview:[self creatCellInLabel:carUserName]];
                 }
         }
-        
+        if (indexPath.row==2) {
+            [cell.contentView addSubview:[self creatCellInLabel:@"小帮发现，实时收藏"]];
+        }
         
         
     }
@@ -725,25 +732,19 @@ static NSString *const idemter = @"cell";
    
     AppDelegate *app = CJXBAPP;
     if (indexPath.section==0) {
-         NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
-        
-        if (cookies.count) {
-            MyDianJuanViewcontrollerViewController *DianVC = [[MyDianJuanViewcontrollerViewController alloc]init];
-            
-            DianVC.hidesBottomBarWhenPushed = YES;
-            
-            [self.navigationController pushViewController:DianVC animated:YES];
-            
-            
-        }else{
-            
-            
-            [MineViewController showAlertMessageWithMessage:@"加入小帮后可查看" duration:1.0];
-        }
-        
-        
-        
-    }
+    __weak typeof(self) ws = self;
+        [UMComLoginManager performLogin:ws completion:^(id responseObject, NSError *error) {
+            if (!error) {
+                
+                MyDianJuanViewcontrollerViewController *DianVC = [[MyDianJuanViewcontrollerViewController alloc]init];
+                
+                DianVC.hidesBottomBarWhenPushed = YES;
+                
+                [ws.navigationController pushViewController:DianVC animated:YES];
+                
+            }
+        }];
+}
     
     
     if (indexPath.section==1) {
@@ -790,6 +791,14 @@ static NSString *const idemter = @"cell";
                 
             }
     }
+        
+        if (indexPath.row==2) {
+            MyNewsViewController *newsVC = [[MyNewsViewController alloc]init];
+            newsVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:newsVC animated:YES];
+        }
+        
+        
     }
     if (indexPath.section==2) {
 
@@ -1026,7 +1035,7 @@ static NSString *const idemter = @"cell";
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Save" object:nil];
     
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Count" object:nil];
     [self.tableView removeJElasticPullToRefreshView];
 }
 

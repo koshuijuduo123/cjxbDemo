@@ -194,8 +194,8 @@
                     [cookieStorage setCookie: cookie];
                 }
                 [NetworkManger requestPOSTWithURLStr:URL_TIckInfo parmDic:@{@"exec":@"lingcoupon",@"couponid":self.tickid} finish:^(id responseObject) {
-                    
-                    if (responseObject[@"IsError"]==0) {
+                    NSLog(@"aaaaaaaa%@",responseObject);
+                    if ([responseObject[@"IsError"] integerValue]==0) {
                         
                         UIAlertController *alert = [UIAlertController alertControllerWithTitle:responseObject[@"Message"] message:@"是否前往我的电子券查看" preferredStyle:(UIAlertControllerStyleAlert)];
                         

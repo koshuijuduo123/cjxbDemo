@@ -15,4 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *baoCountLab;
 
 @property (weak, nonatomic) IBOutlet UILabel *chatCountLab;
+@property (weak, nonatomic) IBOutlet UIImageView *countImg;
+@property (weak, nonatomic) IBOutlet UIImageView *chatImg;
+
+
 @end

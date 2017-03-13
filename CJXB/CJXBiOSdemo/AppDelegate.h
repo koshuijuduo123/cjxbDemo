@@ -13,7 +13,8 @@
 @class MessageModel;
 @class ResultData;
 @class MessageData;
-
+@class MyLoveNewsEntity;
+@class MyNewsModel;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -45,8 +46,10 @@
 
 //添加车辆实体
 -(void)addMovEntiityWith:(CarModel *)model;
-
-
+//添加收藏新闻
+-(void)addMyLoveNewEntity:(MyNewsModel*)model;
+//查询收藏新闻
+-(NSArray *)searchMyNewsforEntity;
 //查询实体
 -(NSArray *)searchMovieEntiity;
 

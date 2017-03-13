@@ -282,7 +282,8 @@
                         NSNotification *notification2 = [NSNotification notificationWithName:kUMComUnreadNotificationRefreshNotification object:nil userInfo:nil];
                         [[NSNotificationCenter defaultCenter] postNotification:notification2];
                         
-                        
+                        NSNotification *notification3 = [NSNotification notificationWithName:@"Count" object:nil userInfo:nil];
+                        [[NSNotificationCenter defaultCenter] postNotification:notification3];
                         
                         [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
                         
@@ -480,7 +481,8 @@ zone:@"86"
                                                       NSNotification *notification2 = [NSNotification notificationWithName:kUMComUnreadNotificationRefreshNotification object:nil userInfo:nil];
                                                       [[NSNotificationCenter defaultCenter] postNotification:notification2];
                                                       
-
+                                                      NSNotification *notification3 = [NSNotification notificationWithName:@"Count" object:nil userInfo:nil];
+                                                      [[NSNotificationCenter defaultCenter] postNotification:notification3];
                                                       
                                                       
                                                       

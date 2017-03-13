@@ -294,7 +294,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WebViewController *webVC = [[WebViewController alloc]init];
     webVC.hidesBottomBarWhenPushed = YES;
-    
+    webVC.shareHiddnBtn = YES;
     LoginDataModel *model = [UserDefault getUserInfo];
     
     NSDictionary *dict =self.dataSourceArray[indexPath.row];
@@ -358,6 +358,7 @@
     webVC.articleId = dict[@"id"];
     
     webVC.qiandao = @"YES";
+    webVC.imgUrl = dict[@"img"];
     
     [self.navigationController pushViewController:webVC animated:YES];
     

@@ -101,6 +101,8 @@
             <connections>
                 <outlet property="baoCountLab" destination="RiB-dN-Euv" id="MWh-yD-ugk"/>
                 <outlet property="chatCountLab" destination="LPc-Fb-CQV" id="2gJ-cq-QfN"/>
+                <outlet property="chatImg" destination="DVc-3g-TIE" id="S5w-UI-w1U"/>
+                <outlet property="countImg" destination="ZT3-sV-Xv3" id="ugR-fc-6jR"/>
                 <outlet property="timeLab" destination="Izc-Nt-UNs" id="lri-Hu-LCm"/>
                 <outlet property="titleImageView" destination="RG8-2F-aIh" id="8wD-5g-V1w"/>
                 <outlet property="titleLab" destination="5xD-pk-4cK" id="tC5-8o-WPd"/>

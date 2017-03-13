@@ -22,11 +22,11 @@
 #import "MessageEntity.h"
 #import "MessageData.h"
 #import "AFNetworking.h"
-
+#import "MyLoveNewsEntity.h"
 #import "LoginViewController.h"
 #import "LoginDataModel.h"
 #import "JWLaunchAd.h"
-
+#import "MyNewsModel.h"
 
 
 
@@ -134,7 +134,7 @@
                     WebViewController *webVC = [[WebViewController alloc] init];
                     
                     webVC.hidesBottomBarWhenPushed = YES;
-                    
+                    webVC.shareHiddnBtn = YES;
                     LoginDataModel *model = [UserDefault getUserInfo];
                     NSString *string;
                     
@@ -223,11 +223,6 @@
                     webVC.articleId = dic[@"id"];
                     
                     webVC.qiandao = @"YES";
-                    
-                    
-                    
-                    
-                    
                     webVC.title = @"最新活动";
                     webVC.AppDelegateSele= -1;
                     
@@ -417,9 +412,11 @@
     
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"CJXBiOSdemo.sqlite"];
+    //开启自动迁移命令
+    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption:@YES,NSInferMappingModelAutomaticallyOption:@YES};
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         // Report any error we got.
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
@@ -537,9 +534,36 @@
 
 }
 
+//添加收藏文章实体
+-(void)addMyLoveNewEntity:(MyNewsModel*)model{
+    //创建实体
+    MyLoveNewsEntity *entity =[NSEntityDescription insertNewObjectForEntityForName:@"MyLoveNewsEntity" inManagedObjectContext:self.managedObjectContext];
+    if (entity==nil) {
+    }
+    entity.imgUrl = model.imgUrl;
+    entity.title  = model.title;
+    entity.newsUrl = model.pushUrl;
+    entity.newId = [NSString stringWithFormat:@"%@",model.newsId];
+    entity.timeAdd = model.timeAdd;
+    [self.managedObjectContext save:nil];
+    
+}
+//查询收藏文章
+-(NSArray *)searchMyNewsforEntity{
+    //实体描述
+    NSEntityDescription *entityDes = [NSEntityDescription entityForName:@"MyLoveNewsEntity" inManagedObjectContext:self.managedObjectContext];
+    //建立查询请求
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    
+    //设置请求哪个实体
+    [request setEntity:entityDes];
+    
+    //遍历所有实体，获取实体信息，存在数组里
+    NSArray *arr = [self.managedObjectContext executeFetchRequest:request error:nil];
+    
+    return arr;
 
-
-
+}
 
 -(void)addCarInfoEntity:(ResultData *)model{
     //创建实体

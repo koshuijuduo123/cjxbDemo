@@ -18,7 +18,10 @@
 #import "IMYWebView.h"
 #import "HZPhotoBrowser.h"
 #import "MBProgressHUD.h"
-@interface WebViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UMSocialUIDelegate,IMYWebViewDelegate,HZPhotoBrowserDelegate>
+#import "JGPopView.h"
+#import "MyNewsModel.h"
+#import "MyLoveNewsEntity.h"
+@interface WebViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UMSocialUIDelegate,IMYWebViewDelegate,HZPhotoBrowserDelegate,selectIndexPathDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sheetBtn;
 @property (weak, nonatomic) IBOutlet UIButton *jfBtn;
 
@@ -42,10 +45,17 @@
 @property(nonatomic,assign)BOOL isTiShiKuang;//是否弹出过提示框
 @property(nonatomic, strong)NSMutableArray *imageArray;//HTML中的图片个数
 @property(nonatomic,strong)MBProgressHUD *hud;
+@property(nonatomic,strong)NSArray *logTypeArrM;
+@property(nonatomic,strong)UIButton *shareBtn;
 @end
 
 @implementation WebViewController
-
+-(NSArray *)logTypeArrM{
+    if (!_logTypeArrM) {
+        self.logTypeArrM = @[@"分享此文章",@"收藏此文章"];
+    }
+    return _logTypeArrM;
+}
 -(NSMutableArray *)imageArray{
     if (!_imageArray) {
         self.imageArray = [NSMutableArray array];
@@ -214,9 +224,6 @@
     [self ImgAction];
     [self.view addSubview:self.hud];
     
-    
-    
-    
     UIButton * backButton = [UIButton buttonWithType:UIButtonTypeSystem];
     backButton.frame = CGRectMake(0, 0, 30, 30);
     [backButton setBackgroundImage:[UIImage imageNamed:@"返回1"] forState:UIControlStateNormal];
@@ -229,27 +236,27 @@
     UIBarButtonItem *negative = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     
     negative.width = -15;
-    
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negative,btn, nil];
     
+    if (_shareHiddnBtn==YES) {
+        self.shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [_shareBtn setImage:[UIImage imageNamed:@"选项"] forState:UIControlStateNormal];
+        
+        [_shareBtn addTarget:self action:@selector(logTypeArrMAction:) forControlEvents:UIControlEventTouchUpInside ];
+        
+        _shareBtn.frame = CGRectMake(5, 0, 30, 30);
+        
+        UIView *rightShareBtn = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 30.0, 30.0)];
+        [rightShareBtn addSubview:_shareBtn];
+        
+        UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]initWithCustomView:rightShareBtn];
+        self.navigationItem.rightBarButtonItem = menuButton;
+        
+    }
     
     
-    
-    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareBtn setImage:[UIImage imageNamed:@"分享给"] forState:UIControlStateNormal];
-    
-    [shareBtn addTarget:self action:@selector(shareButtonAction:) forControlEvents:UIControlEventTouchUpInside ];
-    
-    shareBtn.frame = CGRectMake(5, 0, 30, 30);
-    
-    UIView *rightShareBtn = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 30.0, 30.0)];
-    [rightShareBtn addSubview:shareBtn];
-    
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]initWithCustomView:rightShareBtn];
-    self.navigationItem.rightBarButtonItem = menuButton;
-    
-    
-    
+
     
     self.webView.scrollView.delegate = self;
     
@@ -268,6 +275,19 @@
     
     
 }
+
+
+-(void)logTypeArrMAction:(UIButton *)btn{
+    CGPoint point = CGPointMake(btn.superview.center.x,btn.frame.origin.y + 45);
+    JGPopView *view2 = [[JGPopView alloc] initWithOrigin:point Width:btn.frame.size.width*4  Height:40 * 2 Type:JGTypeOfUpRight Color:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
+    view2.dataArray = self.logTypeArrM;
+    view2.fontSize = 15;
+    view2.row_height = 40;
+    view2.titleTextColor = [UIColor blackColor];
+    view2.delegate = self;
+    [view2 popView];
+}
+
 
 
 
@@ -716,13 +736,9 @@
     }
     
     
-    
-    
-    
-    
-    
-    
-    
+    if (!self.titleLab) {
+        self.titleLab = @"我的收藏页面";
+    }
     //[UMSocialData defaultData].extConfig.smsData =string5;
     
    // [UMSocialData defaultData].extConfig.wechatSessionData.url = string5;
@@ -872,6 +888,60 @@
     //[self updateViewConstraints];
     
 }
+
+- (void)selectIndexPathRow:(NSInteger)index{
+    [self.shareBtn setTitle:[self.logTypeArrM objectAtIndex:index] forState:UIControlStateNormal];
+    if (index==0) {
+        [self shareButtonAction:self.shareBtn];
+    }
+    if (index==1) {
+        //收藏功能
+        MyNewsModel *newsModel = [[MyNewsModel alloc]init];
+        LoginDataModel *model = [UserDefault getUserInfo];
+        self.string5 = nil;
+        
+        self.string5 = [NSString stringWithFormat:@"%@",self.webView.URL.absoluteURL];
+        
+        
+        if ([_string5 isEqualToString:@""]) {
+            
+            self.string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",self.articleId,model.myid];
+        }
+        if (!self.imgUrl) {
+            self.imgUrl = UMLoginImgURL;
+        }
+        if (!self.titleLab) {
+            self.titleLab = @"我的收藏页面";
+        }
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"添加日期📅:yyyy-MM-dd HH:mm"];
+        NSString *datetime = [formatter stringFromDate:[NSDate date]];
+        
+        newsModel.pushUrl = _string5;
+        newsModel.imgUrl =  self.imgUrl;
+        newsModel.title = self.titleLab;
+        newsModel.newsId = self.articleId;
+        newsModel.timeAdd = datetime;
+        AppDelegate *app = CJXBAPP;
+        
+        for (MyLoveNewsEntity *entity in [app searchMyNewsforEntity]) {
+            if ([[NSString stringWithFormat:@"%@",newsModel.newsId]isEqualToString:entity.newId]) {
+                [WebViewController showAlertMessageWithMessage:@"文章不能重复收藏" duration:2.0];
+                return;
+            }
+        }
+        
+        [app addMyLoveNewEntity:newsModel];
+        
+        [WebViewController showAlertMessageWithMessage:@"收藏成功" duration:2.0];
+        
+        
+        }
+    
+}
+
+
+
 
 -(void)dealloc{
     
