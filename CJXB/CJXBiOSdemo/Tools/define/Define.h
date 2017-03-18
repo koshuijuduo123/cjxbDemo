@@ -39,7 +39,7 @@
 
 #define URL_compand @"http://x.xiaobang520.com/biz/bizhandler.ashx"
 
-#define UMLoginImgURL @"https://i.screenshot.net/op1qqh1"
+#define UMLoginImgURL @"https://i.screenshot.net/op1qqh1"//第一次登陆系统头像
 
 #define qiandaoCounts  @"http://x.xiaobang520.com/com/qiandao.aspx" //签到送积分
 #define lipinDuiHuanURL @"http://x.xiaobang520.com/sys/DuiHuanListByUI.aspx?userid=%@&from=timeline&isappinstalled=1"//礼品兑换

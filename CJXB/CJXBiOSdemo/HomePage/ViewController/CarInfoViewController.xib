@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CarInfoViewController">
             <connections>
+                <outlet property="backView" destination="au4-zr-oME" id="kwn-zs-m9o"/>
                 <outlet property="tableView" destination="eKO-Lc-KyO" id="iRe-kO-rWH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,17 +21,25 @@
                     <rect key="frame" x="0.0" y="0.0" width="431" height="525"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="8Eg-zG-Zzv"/>
-                        <outlet property="delegate" destination="-1" id="bHY-Ps-tN0"/>
+                        <outlet property="dataSource" destination="-1" id="pxh-Rx-rkp"/>
+                        <outlet property="delegate" destination="-1" id="2Fq-SI-K9H"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="au4-zr-oME">
+                    <rect key="frame" x="0.0" y="0.0" width="431" height="525"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="au4-zr-oME" secondAttribute="bottom" id="6A3-G1-mzj"/>
                 <constraint firstAttribute="trailing" secondItem="eKO-Lc-KyO" secondAttribute="trailing" id="QxL-N3-oAD"/>
                 <constraint firstAttribute="bottom" secondItem="eKO-Lc-KyO" secondAttribute="bottom" id="Wxh-ac-2eu"/>
                 <constraint firstItem="eKO-Lc-KyO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cM4-K4-71s"/>
                 <constraint firstItem="eKO-Lc-KyO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="kI2-2D-pD0"/>
+                <constraint firstAttribute="trailing" secondItem="au4-zr-oME" secondAttribute="trailing" id="nK3-Vr-xrp"/>
+                <constraint firstItem="au4-zr-oME" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tg8-zu-44v"/>
+                <constraint firstItem="au4-zr-oME" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yaz-Lh-ZC7"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="226.5" y="178.5"/>

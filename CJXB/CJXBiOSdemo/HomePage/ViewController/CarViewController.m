@@ -86,13 +86,13 @@
 //        return;
 //    }
     
-    NSString *carNum = @"^[0-9]{6}";
-    NSPredicate *carnum = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",carNum];
-    if (![carnum evaluateWithObject:[NSString stringWithFormat:@"%@",_maTextFirld.text]]) {
-        [CarViewController showAlertMessageWithMessage:@"识别代号格式错误" duration:1.0];
-        
-        return;
-    }
+//    NSString *carNum = @"^[0-9]{6}";
+//    NSPredicate *carnum = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",carNum];
+//    if (![carnum evaluateWithObject:[NSString stringWithFormat:@"%@",_maTextFirld.text]]) {
+//        [CarViewController showAlertMessageWithMessage:@"识别代号格式错误" duration:1.0];
+//        
+//        return;
+//    }
     
     AppDelegate *app = CJXBAPP;
     
@@ -112,11 +112,6 @@
     
     if ([app searchMovieEntiity].count>4) {
          [CarViewController showAlertMessageWithMessage:@"车位已满，小帮也无能为力" duration:2.0];
-        
-        
-        
-        
-        
         return;
 
     }

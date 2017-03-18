@@ -117,9 +117,9 @@ static NSString * const JGCell = @"JGCell";
     
     CarGroupModel *group = [_dataArrM objectAtIndex:indexPath.section];
     Car *car = [group.list objectAtIndex:indexPath.row];
-    UIImageView *carPinPaiImg = [[UIImageView alloc]init];
-    [carPinPaiImg sd_setImageWithURL:[NSURL URLWithString:car.imgurl] placeholderImage:[UIImage imageNamed:@"zwt"]];
-    cell.imageView.image = carPinPaiImg.image;
+    
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:car.imgurl] placeholderImage:[UIImage imageNamed:@"zwt"]];
+    
     cell.textLabel.text = car.name;
     return cell;
     

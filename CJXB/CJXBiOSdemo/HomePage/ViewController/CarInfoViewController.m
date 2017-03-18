@@ -21,6 +21,7 @@
 #include <string.h>
 @interface CarInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @property(nonatomic,strong)NSMutableArray *dataSource;//cell数据源
 
@@ -37,7 +38,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.tableView.estimatedRowHeight = 100;
      self.tableView.rowHeight = UITableViewAutomaticDimension;
     
@@ -229,14 +229,17 @@ didCompleteWithError:(nullable NSError *)error
          }
          */
         sleep(2);
+        self.backView.hidden = YES;
         [self hidenHUD];
+        
         
         [view.layer removeAllAnimations];
         [self.tableView reloadData];
         
     }else{
         HeaderFoundView *foundView = [[HeaderFoundView alloc]init];
-        sleep(3);
+        sleep(2);
+        self.backView.hidden = YES;
         [self hidenHUD];
         [foundView.layer removeAllAnimations];
         
@@ -450,6 +453,10 @@ didCompleteWithError:(nullable NSError *)error
     
     return foundView;
 }
+
+
+
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 150;

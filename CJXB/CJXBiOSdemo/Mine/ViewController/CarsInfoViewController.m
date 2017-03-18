@@ -86,9 +86,7 @@ static NSString *const ImgCell = @"ImgCell";
     if (indexPath.section==1) {
             
             if (indexPath.row==0) {
-                UIImageView *carPinPaiImg = [[UIImageView alloc]init];
-                [carPinPaiImg sd_setImageWithURL:[NSURL URLWithString:model.carPhotosImgUrl]placeholderImage:[UIImage imageNamed:@"zwt"]];
-                cell.imageView.image = carPinPaiImg.image;
+                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.carPhotosImgUrl]placeholderImage:[UIImage imageNamed:@"zwt"]];
                 cell.textLabel.text = model.carName;
             }
         }
