@@ -289,8 +289,6 @@ static NSString *const identider = @"cell";
 
 #pragma mark - 设置navigationBar透明
 -(void)setNavibar{
-    
-    
     //将绘制的图片设置成导航栏的背景图片
     [self.navigationController.navigationBar setBackgroundImage:[self getImageWithAlpha:1.0] forBarMetrics:UIBarMetricsDefault];
     
@@ -674,7 +672,7 @@ static NSString *const identider = @"cell";
                 webVC.hidesBottomBarWhenPushed = YES;
                 
                 webVC.isUIWebView = YES;
-                webVC.navigationItem.title = @"签到送积分";
+                webVC.title = @"签到送积分";
                 webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
                 
                 [webVC.view addSubview:webVC.webView];

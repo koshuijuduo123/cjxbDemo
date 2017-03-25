@@ -21,6 +21,7 @@
 #import "JGPopView.h"
 #import "MyNewsModel.h"
 #import "MyLoveNewsEntity.h"
+#import "MyCarModel.h"
 @interface WebViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UMSocialUIDelegate,IMYWebViewDelegate,HZPhotoBrowserDelegate,selectIndexPathDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sheetBtn;
 @property (weak, nonatomic) IBOutlet UIButton *jfBtn;
@@ -31,8 +32,7 @@
 
 @property(nonatomic,strong)IMYWebView *webVC;
 
-@property(nonatomic,assign)NSValue *animationDurationValue;
-
+@property(nonatomic,assign)NSTimeInterval animationDuration;
 @property(nonatomic,strong)NSString *string5;
 
 @property(nonatomic,copy)NSString *str2;//嵌入网页的表情字符串
@@ -47,6 +47,8 @@
 @property(nonatomic,strong)MBProgressHUD *hud;
 @property(nonatomic,strong)NSArray *logTypeArrM;
 @property(nonatomic,strong)UIButton *shareBtn;
+
+
 @end
 
 @implementation WebViewController
@@ -79,6 +81,7 @@
     
     self.navigationController.navigationBar.hidden = NO;
     self.bottomLine.constant = 0;
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -254,10 +257,6 @@
         self.navigationItem.rightBarButtonItem = menuButton;
         
     }
-    
-    
-
-    
     self.webView.scrollView.delegate = self;
     
     if (![self.webView usingUIWebView]) {
@@ -271,10 +270,34 @@
         [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
         
     }
+}
+
+-(void)pushWithCarModelToWebView{
+   MyCarModel *model = [MyCarModel shareInstance];
     
+    NSString *jsString4 = [NSString stringWithFormat:@"document.getElementById('entry_field_4').value='%@';",model.carPinPai];
+    [_webView evaluateJavaScript:jsString4 completionHandler:nil];
+   //设置不可编辑属性
+    NSString *jsStrings4 = [NSString stringWithFormat:@"document.getElementById('entry_field_4').readOnly='true';"];
+    [_webView evaluateJavaScript:jsStrings4 completionHandler:nil];
     
+    NSString *jsString5 = [NSString stringWithFormat:@"document.getElementById('entry_field_5').value='%@';",model.carName];
+    [_webView evaluateJavaScript:jsString5 completionHandler:nil];
+    
+    NSString *jsStrings5 = [NSString stringWithFormat:@"document.getElementById('entry_field_5').readOnly='true';"];
+    [_webView evaluateJavaScript:jsStrings5 completionHandler:nil];
+
+    
+    NSString *jsString6 = [NSString stringWithFormat:@"document.getElementById('entry_field_6').value='%@';",model.carXing];
+    [_webView evaluateJavaScript:jsString6 completionHandler:nil];
+    
+    NSString *jsStrings6 = [NSString stringWithFormat:@"document.getElementById('entry_field_6').readOnly='true';"];
+    [_webView evaluateJavaScript:jsStrings6 completionHandler:nil];
+
     
 }
+
+
 
 
 -(void)logTypeArrMAction:(UIButton *)btn{
@@ -354,13 +377,13 @@
     NSValue *value = [info objectForKey:@"UIKeyboardBoundsUserInfoKey"];//关键的一句，网上关于获取键盘高度的解决办法，多到这句就over了。系统宏定义的UIKeyboardBoundsUserInfoKey等测试都不能获取正确的值。不知道为什么。。。
     
     CGSize keyboardSize = [value CGRectValue].size;
-    //NSLog(@"横屏%f",keyboardSize.height);
+    
     float keyboardHeight = keyboardSize.height;
     
-    // 获取键盘弹出的时间
-    self.animationDurationValue = [[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [_animationDurationValue getValue:&animationDuration];
+     //获取键盘弹出的时间
+    NSValue *animationDurationValue = [[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    
+    [animationDurationValue getValue:&_animationDuration];
     
     //自定义的frame大小的改变的语句
     self.bottomLine.constant = keyboardHeight;
@@ -379,7 +402,6 @@
             
             self.webBack();
         }
-        //[self dismissViewControllerAnimated:YES completion:nil];
         return;
 
     }
@@ -477,6 +499,11 @@
     [self getImgs];
     
     
+    //保养表格显示
+    if (_isPushExtcl==YES) {
+    [self pushWithCarModelToWebView];
+    }
+
 }
 
 
@@ -522,19 +549,12 @@
                 browserVc.currentImageIndex = [_imageArray indexOfObject:imageUrl];//当前点击的图片
                 browserVc.delegate = self;
                 [browserVc show];
-                
-            }
-
-            
+                }
             return NO;
         }
         
     }
-    
-    
     return YES;
-        
-    
 }
 
     
@@ -613,9 +633,6 @@
     NSString *jsString = [NSString stringWithFormat:@"document.getElementsByTagName('%@').length", tag];
     
     int count =  [[_webView stringByEvaluatingJavaScriptFromString:jsString] intValue];
-    
-   
-    
     return count;
 }
 
@@ -629,10 +646,6 @@
     
     NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
     if (cookies.count==0) {
-        
-        //LoginViewController *logVC = [[LoginViewController alloc]init];
-        //[self.navigationController pushViewController:logVC animated:YES];
-    
         [WebViewController showAlertMessageWithMessage:@"加入小帮参与评论" duration:1.0];
         return;
     }else{
@@ -657,24 +670,15 @@
         
         [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/article/articlehandler.ashx" parmDic:@{@"exec":@"addpl",@"articleid":self.articleId,@"con":self.taskTextFirld.text} finish:^(id responseObject) {
             self.taskTextFirld.text = nil;
-            //[self.taskTextFirld resignFirstResponder];
-            //[self textFieldDidEndEditing:_taskTextFirld];
             [WebViewController showAlertMessageWithMessage:responseObject[@"Message"] duration:1.0];
             
         } enError:^(NSError *error) {
-            //[WebViewController showAlertMessageWithMessage:@"评论失败" duration:1.0];
+            
         }];
-        
         //刷新界面
         [self.webView reload];
-        
-        
-    }
-    
-    
-    
+        }
 }
-
 
 //不用点击自动消失的提示框
 +(void)showAlertMessageWithMessage:(NSString*)message duration:(NSTimeInterval)time
@@ -698,19 +702,9 @@
 }
 
 
-
-
-
-
-
 //分享
 - (IBAction)shareButtonAction:(UIButton *)sender {
-         
-    //[app setNSString:self.articleId];
-    
     [self.taskTextFirld resignFirstResponder];
-    
-    
     [UMSocialData setAppKey:@"57ca6a40e0f55ac3c6003450"];
     //存放当前显示的分享平台，不能强迫用户安装需要分享的应用
     NSMutableArray *plantFormArr = [[NSMutableArray alloc]init];
@@ -753,12 +747,6 @@
     [UMSocialWechatHandler setWXAppId:@"wxdcdd2ba2548e88b5" appSecret:@"29ceee15ff96df366c93a043d695862d" url:_string5];
     
     [UMSocialSnsService presentSnsIconSheetView:self appKey:@"57ca6a40e0f55ac3c6003450" shareText:self.titleLab shareImage:self.titleImg shareToSnsNames:plantFormArr delegate:self];
-    
-    
-    
-    
-
-    
 }
 
 -(void)didSelectSocialPlatform:(NSString *)platformName withSocialData:(UMSocialData *)socialData{
@@ -785,10 +773,6 @@
     
     
 }
-
-
-
-
 
 
 //分享成功的回调
@@ -819,11 +803,7 @@
             [WebViewController showAlertMessageWithMessage:@"登录后才可赚取积分" duration:2.0];
             
         }
-        
-        
-        
-        
-    }
+}
 
 }
 
@@ -856,19 +836,13 @@
         
         //键盘动态弹出高度通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(KeyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+       
         
-        
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:_animationDuration animations:^{
             self.backView.frame = CGRectMake(0, size_height-60-self.bottomLine.constant, size_width, 60);
             
         }];
-        
-        
-        
-    }
-    
-    //[self updateViewConstraints];
-
+        }
 }
 
 
@@ -881,12 +855,10 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     self.bottomLine.constant = 0;
     
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:_animationDuration animations:^{
         self.backView.frame = CGRectMake(0, size_height-60-self.bottomLine.constant, size_width, 60);
         
     }];
-    //[self updateViewConstraints];
-    
 }
 
 - (void)selectIndexPathRow:(NSInteger)index{
@@ -940,9 +912,6 @@
     
 }
 
-
-
-
 -(void)dealloc{
     
     if (![self.webView usingUIWebView]) {
@@ -950,7 +919,7 @@
         [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
     }
     
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 

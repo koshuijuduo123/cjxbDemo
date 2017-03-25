@@ -245,7 +245,11 @@
     NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsTableViewCell" forIndexPath:indexPath];
     NSDictionary *dic = self.dataSourceArray[indexPath.row];
     [cell.titleImageView sd_setImageWithURL:dic[@"img"] placeholderImage:[UIImage imageNamed:@"zwt"]];
-    
+    if ([dic[@"zhuanfa"] integerValue]<50) {
+        cell.zhuanfaImg.hidden=YES;
+    }else{
+        cell.zhuanfaImg.hidden = NO;
+    }
     
     cell.titleLab.text = dic[@"title"];
     

@@ -18,10 +18,7 @@
         self = viewArray[0];
         self.frame = frame;
         
-               
-        
-        
-    }
+        }
     
     return self;
     

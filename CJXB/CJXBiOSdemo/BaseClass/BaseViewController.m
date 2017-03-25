@@ -29,6 +29,7 @@
     //设置等待框动画样式
     _hud.mode = MBProgressHUDModeCustomView;
     [self ImgAction];
+    
     [self.view addSubview:self.hud];
     
     

@@ -499,7 +499,7 @@
          webVC.hidesBottomBarWhenPushed = YES;
         //webVC.view.frame = CGRectMake(0, 64, size_width, size_height-64);
         
-        
+        webVC.title = @"礼品兑换";
         webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
         
         [webVC.view addSubview:webVC.webView];
@@ -528,7 +528,7 @@
         webVC.hidesBottomBarWhenPushed = YES;
         
         webVC.isUIWebView = YES;
-        webVC.navigationItem.title = @"会员特权";
+        webVC.title = @"会员特权";
         webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
         
         [webVC.view addSubview:webVC.webView];
@@ -820,14 +820,6 @@
                 [weakSelf.backView viewWithTag:102].hidden = NO;
                 [weakSelf.backView viewWithTag:103].hidden = NO;
                 
-            
-            
-            
-            
-            
-            
-            
-           
             
             //获得头视图在当前tableView中的位置
             CGRect rectInTableView = [weakSelf.tableView rectForHeaderInSection:0];

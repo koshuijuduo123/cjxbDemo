@@ -32,4 +32,7 @@ typedef void (^WebBack)();
 @property (weak, nonatomic) IBOutlet UIView *backView;
 @property(nonatomic,copy)WebBack webBack;
 @property(nonatomic,assign)int AppDelegateSele;
+
+@property(nonatomic,assign)BOOL isPushExtcl;//是不是跳转了保养表格
+
 @end

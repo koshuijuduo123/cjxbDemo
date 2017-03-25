@@ -9,11 +9,13 @@
 #import "UIView+AICategory.h"
 
 @implementation UIView (AICategory)
+
 - (void)setX:(CGFloat)x
 {
     CGRect frame = self.frame;
     frame.origin.x = x;
     self.frame = frame;
+    
 }
 
 - (void)setY:(CGFloat)y
@@ -26,6 +28,7 @@
 - (CGFloat)x
 {
     return self.frame.origin.x;
+    
 }
 
 - (CGFloat)y

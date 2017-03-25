@@ -8,6 +8,8 @@
 
 #import "CarsInfoViewController.h"
 #import "MyCarModel.h"
+#import "WebViewController.h"
+#import "IMYWebView.h"
 @interface CarsInfoViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -37,9 +39,22 @@ static NSString *const ImgCell = @"ImgCell";
     self.tableView.tableFooterView = footView;
 }
 
-//添加此车型
+//保养此车型
 - (IBAction)addCarTypeAction:(UIButton *)sender {
+    WebViewController *webVC = [[WebViewController alloc]init];
+    webVC.hidesBottomBarWhenPushed = YES;
+    webVC.isUIWebView = YES;
+    webVC.isPushExtcl = YES;
+    webVC.title = @"保养预约";
+    webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
+    [webVC.view addSubview:webVC.webView];
+    NSString *string5 = [NSString stringWithFormat:@"https://jinshuju.net/f/FAJgNj"];
+    NSURL *url1 = [[NSURL alloc]initWithString:string5];
+    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url1];
+    [webVC.webView loadRequest:request];
+    //webVC.qiandao = @"YES";
     
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 

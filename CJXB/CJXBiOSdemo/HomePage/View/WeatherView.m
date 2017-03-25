@@ -7,8 +7,8 @@
 //
 
 #import "WeatherView.h"
-#import "AFNetworking.h"
-
+//#import "AFNetworking.h"
+#import "NetworkManger.h"
 
 @implementation WeatherView
 
@@ -38,10 +38,11 @@
    
     
     
-    
-    
-    
-   NSURL *URL =[NSURL URLWithString:@"http://api.k780.com:88/?app=weather.today&weaid=101180301&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json"];
+//    NSString * str =@"新乡市";
+//    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);
+//    
+//    NSLog(@"%@",[str stringByAddingPercentEscapesUsingEncoding:enc]);
+NSURL *URL =[NSURL URLWithString:@"http://api.k780.com:88/?app=weather.today&weaid=101180301&appkey=24167&sign=3e2fe7ddefd1810ae2744d112987a42e&format=json"];
    
     
     
@@ -50,9 +51,6 @@
                                      initWithContentsOfURL:URL
                                      encoding:NSUTF8StringEncoding
                                      error:&error];
-    
-    
-       
     
     NSString *strTempL;
     NSString *strTempH;
