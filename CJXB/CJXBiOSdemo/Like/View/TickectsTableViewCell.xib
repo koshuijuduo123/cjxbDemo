@@ -20,10 +20,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KP4-Up-EeZ">
                         <rect key="frame" x="0.0" y="2" width="259" height="155"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RBn-xQ-lUz">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="RBn-xQ-lUz">
                                 <rect key="frame" x="0.0" y="0.0" width="252" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.3448627735" blue="0.28946399649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" image="zwt.png" translatesAutoresizingMaskIntoConstraints="NO" id="YVp-du-iO2">
@@ -41,7 +41,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lH2-rB-VDg">
                                 <rect key="frame" x="135" y="43" width="37.5" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.3448627735" blue="0.28946399649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1C-rh-HOX">
@@ -63,7 +63,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.21257918378340013" green="0.78020619616845288" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="lH2-rB-VDg" firstAttribute="leading" secondItem="utA-3b-MUP" secondAttribute="leading" id="UDI-Sp-U5E"/>
                             <constraint firstItem="RBn-xQ-lUz" firstAttribute="leading" secondItem="KP4-Up-EeZ" secondAttribute="leading" id="UM9-fW-iPm"/>
@@ -145,6 +144,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="gje-q6-Toe" firstAttribute="height" secondItem="KP4-Up-EeZ" secondAttribute="height" id="2Yb-XN-GKM"/>
                     <constraint firstItem="KP4-Up-EeZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="6xZ-sl-Yiy"/>
@@ -182,7 +182,7 @@
                 <outlet property="whereLab" destination="S1C-rh-HOX" id="lH7-dy-YH0"/>
                 <outlet property="zheLab" destination="8W1-A1-JyN" id="Hzr-bW-WIA"/>
             </connections>
-            <point key="canvasLocation" x="326.5" y="49"/>
+            <point key="canvasLocation" x="324.5" y="62"/>
         </tableViewCell>
     </objects>
     <resources>

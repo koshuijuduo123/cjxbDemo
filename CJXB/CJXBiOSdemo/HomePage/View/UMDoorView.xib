@@ -27,9 +27,9 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="idU-dQ-AMQ">
-                    <rect key="frame" x="241" y="4" width="40" height="32"/>
+                    <rect key="frame" x="236" y="4" width="45" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="40" id="LJz-lE-TkC"/>
+                        <constraint firstAttribute="width" constant="45" id="LJz-lE-TkC"/>
                     </constraints>
                     <state key="normal" backgroundImage="分类.png"/>
                     <connections>

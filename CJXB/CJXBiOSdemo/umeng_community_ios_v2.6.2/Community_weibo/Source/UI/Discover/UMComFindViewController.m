@@ -94,6 +94,7 @@
     realTimeFeedsViewController.isAutoStartLoadData = YES;
     realTimeFeedsViewController.fetchRequest = [[UMComAllNewFeedsRequest alloc]initWithCount:BatchSize];
     realTimeFeedsViewController.title = UMComLocalizedString(@"um_com_newcontent", @"实时内容");
+    
     [self.navigationController  pushViewController:realTimeFeedsViewController animated:YES];
 }
 

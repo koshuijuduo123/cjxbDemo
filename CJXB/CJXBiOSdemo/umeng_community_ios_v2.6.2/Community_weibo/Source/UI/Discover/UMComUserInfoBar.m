@@ -13,8 +13,8 @@
 #import "UMComImageUrl+CoreDataProperties.h"
 #import "UMComMedalImageView.h"
 #import "UMComMedal+CoreDataProperties.h"
-
-
+#import "UserDefault.h"
+#import "LoginDataModel.h"
 const CGFloat g_UMComUserInfoBar_SpaceBetweenNameAndMedal = 5;//勋章和名字的间距
 
 @interface UMComUserInfoBar ()<UMComImageViewDelegate>
@@ -101,7 +101,10 @@ const CGFloat g_UMComUserInfoBar_SpaceBetweenNameAndMedal = 5;//勋章和名字�
         _status.layer.borderColor = UMComColorWithColorValueString(@"34C035").CGColor;
         _follower.text = [NSString stringWithFormat:UMComLocalizedString(@"um_com_funCount_template", @"粉丝 %@"), countString(user.fans_count)];
         _folowing.text = [NSString stringWithFormat:UMComLocalizedString(@"um_com_followingCount_template", @"关注 %@"), countString(user.following_count)];
-        _score.text = [NSString stringWithFormat:UMComLocalizedString(@"um_com_scoreCount_template", @"积分 %@"), countString(user.point)];
+        
+        LoginDataModel *model = [UserDefault getUserInfo];
+        NSNumber *userCounts = [NSNumber numberWithInteger:[model.points integerValue]];
+        _score.text = [NSString stringWithFormat:UMComLocalizedString(@"um_com_scoreCount_template", @"积分 %@"), countString(userCounts)];
         [_avatar setImageURL:[user.icon_url small_url_string] placeHolderImage:UMComImageWithImageName(@"um_forum_post_default")];
         [self hideInfoSubviews:NO];
         _loginTip.hidden = YES;

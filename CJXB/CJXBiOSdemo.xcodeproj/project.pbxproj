@@ -124,6 +124,11 @@
 		B0533E5C1D7AA5EE00D3383F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0533E5B1D7AA5EE00D3383F /* ImageIO.framework */; };
 		B0533E5E1D7AA62C00D3383F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0533E5D1D7AA62C00D3383F /* SystemConfiguration.framework */; };
 		B0533E601D7AA64400D3383F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0533E5F1D7AA64400D3383F /* CoreTelephony.framework */; };
+		B054803A1E8BA1D500A56ABA /* BaseWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05480371E8BA1D500A56ABA /* BaseWebController.m */; };
+		B054803B1E8BA1D500A56ABA /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05480391E8BA1D500A56ABA /* WKWebViewController.m */; };
+		B054803E1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B054803D1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.m */; };
+		B054804E1E8BA24900A56ABA /* libYouzan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05480431E8BA24900A56ABA /* libYouzan.a */; };
+		B054804F1E8BA24900A56ABA /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = B05480461E8BA24900A56ABA /* read_me.txt */; };
 		B05FD69C1D76C409003CDBCE /* TickentInFoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05FD69A1D76C409003CDBCE /* TickentInFoViewController.m */; };
 		B05FD69D1D76C409003CDBCE /* TickentInFoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05FD69B1D76C409003CDBCE /* TickentInFoViewController.xib */; };
 		B05FD6A01D76D060003CDBCE /* HeaderHeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B05FD69F1D76D060003CDBCE /* HeaderHeView.m */; };
@@ -431,8 +436,6 @@
 		B0D459021D77D48C0051DAD4 /* ThreeHesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0D459011D77D48C0051DAD4 /* ThreeHesView.xib */; };
 		B0D459051D7807E80051DAD4 /* FourWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D459041D7807E80051DAD4 /* FourWebView.m */; };
 		B0D459071D780E670051DAD4 /* FourWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0D459061D780E670051DAD4 /* FourWebView.xib */; };
-		B0D459111D7822E10051DAD4 /* FourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4590F1D7822E10051DAD4 /* FourViewController.m */; };
-		B0D459121D7822E10051DAD4 /* FourViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0D459101D7822E10051DAD4 /* FourViewController.xib */; };
 		B0D82F9C1D8E7EB7000231E2 /* NoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D82F9B1D8E7EB7000231E2 /* NoticeView.m */; };
 		B0D82F9E1D8E7EC6000231E2 /* NoticeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0D82F9D1D8E7EC6000231E2 /* NoticeView.xib */; };
 		B0D8BD181D865784005F87D2 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = B0D8BD171D865784005F87D2 /* share.png */; };
@@ -450,6 +453,12 @@
 		B0E0B8F61DB2132F00420287 /* 签到@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E0B8F51DB2132F00420287 /* 签到@2x.png */; };
 		B0E0B8F81DB2133600420287 /*  签到@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E0B8F71DB2133600420287 /*  签到@3x.png */; };
 		B0E3DBD51E1F90E100010572 /* UIView+AICategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E3DBD41E1F90E100010572 /* UIView+AICategory.m */; };
+		B0E9D4321E94990F00D25E7C /* 保养.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E9D42C1E94990F00D25E7C /* 保养.png */; };
+		B0E9D4331E94990F00D25E7C /* 保养@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E9D42D1E94990F00D25E7C /* 保养@2x.png */; };
+		B0E9D4341E94990F00D25E7C /* 保养@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E9D42E1E94990F00D25E7C /* 保养@3x.png */; };
+		B0E9D4351E94990F00D25E7C /* 商城.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E9D42F1E94990F00D25E7C /* 商城.png */; };
+		B0E9D4361E94990F00D25E7C /* 商城@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E9D4301E94990F00D25E7C /* 商城@2x.png */; };
+		B0E9D4371E94990F00D25E7C /* 商城@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0E9D4311E94990F00D25E7C /* 商城@3x.png */; };
 		B0EFE02B1E5FFF6F008BB23F /* CarXingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EFE02A1E5FFF6F008BB23F /* CarXingModel.m */; };
 		B0EFE02D1E601F92008BB23F /* 暂无数据.png in Resources */ = {isa = PBXBuildFile; fileRef = B0EFE02C1E601F92008BB23F /* 暂无数据.png */; };
 		B0F255031D88F90C0055F3C1 /* ChouJiangView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F255021D88F90C0055F3C1 /* ChouJiangView.m */; };
@@ -657,6 +666,23 @@
 		B0533E5B1D7AA5EE00D3383F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B0533E5D1D7AA62C00D3383F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B0533E5F1D7AA64400D3383F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		B05480361E8BA1D500A56ABA /* BaseWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseWebController.h; sourceTree = "<group>"; };
+		B05480371E8BA1D500A56ABA /* BaseWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseWebController.m; sourceTree = "<group>"; };
+		B05480381E8BA1D500A56ABA /* WKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewController.h; sourceTree = "<group>"; };
+		B05480391E8BA1D500A56ABA /* WKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewController.m; sourceTree = "<group>"; };
+		B054803C1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BackButtonHandler.h"; sourceTree = "<group>"; };
+		B054803D1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BackButtonHandler.m"; sourceTree = "<group>"; };
+		B05480411E8BA24900A56ABA /* NSError+YZNetworkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+YZNetworkError.h"; sourceTree = "<group>"; };
+		B05480421E8BA24900A56ABA /* NSMutableDictionary+NullObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+NullObject.h"; sourceTree = "<group>"; };
+		B05480431E8BA24900A56ABA /* libYouzan.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libYouzan.a; sourceTree = "<group>"; };
+		B05480451E8BA24900A56ABA /* YZUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZUserModel.h; sourceTree = "<group>"; };
+		B05480461E8BA24900A56ABA /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		B05480481E8BA24900A56ABA /* OpenGoodsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGoodsService.h; sourceTree = "<group>"; };
+		B05480491E8BA24900A56ABA /* OpenGoodsServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGoodsServiceProtocol.h; sourceTree = "<group>"; };
+		B054804A1E8BA24900A56ABA /* OpenTradeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTradeService.h; sourceTree = "<group>"; };
+		B054804B1E8BA24900A56ABA /* OpenTradeServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTradeServiceProtocol.h; sourceTree = "<group>"; };
+		B054804C1E8BA24900A56ABA /* YZSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDK.h; sourceTree = "<group>"; };
+		B054804D1E8BA24900A56ABA /* YZSDKDefination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDKDefination.h; sourceTree = "<group>"; };
 		B05FD6991D76C409003CDBCE /* TickentInFoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickentInFoViewController.h; sourceTree = "<group>"; };
 		B05FD69A1D76C409003CDBCE /* TickentInFoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickentInFoViewController.m; sourceTree = "<group>"; };
 		B05FD69B1D76C409003CDBCE /* TickentInFoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TickentInFoViewController.xib; sourceTree = "<group>"; };
@@ -1217,9 +1243,6 @@
 		B0D459041D7807E80051DAD4 /* FourWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourWebView.m; sourceTree = "<group>"; };
 		B0D459061D780E670051DAD4 /* FourWebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FourWebView.xib; sourceTree = "<group>"; };
 		B0D4590C1D78101B0051DAD4 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
-		B0D4590E1D7822E10051DAD4 /* FourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourViewController.h; sourceTree = "<group>"; };
-		B0D4590F1D7822E10051DAD4 /* FourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourViewController.m; sourceTree = "<group>"; };
-		B0D459101D7822E10051DAD4 /* FourViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FourViewController.xib; sourceTree = "<group>"; };
 		B0D82F9A1D8E7EB7000231E2 /* NoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeView.h; sourceTree = "<group>"; };
 		B0D82F9B1D8E7EB7000231E2 /* NoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeView.m; sourceTree = "<group>"; };
 		B0D82F9D1D8E7EC6000231E2 /* NoticeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeView.xib; sourceTree = "<group>"; };
@@ -1245,6 +1268,12 @@
 		B0E0B8F71DB2133600420287 /*  签到@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " 签到@3x.png"; sourceTree = "<group>"; };
 		B0E3DBD31E1F90E100010572 /* UIView+AICategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AICategory.h"; sourceTree = "<group>"; };
 		B0E3DBD41E1F90E100010572 /* UIView+AICategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AICategory.m"; sourceTree = "<group>"; };
+		B0E9D42C1E94990F00D25E7C /* 保养.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "保养.png"; sourceTree = "<group>"; };
+		B0E9D42D1E94990F00D25E7C /* 保养@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "保养@2x.png"; sourceTree = "<group>"; };
+		B0E9D42E1E94990F00D25E7C /* 保养@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "保养@3x.png"; sourceTree = "<group>"; };
+		B0E9D42F1E94990F00D25E7C /* 商城.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "商城.png"; sourceTree = "<group>"; };
+		B0E9D4301E94990F00D25E7C /* 商城@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "商城@2x.png"; sourceTree = "<group>"; };
+		B0E9D4311E94990F00D25E7C /* 商城@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "商城@3x.png"; sourceTree = "<group>"; };
 		B0EFE0291E5FFF6F008BB23F /* CarXingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarXingModel.h; sourceTree = "<group>"; };
 		B0EFE02A1E5FFF6F008BB23F /* CarXingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarXingModel.m; sourceTree = "<group>"; };
 		B0EFE02C1E601F92008BB23F /* 暂无数据.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "暂无数据.png"; sourceTree = "<group>"; };
@@ -1312,6 +1341,7 @@
 				B0A2548F1DDB10D300EEA050 /* libicucore.tbd in Frameworks */,
 				B0A250121DDB0E0500EEA050 /* libiconv.tbd in Frameworks */,
 				B0A70EBE1E01202100B00CC5 /* SMS_SDK.framework in Frameworks */,
+				B054804E1E8BA24900A56ABA /* libYouzan.a in Frameworks */,
 				B0A253F41DDB105B00EEA050 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				B01DDC551DD6FD5200918C3A /* CoreMotion.framework in Frameworks */,
 				B0533BE31D7A764B00D3383F /* MessageUI.framework in Frameworks */,
@@ -1612,6 +1642,48 @@
 				B04A72FB1DB22CC200B9DA6D /* 积分1@3x.png */,
 			);
 			path = "分数";
+			sourceTree = "<group>";
+		};
+		B054803F1E8BA24900A56ABA /* YouzaniOSSDK */ = {
+			isa = PBXGroup;
+			children = (
+				B05480401E8BA24900A56ABA /* Category */,
+				B05480431E8BA24900A56ABA /* libYouzan.a */,
+				B05480441E8BA24900A56ABA /* Model */,
+				B05480461E8BA24900A56ABA /* read_me.txt */,
+				B05480471E8BA24900A56ABA /* Service */,
+				B054804C1E8BA24900A56ABA /* YZSDK.h */,
+				B054804D1E8BA24900A56ABA /* YZSDKDefination.h */,
+			);
+			path = YouzaniOSSDK;
+			sourceTree = "<group>";
+		};
+		B05480401E8BA24900A56ABA /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B05480411E8BA24900A56ABA /* NSError+YZNetworkError.h */,
+				B05480421E8BA24900A56ABA /* NSMutableDictionary+NullObject.h */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		B05480441E8BA24900A56ABA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B05480451E8BA24900A56ABA /* YZUserModel.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B05480471E8BA24900A56ABA /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B05480481E8BA24900A56ABA /* OpenGoodsService.h */,
+				B05480491E8BA24900A56ABA /* OpenGoodsServiceProtocol.h */,
+				B054804A1E8BA24900A56ABA /* OpenTradeService.h */,
+				B054804B1E8BA24900A56ABA /* OpenTradeServiceProtocol.h */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		B05FD6A81D76DD4C003CDBCE /* newView */ = {
@@ -2440,6 +2512,12 @@
 		B0A691D91D701B950084ADC9 /* buttonImage */ = {
 			isa = PBXGroup;
 			children = (
+				B0E9D42C1E94990F00D25E7C /* 保养.png */,
+				B0E9D42D1E94990F00D25E7C /* 保养@2x.png */,
+				B0E9D42E1E94990F00D25E7C /* 保养@3x.png */,
+				B0E9D42F1E94990F00D25E7C /* 商城.png */,
+				B0E9D4301E94990F00D25E7C /* 商城@2x.png */,
+				B0E9D4311E94990F00D25E7C /* 商城@3x.png */,
 				B04A73111DB232D800B9DA6D /* 车辆.png */,
 				B04A73121DB232D800B9DA6D /* 车辆@2x.png */,
 				B04A73131DB232D800B9DA6D /* 车辆@3x.png */,
@@ -2588,6 +2666,8 @@
 		B0C329E41D6E85FF00EB589E /* BaseClass */ = {
 			isa = PBXGroup;
 			children = (
+				B054803C1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.h */,
+				B054803D1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.m */,
 				B0E3DBD31E1F90E100010572 /* UIView+AICategory.h */,
 				B0E3DBD41E1F90E100010572 /* UIView+AICategory.m */,
 				B0C329FC1D6E878100EB589E /* BaseViewController.h */,
@@ -2618,6 +2698,7 @@
 				B064CE5A1E713B7B00EB3D1B /* JGPopView.h */,
 				B064CE5B1E713B7B00EB3D1B /* JGPopView.m */,
 				B0487B401DFE908D0030646F /* photoBroser */,
+				B054803F1E8BA24900A56ABA /* YouzaniOSSDK */,
 				B0FF19C11E08CCB700A47E24 /* JWLaunchAd */,
 				B02872A11E1B472800FEFDEC /* runtime */,
 				B006F9261DD2B86900656C33 /* PPCounter */,
@@ -2804,9 +2885,6 @@
 				B05FD6991D76C409003CDBCE /* TickentInFoViewController.h */,
 				B05FD69A1D76C409003CDBCE /* TickentInFoViewController.m */,
 				B05FD69B1D76C409003CDBCE /* TickentInFoViewController.xib */,
-				B0D4590E1D7822E10051DAD4 /* FourViewController.h */,
-				B0D4590F1D7822E10051DAD4 /* FourViewController.m */,
-				B0D459101D7822E10051DAD4 /* FourViewController.xib */,
 				B00A3D6E1D7C1FD2005B19E5 /* CarViewController.h */,
 				B00A3D6F1D7C1FD2005B19E5 /* CarViewController.m */,
 				B00A3D701D7C1FD2005B19E5 /* CarViewController.xib */,
@@ -2908,6 +2986,10 @@
 		B0C329F71D6E86CB00EB589E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B05480361E8BA1D500A56ABA /* BaseWebController.h */,
+				B05480371E8BA1D500A56ABA /* BaseWebController.m */,
+				B05480381E8BA1D500A56ABA /* WKWebViewController.h */,
+				B05480391E8BA1D500A56ABA /* WKWebViewController.m */,
 				B0C32A131D6EC79B00EB589E /* LikesViewController.h */,
 				B0C32A141D6EC79B00EB589E /* LikesViewController.m */,
 			);
@@ -3193,6 +3275,7 @@
 				B0A1A64F1DE3E013007220DB /* login_bg6@2x.png in Resources */,
 				B04A72E81DB22B2400B9DA6D /* 电子券@2x.png in Resources */,
 				B0C376D31D712063008A74E1 /* new_feature_3@2x.png in Resources */,
+				B0E9D4371E94990F00D25E7C /* 商城@3x.png in Resources */,
 				B0C376E91D7169C4008A74E1 /* 咨询@2x.png in Resources */,
 				B05FD6A71D76D9BE003CDBCE /* TwoHeView.xib in Resources */,
 				B05FD6BC1D76DD4C003CDBCE /* hdt@3x.png in Resources */,
@@ -3219,6 +3302,7 @@
 				B0BBAFE01DC33EDB00A4CE60 /* coupon_gray.png in Resources */,
 				B005BDFE1DC6EA3400EAC91F /* 雷雨.png in Resources */,
 				B0A254041DDB105B00EEA050 /* UMSLoginViewController.xib in Resources */,
+				B0E9D4341E94990F00D25E7C /* 保养@3x.png in Resources */,
 				B04A73061DB2306F00B9DA6D /* 驾驶信息.png in Resources */,
 				B0A254501DDB105C00EEA050 /* UMComEditTopicsTableViewCell.xib in Resources */,
 				B00D2EB61DDC308E003D71E4 /* 兑换.png in Resources */,
@@ -3324,6 +3408,7 @@
 				B0C32A361D6EC90C00EB589E /* tabBar_myorder_selected@3x.png in Resources */,
 				B05FD6B91D76DD4C003CDBCE /* exclamationMark.png in Resources */,
 				B006F93D1DD3184400656C33 /* wawago0@2x.png in Resources */,
+				B0E9D4331E94990F00D25E7C /* 保养@2x.png in Resources */,
 				B0C32A2A1D6EC90C00EB589E /* tabBar_home_selected@3x.png in Resources */,
 				B0D82F9E1D8E7EC6000231E2 /* NoticeView.xib in Resources */,
 				B006F9391DD3153400656C33 /* wawago2@2x.png in Resources */,
@@ -3362,6 +3447,7 @@
 				B0C376D01D712063008A74E1 /* new_feature_2@2x.png in Resources */,
 				B04A73181DB233EA00B9DA6D /* 驾驶证.png in Resources */,
 				B04D1CEB1D7E5FB700A6D921 /* FuwuViewController.xib in Resources */,
+				B054804F1E8BA24900A56ABA /* read_me.txt in Resources */,
 				B0A8252F1D829A4D0035BA7B /* 分.png in Resources */,
 				B0C376D21D712063008A74E1 /* new_feature_3.png in Resources */,
 				B0A254071DDB105B00EEA050 /* UMSocialSDKResourcesNew.bundle in Resources */,
@@ -3388,6 +3474,7 @@
 				B0A254061DDB105B00EEA050 /* UMSShareListController.xib in Resources */,
 				B0297B3E1DB89B7B00F76D4E /* 定位@3x.png in Resources */,
 				B0C376D11D712063008A74E1 /* new_feature_2@3x.png in Resources */,
+				B0E9D4321E94990F00D25E7C /* 保养.png in Resources */,
 				B0F7BF921D794F0000675BDE /* 鸟的煽动动画00011.png in Resources */,
 				B04A73151DB232D800B9DA6D /* 车辆@2x.png in Resources */,
 				B0DABF241D9A050D00FACDC4 /* MesgInfoView.xib in Resources */,
@@ -3405,7 +3492,7 @@
 				B0A253FF1DDB105B00EEA050 /* UMSCommentDetailController.xib in Resources */,
 				B0F255051D88F9190055F3C1 /* ChouJiangView.xib in Resources */,
 				B0EFE02D1E601F92008BB23F /* 暂无数据.png in Resources */,
-				B0D459121D7822E10051DAD4 /* FourViewController.xib in Resources */,
+				B0E9D4351E94990F00D25E7C /* 商城.png in Resources */,
 				B0A2547F1DDB105C00EEA050 /* UMComProfileSettingController.xib in Resources */,
 				B0A253FC1DDB105B00EEA050 /* UMSocialLocalizable.strings in Resources */,
 				B041CA1A1DBB4750008C411B /* 民警@3x.png in Resources */,
@@ -3414,6 +3501,7 @@
 				B04A73081DB2307300B9DA6D /* 驾驶信息@2x.png in Resources */,
 				B0F7BF821D794EF100675BDE /* Volume@2x.png in Resources */,
 				B0C329D51D6E7EEC00EB589E /* Main.storyboard in Resources */,
+				B0E9D4361E94990F00D25E7C /* 商城@2x.png in Resources */,
 				B0C376E21D7132D2008A74E1 /* 空心圆.png in Resources */,
 				B005BDF81DC6EA3400EAC91F /* 小雪.png in Resources */,
 				B0408AA31DC9D11900CB3B7E /* 男.png in Resources */,
@@ -3507,6 +3595,7 @@
 				B0A2544B1DDB105C00EEA050 /* UMComFindViewController.m in Sources */,
 				B0A253FA1DDB105B00EEA050 /* UMComShareDelegateHandler.m in Sources */,
 				B0A254331DDB105C00EEA050 /* UMAssetsCollectionCell.m in Sources */,
+				B054803A1E8BA1D500A56ABA /* BaseWebController.m in Sources */,
 				B0A254571DDB105C00EEA050 /* UMComLocationTableViewCell.m in Sources */,
 				B0A2541C1DDB105C00EEA050 /* UMComViewController.m in Sources */,
 				B0A254751DDB105C00EEA050 /* UMComLikeTableViewController.m in Sources */,
@@ -3583,6 +3672,7 @@
 				B0A254281DDB105C00EEA050 /* UMComGridView.m in Sources */,
 				B0A2544F1DDB105C00EEA050 /* UMComEditTopicsTableViewCell.m in Sources */,
 				B0A254271DDB105C00EEA050 /* UMComEditTextView.m in Sources */,
+				B054803E1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.m in Sources */,
 				B0A254681DDB105C00EEA050 /* UMComCommentTableViewCell.m in Sources */,
 				B0A2547A1DDB105C00EEA050 /* UMComSysCommentCell.m in Sources */,
 				B0A2548E1DDB105C00EEA050 /* UMComTools.m in Sources */,
@@ -3605,6 +3695,7 @@
 				B0A8252C1D8297470035BA7B /* MyCarTableViewCell.m in Sources */,
 				B0E3DBD51E1F90E100010572 /* UIView+AICategory.m in Sources */,
 				B0C1B0161D9927EF003007C1 /* MessageEntity.m in Sources */,
+				B054803B1E8BA1D500A56ABA /* WKWebViewController.m in Sources */,
 				B0FF19C71E08CCB800A47E24 /* UIImageView+JWWebCache.m in Sources */,
 				B0C4E9CD1DB74F5D00A25B0C /* UIScrollView+JElasticPullToRefresh.m in Sources */,
 				B0A2548B1DDB105C00EEA050 /* UMComModel.xcdatamodeld in Sources */,
@@ -3661,7 +3752,6 @@
 				B0A2542D1DDB105C00EEA050 /* UMComHorizonMenuView.m in Sources */,
 				B006F9321DD2B86900656C33 /* UILabel+PPCounter.m in Sources */,
 				B0CFA1AA1D76757B00FE8AE3 /* WebViewController.m in Sources */,
-				B0D459111D7822E10051DAD4 /* FourViewController.m in Sources */,
 				B0A2545E1DDB105C00EEA050 /* UMComFeedStyle.m in Sources */,
 				B0DC6F431D79039300E274C4 /* MapModel.m in Sources */,
 				B0A2543B1DDB105C00EEA050 /* UMComRefreshView.m in Sources */,
@@ -3839,7 +3929,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The discovery of new valley power network technology service co., LTD (49P288ASS4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The discovery of new valley power network technology service co., LTD (49P288ASS4)";
 				DEVELOPMENT_TEAM = 49P288ASS4;
 				ENABLE_BITCODE = NO;
@@ -3869,11 +3959,33 @@
 					"$(PROJECT_DIR)/CJXBiOSdemo/umeng_community_ios_v2.6.2/Community_component/UMSocial_Sdk/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/CJXBiOSdemo/umeng_community_ios_v2.6.2/LibUMCommunity",
 					"$(PROJECT_DIR)/CJXBiOSdemo/umeng_community_ios_v2.6.2/Community_component/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/CJXBiOSdemo/Tools/YouzaniOSSDK",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AFNetworking\"",
+					"-framework",
+					"\"IMYWebView\"",
+					"-framework",
+					"\"JSBadgeView\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MJExtension\"",
+					"-framework",
+					"\"MJRefresh\"",
+					"-framework",
+					"\"SDCycleScrollView\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cjxb.demo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "651413a7-6296-4463-acf0-cfb4ef9c60d7";
 				PROVISIONING_PROFILE_SPECIFIER = mswjcjxb;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -3883,7 +3995,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The discovery of new valley power network technology service co., LTD (49P288ASS4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The discovery of new valley power network technology service co., LTD (49P288ASS4)";
 				DEVELOPMENT_TEAM = 49P288ASS4;
 				ENABLE_BITCODE = NO;
@@ -3913,11 +4025,33 @@
 					"$(PROJECT_DIR)/CJXBiOSdemo/umeng_community_ios_v2.6.2/Community_component/UMSocial_Sdk/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/CJXBiOSdemo/umeng_community_ios_v2.6.2/LibUMCommunity",
 					"$(PROJECT_DIR)/CJXBiOSdemo/umeng_community_ios_v2.6.2/Community_component/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/CJXBiOSdemo/Tools/YouzaniOSSDK",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"AFNetworking\"",
+					"-framework",
+					"\"IMYWebView\"",
+					"-framework",
+					"\"JSBadgeView\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MJExtension\"",
+					"-framework",
+					"\"MJRefresh\"",
+					"-framework",
+					"\"SDCycleScrollView\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cjxb.demo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "651413a7-6296-4463-acf0-cfb4ef9c60d7";
 				PROVISIONING_PROFILE_SPECIFIER = mswjcjxb;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -49,6 +49,8 @@ const CGFloat A_WEEK_SECONDES = 60*60*24*7;
 
 @implementation UMComPhotoAlbumViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitleViewWithTitle:UMComLocalizedString(@"um_com_album", @"相册")];
@@ -113,11 +115,13 @@ const CGFloat A_WEEK_SECONDES = 60*60*24*7;
     CGFloat itemWidth = (self.view.frame.size.width-8)/3;
     self.layout.itemSize = CGSizeMake(itemWidth, itemWidth);
     [self.albumCollectionView reloadData];
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.translucent  = YES;
 }
 
 - (void)fecthCoreDataImageUrlList:(AlbumLoadCompletionHandler)handler

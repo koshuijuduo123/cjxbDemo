@@ -93,6 +93,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    
+    self.navigationController.navigationBar.translucent  = YES;
     if (self.isDown==YES) {
         //获取网页中的积分值
         NSString *pointStr = [self.webView1 stringByEvaluatingJavaScriptFromString:@"document.getElementById('totalpointsnum').innerHTML"];
@@ -112,10 +114,19 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.translucent = NO;
+}
+
+
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //调整取消毛玻璃时，视图下移问题
+    self.extendedLayoutIncludesOpaqueBars = YES;
+    
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.title = @"电子劵详情";
@@ -194,7 +205,7 @@
                     [cookieStorage setCookie: cookie];
                 }
                 [NetworkManger requestPOSTWithURLStr:URL_TIckInfo parmDic:@{@"exec":@"lingcoupon",@"couponid":self.tickid} finish:^(id responseObject) {
-                    NSLog(@"aaaaaaaa%@",responseObject);
+                    
                     if ([responseObject[@"IsError"] integerValue]==0) {
                         
                         UIAlertController *alert = [UIAlertController alertControllerWithTitle:responseObject[@"Message"] message:@"是否前往我的电子券查看" preferredStyle:(UIAlertControllerStyleAlert)];

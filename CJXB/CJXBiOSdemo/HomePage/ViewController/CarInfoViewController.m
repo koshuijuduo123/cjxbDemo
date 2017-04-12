@@ -36,8 +36,22 @@
     return _dataSource;
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.translucent = NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.translucent  = YES;
+}
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.extendedLayoutIncludesOpaqueBars =YES;
     self.tableView.estimatedRowHeight = 100;
      self.tableView.rowHeight = UITableViewAutomaticDimension;
     

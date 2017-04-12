@@ -345,6 +345,7 @@
         }
     }
     UMComUserCenterViewController *userCenterVc = [[UMComUserCenterViewController alloc]initWithUser:user];
+    userCenterVc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:userCenterVc animated:YES];
 }
 
@@ -367,6 +368,7 @@
     }
     UMComFeedDetailViewController * feedDetailViewController = [[UMComFeedDetailViewController alloc] initWithFeed:feed showFeedDetailShowType:UMComShowFromClickFeedText];
     feedDetailViewController.feedOperationFinishDelegate = self;
+    feedDetailViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:feedDetailViewController animated:YES];
 }
 
@@ -377,6 +379,7 @@
     }
     UMComFeedDetailViewController * feedDetailViewController = [[UMComFeedDetailViewController alloc] initWithFeed:feed showFeedDetailShowType:UMComShowFromClickFeedText];
     feedDetailViewController.feedOperationFinishDelegate = self;
+    feedDetailViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:feedDetailViewController animated:YES];
 }
 
@@ -384,6 +387,9 @@
 - (void)customObj:(id)obj clickOnURL:(NSString *)url
 {
     UMComWebViewController * webViewController = [[UMComWebViewController alloc] initWithUrl:url];
+    //使用系统的返回按钮
+    webViewController.isPushWebView = YES;
+    webViewController.hidesBottomBarWhenPushed  =YES;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 

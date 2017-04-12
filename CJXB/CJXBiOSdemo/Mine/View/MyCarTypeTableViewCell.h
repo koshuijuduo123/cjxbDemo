@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface MyCarTypeTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *imgView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLab;
 
-@property (weak, nonatomic) IBOutlet UIImageView *carPinPaiImg;
-@property (weak, nonatomic) IBOutlet UILabel *carPinPaiLab;
-@property (weak, nonatomic) IBOutlet UILabel *carXiLab;
-@property (weak, nonatomic) IBOutlet UILabel *carXingLab;
+@property (weak, nonatomic) IBOutlet UILabel *contentLab;
 
 @end

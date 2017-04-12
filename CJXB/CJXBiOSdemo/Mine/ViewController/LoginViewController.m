@@ -244,7 +244,7 @@
             userAccounts.gender = [NSNumber numberWithInteger:[model.sex integerValue]];
             
             userAccounts.icon_url = model.headimgurl;
-                
+            //userAccounts.score = [NSNumber numberWithInteger:[model.points integerValue]];
            
             //钱
             //userAccount.custom = [NSString stringWithFormat:@"%@",model.money ];
@@ -284,7 +284,9 @@
                         
                         NSNotification *notification3 = [NSNotification notificationWithName:@"Count" object:nil userInfo:nil];
                         [[NSNotificationCenter defaultCenter] postNotification:notification3];
-                        
+                        //传递给有赞
+                        [self callBlockWithResult:YES];
+
                         [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
                         
                         
@@ -367,7 +369,7 @@ zone:@"86"
  
                                           
                                           UMComUserAccount *userAccounts = [[UMComUserAccount alloc] init];
-                                          
+                                          //userAccounts.score = [NSNumber numberWithInteger:[model.points integerValue]];
                                           
                                           userAccounts.usid = [NSString stringWithFormat:@"%@",model.username];
                                           userAccounts.name = model.nickname;
@@ -483,8 +485,8 @@ zone:@"86"
                                                       
                                                       NSNotification *notification3 = [NSNotification notificationWithName:@"Count" object:nil userInfo:nil];
                                                       [[NSNotificationCenter defaultCenter] postNotification:notification3];
-                                                      
-                                                      
+                                                      //传递给有赞
+                                                      [self callBlockWithResult:YES];
                                                       
                                                       [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
                                                       
@@ -521,9 +523,24 @@ zone:@"86"
 //返回
 - (IBAction)fanButtonAction:(UIButton *)sender {
    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.isShoping==YES) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认不登录" delegate:self cancelButtonTitle:@"不登录" otherButtonTitles:@"登录",nil];
+        [alertView show];
+        
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     
 }
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self callBlockWithResult:buttonIndex == 1?YES:NO];
+    }];
+}
+
 
 #pragma mark - UMComLogin代理
 - (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(void (^)(id responseObject, NSError *))completion{
@@ -569,6 +586,25 @@ zone:@"86"
 
 
 
+- (void)callBlockWithResult:(BOOL)success {
+    if (success) {
+        LoginDataModel *model = [UserDefault getUserInfo];
+        if (self.loginBlock) {
+            if (!model) {
+                self.loginBlock(nil,NO);
+                [LoginViewController showAlertMessageWithMessage:@"登录信息错误，请重新登录" duration:2.0];
+            }else{
+                
+                self.loginBlock(model,YES);
+            }
+            
+        }
+    } else {
+        if (self.loginBlock) {
+            self.loginBlock(nil,NO);
+        }
+    }
+}
 
 
 

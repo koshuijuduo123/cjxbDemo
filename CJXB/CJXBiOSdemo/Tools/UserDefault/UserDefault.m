@@ -57,13 +57,13 @@ static MyCarModel *myModel = nil;
     [userDefaults synchronize];
 }
 
-//保存车辆信息
-+(void)saveCarInfo:(MyCarModel *)model{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
-    [userDefaults setObject:data forKey:@"myCar_Data"];
-    [userDefaults synchronize];
-}
+////保存车辆信息
+//+(void)saveCarInfo:(MyCarModel *)model{
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+//    [userDefaults setObject:data forKey:@"myCar_Data"];
+//    [userDefaults synchronize];
+//}
 
 
 
@@ -85,18 +85,18 @@ static MyCarModel *myModel = nil;
 }
 
 //获取车辆信息
-+(MyCarModel *)getMyCarInfo{
-    if (myModel==nil) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSData *data = [userDefaults objectForKey:@"myCar_Data"];
-        if (data) {
-            myModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        }else{
-            return nil;
-        }
-    }
-    return myModel;
-}
+//+(MyCarModel *)getMyCarInfo{
+//    if (myModel==nil) {
+//        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//        NSData *data = [userDefaults objectForKey:@"myCar_Data"];
+//        if (data) {
+//            myModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//        }else{
+//            return nil;
+//        }
+//    }
+//    return myModel;
+//}
 
 
 //判断用户是否登录
@@ -121,11 +121,11 @@ static MyCarModel *myModel = nil;
 }
 
 //清除车辆信息
-+(void)clearMyCarData{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"myCar_Data"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    myModel = nil;
-}
+//+(void)clearMyCarData{
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"myCar_Data"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    myModel = nil;
+//}
 
 
 //存取uid
@@ -138,6 +138,17 @@ static MyCarModel *myModel = nil;
      return [[NSUserDefaults standardUserDefaults]valueForKey:@"date_Dian"];
 }
 
++ (YZUserModel *)modelWithUser:(LoginDataModel *)model {
+    YZUserModel *userModel = [YZUserModel new];
+    
+    userModel.userID = [NSString stringWithFormat:@"%@",model.username];
+    userModel.userName =[NSString stringWithFormat:@"%@",model.username];
+    userModel.nickName = [NSString stringWithFormat:@"%@",model.nickname];
+    userModel.gender = [NSString stringWithFormat:@"%@",model.sex];
+    userModel.avatar = [NSString stringWithFormat:@"%@",model.headimgurl];
+    userModel.telePhone = [NSString stringWithFormat:@"%@",model.mobile];
+    return userModel;
+}
 
 
 @end

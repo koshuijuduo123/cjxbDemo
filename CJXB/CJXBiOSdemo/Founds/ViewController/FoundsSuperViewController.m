@@ -245,7 +245,7 @@
     NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsTableViewCell" forIndexPath:indexPath];
     NSDictionary *dic = self.dataSourceArray[indexPath.row];
     [cell.titleImageView sd_setImageWithURL:dic[@"img"] placeholderImage:[UIImage imageNamed:@"zwt"]];
-    if ([dic[@"zhuanfa"] integerValue]<50) {
+    if ([dic[@"zhuanfa"] integerValue]<40) {
         cell.zhuanfaImg.hidden=YES;
     }else{
         cell.zhuanfaImg.hidden = NO;
@@ -302,7 +302,7 @@
     LoginDataModel *model = [UserDefault getUserInfo];
     
     NSDictionary *dict =self.dataSourceArray[indexPath.row];
-    //NSLog(@"%@",dict[@"id"]);
+    
     NSString *string = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",dict[@"id"],model.myid];
     
     
@@ -345,10 +345,6 @@
     
     
     [webVC.webView loadRequest:request];
-    
-    
-    
-    
     
     webVC.titleLab = dict[@"title"];
     UIImageView *imgView = [[UIImageView alloc]init];

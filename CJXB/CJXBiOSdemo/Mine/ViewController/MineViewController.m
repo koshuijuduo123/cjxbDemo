@@ -9,7 +9,7 @@
 #import "MineViewController.h"
 #import "MinTouView.h"
 #import "LoginViewController.h"
-
+#import "YZSDK.h"
 #import "MessageEntity.h"
 #import "FuwuViewController.h"
 #import "AppDelegate.h"
@@ -33,7 +33,7 @@
 #import "UMComImageUrl.h"
 #import "IMYWebView.h"
 #import "UMComDiscoverViewController.h"
-#import "CarsPinPaiViewController.h"
+#import "MyCarTypeTableViewCell.h"
 #import "MyNewsViewController.h"
 @interface MineViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -55,7 +55,7 @@
 @property(nonatomic,strong)NSString *rcount;//我的电子券数量
 @property(nonatomic,strong)UILabel *rcountLab; //我的电子券个数显示lab
 @end
-static NSString *const idemter = @"cell";
+//static NSString *const idemter = @"MyCarTypeTableViewCell";
 @implementation MineViewController
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -87,7 +87,8 @@ static NSString *const idemter = @"cell";
     self.tableView.tableFooterView = footView;
     //设置cell分割线颜色
     [_tableView setSeparatorColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
-    
+    //注册自定义cell
+    [self.tableView registerNib:[UINib nibWithNibName:@"MyCarTypeTableViewCell" bundle:nil] forCellReuseIdentifier:@"MyCarTypeTableViewCell"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         [self hsUpdateApp];
@@ -127,6 +128,9 @@ static NSString *const idemter = @"cell";
             
             NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
             
+            //刷新指定
+            NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
+            [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
             
             if (cookies.count) {
                 [self myDianZiQuanCount];
@@ -390,12 +394,7 @@ static NSString *const idemter = @"cell";
     };
     
     
-    
-    
-    
-    //注册cell
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:idemter];
-    self.arr1 = @[@"保养爱车",@"我的驾驶证",@"收藏文章"];
+    self.arr1 = @[@"我的爱车",@"我的驾驶证",@"收藏文章"];
     self.arr2 = @[@"个人信息",@"周边商户",@"帮友之家"];
     
     self.imageArray1 = @[@"我的爱车",@"驾驶证",@"我的收藏"];
@@ -428,14 +427,8 @@ static NSString *const idemter = @"cell";
     
     self.notice = [[NoticeView alloc]initWithFrame:CGRectMake(0, 0, size_width, 150)];
     
-    
-    
-    
     //获取本地存储的user
    //UMComUser *user =[UMComUser objectWithObjectId:[UserDefault getDianZiJuanDate]];
-    
-    
-    
     
     [_notice.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",userInfo[@"headimgurl"]]] placeholderImage:[UIImage imageNamed:@"icon_user_avatar_anonymous"]];
     
@@ -524,7 +517,7 @@ static NSString *const idemter = @"cell";
         //退出操作
         //清除本地登录信息
         [UserDefault clearUserData];
-        
+        [YZSDK logoutYouzanWithWKWebView];
         NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
         [defult removeObjectForKey:@"kUserDefaultsCookie"];
         [defult synchronize];
@@ -628,47 +621,61 @@ static NSString *const idemter = @"cell";
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:idemter forIndexPath:indexPath];
+    MyCarTypeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyCarTypeTableViewCell" forIndexPath:indexPath];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (indexPath.section==0) {
-        cell.textLabel.text = @"我的电子劵";
-        cell.imageView.image = [UIImage imageNamed:@"电子券"];
+        cell.titleLab.text = @"我的电子劵";
+        cell.imgView.image = [UIImage imageNamed:@"电子券"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.contentLab.text= [NSString stringWithFormat:@"共有%@张",self.rcount];
         
-        _rcountLab.font = [UIFont boldSystemFontOfSize:14];
-        [_rcountLab sizeToFit];
-        _rcountLab.backgroundColor = [UIColor clearColor];
-        
-        _rcountLab.backgroundColor = [UIColor clearColor];
-        _rcountLab.textColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0];
-        _rcountLab.text = [NSString stringWithFormat:@"共有%@张",self.rcount];
-        _rcountLab.frame =CGRectMake(size_width -_rcountLab.frame.size.width - 30, 15, _rcountLab.frame.size.width, _rcountLab.frame.size.height);
-        [cell.contentView addSubview:_rcountLab];
     }
     
     if (indexPath.section==1) {
          NSString *name = self.arr1[indexPath.row];
         NSString *imageName = self.imageArray1[indexPath.row];
-        cell.textLabel.text = name;
-        cell.imageView.image = [UIImage imageNamed:imageName];
+        cell.titleLab.text = name;
+        cell.imgView.image = [UIImage imageNamed:imageName];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        AppDelegate *app =  CJXBAPP;
         
         if (indexPath.row==0) {
-            [cell.contentView addSubview:[self creatCellInLabel:@"选择车型"]];
+            if ([app searchMovieEntiity].count) {
+                NSArray *arr = [app searchMovieEntiity];
+               cell.contentLab.text = [NSString stringWithFormat:@"共%ld辆车",arr.count];
+            }else{
+                cell.contentLab.text = @"上传车辆";
+            }
+            
+            
         }
         if (indexPath.row==1) {
-            AppDelegate *app = CJXBAPP;
+            
             if ([app searchMessageEntity].count) {
                 NSArray *arr = [app searchMessageEntity];
                 MessageEntity *entity = [arr firstObject];
                 NSString *carUserName =[NSString stringWithFormat:@"%@的驾驶证",entity.xm];
-                [cell.contentView addSubview:[self creatCellInLabel:carUserName]];
-                }
+                
+                cell.contentLab.text = carUserName;
+            }else{
+               
+                cell.contentLab.text = @"上传驾驶证";
+            }
         }
         if (indexPath.row==2) {
-            [cell.contentView addSubview:[self creatCellInLabel:@"小帮发现，实时收藏"]];
+            
+            if ([app searchMyNewsforEntity].count) {
+                NSArray *arr = [app searchMyNewsforEntity];
+            cell.contentLab.text = [NSString stringWithFormat:@"收录%ld篇文章",arr.count];
+            }else{
+                cell.contentLab.text = @"小帮发现，实时收藏";
+                
+            }
+            
+            
+            
         }
         
         
@@ -677,19 +684,22 @@ static NSString *const idemter = @"cell";
     if (indexPath.section==2) {
         NSString *name = self.arr2[indexPath.row];
         NSString *imageName = self.imageArray2[indexPath.row];
-        cell.textLabel.text = name;
-        cell.imageView.image = [UIImage imageNamed:imageName];
+        cell.titleLab.text = name;
+        cell.imgView.image = [UIImage imageNamed:imageName];
         
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row==0) {
-            [cell.contentView addSubview:[self creatCellInLabel:@"更换头像姓名等"]];
+            
+            cell.contentLab.text = @"更换头像姓名等";
         }
         if (indexPath.row==1) {
-            [cell.contentView addSubview:[self creatCellInLabel:@"周边汽车服务一览"]];
+            
+            cell.contentLab.text = @"周边汽车服务一览";
         }
         if (indexPath.row==2) {
-            [cell.contentView addSubview:[self creatCellInLabel:@"车友动态随时掌握"]];
+           
+            cell.contentLab.text = @"车友动态随时掌握";
         }
         
         /*
@@ -722,8 +732,8 @@ static NSString *const idemter = @"cell";
         
     }
     
-    cell.textLabel.font = [UIFont systemFontOfSize:14.0];
-    
+    cell.titleLab.font = [UIFont systemFontOfSize:14.0];
+    cell.contentLab.font = [UIFont systemFontOfSize:14.0];
     
     return cell;
 }
@@ -750,12 +760,12 @@ static NSString *const idemter = @"cell";
     if (indexPath.section==1) {
         if (indexPath.row==0) {
             
-            CarsPinPaiViewController *fuwuVC = [[CarsPinPaiViewController alloc]init];
-            fuwuVC.hidesBottomBarWhenPushed = YES;
+           // CarsPinPaiViewController *fuwuVC = [[CarsPinPaiViewController alloc]init];
+           // fuwuVC.hidesBottomBarWhenPushed = YES;
             
-            [self.navigationController pushViewController:fuwuVC animated:YES];
+            //[self.navigationController pushViewController:fuwuVC animated:YES];
             
-            /*
+            
             if ([app searchMovieEntiity].count>0) {
                 MyCarViewController *myVC = [[MyCarViewController alloc]init];
                 myVC.hidesBottomBarWhenPushed = YES;
@@ -767,7 +777,7 @@ static NSString *const idemter = @"cell";
                 
                 
             }
-            */
+            
             
             
         }
@@ -887,7 +897,7 @@ static NSString *const idemter = @"cell";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (size_width<=320) {
-        return 40;
+        return 45;
     }else if (size_width==375){
         return 50;
     }else{
@@ -924,6 +934,7 @@ static NSString *const idemter = @"cell";
         return;
     }
     NSDictionary *dic = array[0];
+    
     //商店版本号
     NSString *appStoreVersion = dic[@"version"];
     
@@ -945,7 +956,7 @@ static NSString *const idemter = @"cell";
     {
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertController *alercConteoller = [UIAlertController alertControllerWithTitle:@"版本有更新" message:[NSString stringWithFormat:@"检测到新版本(%@),是否更新?",dic[@"version"]] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alercConteoller = [UIAlertController alertControllerWithTitle:@"版本有更新" message:[NSString stringWithFormat:@"新版本(%@),是否更新?\n新版本更新内容:\n%@",dic[@"version"],dic[@"releaseNotes"]] preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 //此处加入应用在app store的地址，方便用户去更新，一种实现方式如下
                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/id%@?ls=1&mt=8", storeAppID]];
@@ -1013,7 +1024,7 @@ static NSString *const idemter = @"cell";
     
 }
 */
-
+/*
 -(UILabel *)creatCellInLabel:(NSString *)string{
     UILabel *label = [[UILabel alloc] init]; //定义一个在cell最右边显示的label
     label.text = string;
@@ -1025,7 +1036,7 @@ static NSString *const idemter = @"cell";
     label.textColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0];
     return label;
 }
-
+*/
 
 
 - (void)dealloc {

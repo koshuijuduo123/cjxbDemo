@@ -117,7 +117,7 @@
                 <outlet property="titleLab" destination="5xD-pk-4cK" id="tC5-8o-WPd"/>
                 <outlet property="zhuanfaImg" destination="l4i-kL-5GB" id="2e9-Ye-Zoy"/>
             </connections>
-            <point key="canvasLocation" x="487" y="206.5"/>
+            <point key="canvasLocation" x="354" y="161.5"/>
         </tableViewCell>
     </objects>
     <resources>

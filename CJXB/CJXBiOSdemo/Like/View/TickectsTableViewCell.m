@@ -11,7 +11,8 @@
 @implementation TickectsTableViewCell
 
 - (void)awakeFromNib {
-    
+   
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

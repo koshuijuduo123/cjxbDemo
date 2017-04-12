@@ -58,10 +58,20 @@
 @property(nonatomic,assign)BOOL isRuturnView;//是否处于回收视图状态  YES表示是
 
 
-
 @end
 
 @implementation LikesViewController
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.translucent  = YES;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.translucent = NO;
+}
+
 
 -(NSMutableArray *)refreshImages{
     if (!_refreshImages) {
@@ -117,17 +127,6 @@
     }
     return _headerView;
 }
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.translucent = YES;
-    
-    
-}
-
-
-
-
 
 
 //创建弹出的视图
@@ -377,7 +376,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
     //self.edgesForExtendedLayout = UIRectEdgeNone;
     //self.tableView.frame = CGRectMake(0, -64, size_width, size_height-64);
     //将绘制的图片设置成导航栏的背景图片
@@ -411,7 +410,7 @@
     
     self.headersView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height*2/7)];
     
-    //headerView.backgroundColor = [UIColor orangeColor];
+    _headerView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
     
     self.tableView.tableHeaderView = _headersView;
     
@@ -776,7 +775,8 @@
             cell.bigBackView.backgroundColor = [UIColor colorWithRed:223/255.0 green:223/255.0 blue:223/255.0 alpha:1.0];
         }else{
                 
-                cell.Zimg.hidden = YES;
+            cell.Zimg.hidden = YES;
+             cell.bigBackView.backgroundColor = [UIColor colorWithRed:229/255.0 green:200/255.0 blue:144/255.0 alpha:1.0];
             }
         //取消点击效果
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

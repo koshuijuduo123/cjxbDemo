@@ -22,6 +22,8 @@
 #import "MyNewsModel.h"
 #import "MyLoveNewsEntity.h"
 #import "MyCarModel.h"
+
+#import "MJRefresh.h"
 @interface WebViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UMSocialUIDelegate,IMYWebViewDelegate,HZPhotoBrowserDelegate,selectIndexPathDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sheetBtn;
 @property (weak, nonatomic) IBOutlet UIButton *jfBtn;
@@ -218,6 +220,15 @@
         
         self.backView.hidden = YES;
     }
+    
+    //网页下拉刷新
+    _webView.scrollView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 进入刷新状态后会自动调用这个block
+        [self.webView reload];
+        [_webView.scrollView.header endRefreshing];
+    }];
+
+    
     
     
     //初始化hud
@@ -577,12 +588,9 @@
 -(void)webViewFail{
     UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height)];
     view1.backgroundColor = [UIColor whiteColor];
-    UIImageView *imgVc = [[UIImageView alloc]initWithFrame:CGRectMake((size_width-300)/2, 0, 300, size_height)];
+    UIImageView *imgVc = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height)];
     imgVc.image = [UIImage imageNamed:@"请求错误"];
-    
     [view1 addSubview:imgVc];
-    
-    
     [self.view addSubview:view1];
 }
 
@@ -671,12 +679,12 @@
         [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/article/articlehandler.ashx" parmDic:@{@"exec":@"addpl",@"articleid":self.articleId,@"con":self.taskTextFirld.text} finish:^(id responseObject) {
             self.taskTextFirld.text = nil;
             [WebViewController showAlertMessageWithMessage:responseObject[@"Message"] duration:1.0];
+            //刷新界面
+            [self.webView reload];
             
         } enError:^(NSError *error) {
             
         }];
-        //刷新界面
-        [self.webView reload];
         }
 }
 

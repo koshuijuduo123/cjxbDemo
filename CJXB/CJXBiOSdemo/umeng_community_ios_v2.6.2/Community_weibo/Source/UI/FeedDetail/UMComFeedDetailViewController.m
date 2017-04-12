@@ -136,6 +136,7 @@ typedef void(^LoadFinishBlock)(NSError *error);
     
     self.navigationController.navigationBar.translucent = NO;
     
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated

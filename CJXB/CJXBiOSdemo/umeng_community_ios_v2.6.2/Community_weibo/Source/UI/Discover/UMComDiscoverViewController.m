@@ -50,7 +50,7 @@
     [super viewDidLoad];
     
     [self setForumUIBackButton];
-    [self setForumUITitle:UMComLocalizedString(@"um_com_find", @"我的")];
+    [self setForumUITitle:UMComLocalizedString(@"um_com_find", @"我的车友圈")];
     
     self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
@@ -451,6 +451,7 @@
     realTimeFeedsViewController.isLoadLoacalData = NO;
     realTimeFeedsViewController.isAutoStartLoadData = YES;
     realTimeFeedsViewController.fetchRequest = [[UMComAllNewFeedsRequest alloc]initWithCount:BatchSize];
+    
     realTimeFeedsViewController.title = UMComLocalizedString(@"um_com_newcontent", @"实时内容");
     [self.navigationController  pushViewController:realTimeFeedsViewController animated:YES];
 }

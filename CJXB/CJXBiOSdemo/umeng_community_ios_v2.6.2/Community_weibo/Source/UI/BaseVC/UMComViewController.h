@@ -11,5 +11,7 @@
 @interface UMComViewController : UIViewController
 
 @property (nonatomic, assign) BOOL doNotShowBackButton;
+@property(nonatomic,assign)BOOL isPushWebView;//是否push web页面
 
+@property (nonatomic, strong) UIWebView *webView;
 @end

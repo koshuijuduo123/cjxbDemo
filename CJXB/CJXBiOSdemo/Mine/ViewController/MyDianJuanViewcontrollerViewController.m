@@ -316,8 +316,7 @@
         
         cell.tickNameLab.text =dict[@"name"];
 
-        cell.bigBackView.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:249/255.0 alpha:1.0];
-        
+        cell.bigBackView.backgroundColor = [UIColor colorWithRed:229/255.0 green:200/255.0 blue:144/255.0 alpha:1.0];        
         [cell.tickImageView sd_setImageWithURL:dict[@"img"] placeholderImage:[UIImage imageNamed:@"zwt"]];
         
         cell.jfCountLab.text = @"点击使用";

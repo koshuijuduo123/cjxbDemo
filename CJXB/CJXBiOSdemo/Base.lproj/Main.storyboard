@@ -133,7 +133,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Aym-6p-cXb">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Rxv-RP-S4J" id="hCJ-ZM-Oeg"/>
@@ -162,7 +162,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6he-dJ-boT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2133" y="1605"/>
+            <point key="canvasLocation" x="3227" y="1647"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="Hks-iS-TYA">
+            <objects>
+                <viewController id="o7E-hB-Y7j" customClass="WKWebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PV0-2m-6by"/>
+                        <viewControllerLayoutGuide type="bottom" id="APV-a5-YfF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X3G-Cq-47M">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="CEQ-EH-t17"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RiI-33-ypE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2176" y="1630"/>
         </scene>
         <!--首页-->
         <scene sceneID="bcv-XI-hjs">
@@ -228,11 +247,11 @@
             </objects>
             <point key="canvasLocation" x="1417" y="929"/>
         </scene>
-        <!--优惠-->
+        <!--商城-->
         <scene sceneID="sDz-gz-c5E">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lM0-Iv-90q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="优惠" image="tabBar_housekeeper_normal.png" selectedImage="tabBar_housekeeper_selected.png" id="mo4-PR-i1u"/>
+                    <tabBarItem key="tabBarItem" title="商城" image="tabBar_housekeeper_normal.png" selectedImage="tabBar_housekeeper_selected.png" id="mo4-PR-i1u"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cMs-te-zDx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -240,7 +259,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Rxv-RP-S4J" kind="relationship" relationship="rootViewController" id="eRM-7h-lmK"/>
+                        <segue destination="o7E-hB-Y7j" kind="relationship" relationship="rootViewController" id="CRE-dA-Vcc"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Emt-VL-uKf" userLabel="First Responder" sceneMemberID="firstResponder"/>

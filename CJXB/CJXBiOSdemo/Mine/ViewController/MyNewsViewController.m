@@ -68,6 +68,7 @@
     [cell.titleImageView sd_setImageWithURL:[NSURL URLWithString:entity.imgUrl] placeholderImage:[UIImage imageNamed:@"zwt"]];
     cell.titleLab.text = entity.title;
     cell.timeLab.text = entity.timeAdd;
+    cell.zhuanfaImg.hidden = YES;
     cell.baoCountLab.hidden = YES;
     cell.chatCountLab.hidden = YES;
     cell.countImg.hidden = YES;

@@ -29,11 +29,6 @@
         self.unPushLab.clipsToBounds = YES;
         
         [self WeiDuMessageWithView:_unPushLab];
-        
-        
-        
-        
-        
     }
     
     return self;

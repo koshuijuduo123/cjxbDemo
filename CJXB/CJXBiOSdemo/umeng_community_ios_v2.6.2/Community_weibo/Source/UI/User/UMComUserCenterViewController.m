@@ -25,6 +25,8 @@
 #import "UMComScrollViewDelegate.h"
 #import "UMComMedal+CoreDataProperties.h"
 #import "UMComFeedsTableViewCell.h"
+#import "UserDefault.h"
+#import "LoginDataModel.h"
 //#import "UMComUserTableViewCell.h"
 
 #define SuperAdmin 3 //超级管理员
@@ -310,8 +312,11 @@
 {
     __weak typeof(self) weakSelf = self;
     [self.userProfileRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        LoginDataModel *model = [UserDefault getUserInfo];
         if ([data isKindOfClass:[NSArray class]] && data.count > 0) {
             UMComUser *user = data.firstObject;
+            user.point = [NSNumber numberWithInteger:[model.points integerValue]];
+            
             weakSelf.user = user;
             [weakSelf.detailView reloadSubViewsWithUser:user];
         }else if(error){

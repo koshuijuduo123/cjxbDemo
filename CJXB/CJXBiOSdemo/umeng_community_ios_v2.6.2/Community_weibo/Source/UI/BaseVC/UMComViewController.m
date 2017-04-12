@@ -31,7 +31,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     if (self.doNotShowBackButton == NO) {
-        [self setForumUIBackButton];  
+        [self setllForumUIBackButton];
     }
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
@@ -60,6 +60,34 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kUMComCommunityInvalidErrorNotification object:nil];
     [[[UIAlertView alloc]initWithTitle:nil message:UMComLocalizedString(ERR_MSG_INVALID_COMMUNITY,@"社区已经被强制关闭，暂时无法访问请见谅。") delegate:nil cancelButtonTitle:UMComLocalizedString(@"um_com_ok",@"好") otherButtonTitles:nil, nil] show];
 }
+
+
+- (void)setllForumUIBackButton
+{
+    [self setBackButtonWithImageName:@"um_forum_back_gray" buttonSize:CGSizeMake(10, 19) action:@selector(goBack)];
+}
+
+- (void)goBack
+{
+    if (self.navigationController.viewControllers.count >1) {
+        if (self.isPushWebView==YES) {
+            if ([self.webView canGoBack]) {
+                [self.webView goBack];
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }else{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+    }else{
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -36,9 +36,13 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-   
+   self.navigationController.navigationBar.translucent = NO;
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.translucent  = YES;
+}
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     NSIndexSet *index = [[NSIndexSet alloc]initWithIndex:0];
@@ -47,8 +51,12 @@
 }
 
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.extendedLayoutIncludesOpaqueBars = YES;
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"MyCarTableViewCell" bundle:nil] forCellReuseIdentifier:@"MyCarTableViewCell"];
     _tableView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];

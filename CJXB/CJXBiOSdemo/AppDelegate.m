@@ -33,8 +33,12 @@
 #import "MJExtension.h"
 #import "IMYWebView.h"
 #import <SMS_SDK/SMSSDK.h>
-
+#import "YZSDK.h"
 #import "UMCommunity.h"
+
+static NSString *userAgent = @"1bd1cac4ba73df23c81490580437823";
+static NSString *appID = @"10dc300fbf4f70e851";
+static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
 //#import <AVFoundation/AVFoundation.h>
 @interface AppDelegate ()<UMSocialUIDelegate>
 
@@ -44,7 +48,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    //设置AppID和AppSecret
+    [YZSDK setOpenInterfaceAppID:appID appSecret:appSecret];
+    //设置UA
+    [YZSDK userAgentInit:userAgent version:@""];
     
     [UMCommunity setAppKey:UMAppKey withAppSecret:UMAppSecret];
     

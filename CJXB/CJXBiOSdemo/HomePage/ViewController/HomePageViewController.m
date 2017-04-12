@@ -36,9 +36,9 @@
 #import "UMComSession.h"
 #import "UMComNoticeSystemViewController.h"
 
-
+#import "WKWebViewController.h"
 #import "UMComDiscoverViewController.h"
-
+#import "CarsPinPaiViewController.h"
 #import "CarViewController.h"
 #import "MessageViewController.h"
 #import "LoginViewController.h"
@@ -81,6 +81,7 @@
 
 @property(nonatomic,strong)UMComFeedTableViewController *realTimeFeedsViewController;
 @property(nonatomic,strong)UMDoorView *umDoorView;
+
 
 @end
 static NSString *const identider = @"cell";
@@ -149,9 +150,8 @@ static NSString *const identider = @"cell";
     //[self.navigationController setNavigationBarHidden:NO];
     //设置导航栏不透明
     //[self.navigationController.navigationBar setBackgroundImage:[self getImageWithAlpha:1.0] forBarMetrics:UIBarMetricsDefault];
-        
-    
 }
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -175,8 +175,6 @@ static NSString *const identider = @"cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     
     self.extendedLayoutIncludesOpaqueBars = YES;
     
@@ -239,8 +237,10 @@ static NSString *const identider = @"cell";
    [UMComPushRequest requestConfigDataWithResult:^(id responseObject, NSError *error) {
    JSBadgeView *bageView =  [self.umDoorView viewWithTag:9999];
    UMComUnReadNoticeModel *unReadNotice = [UMComSession sharedInstance].unReadNoticeModel;
+   UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:0];
     if (unReadNotice.totalNotiCount==0) {
         bageView.badgeText =nil;
+        item.badgeValue=nil;
     }else{
         
         if (unReadNotice.totalNotiCount>[bageView.badgeText integerValue]) {
@@ -256,6 +256,11 @@ static NSString *const identider = @"cell";
         }
         
         bageView.badgeText =[NSString stringWithFormat:@"%ld",(long)unReadNotice.totalNotiCount];
+        if (unReadNotice.totalNotiCount>99) {
+            item.badgeValue = @"99+";
+        }
+        //给标签加未读标记
+        item.badgeValue =[NSString stringWithFormat:@"%ld",(long)unReadNotice.totalNotiCount];
         
     }
     
@@ -499,7 +504,11 @@ static NSString *const identider = @"cell";
         
         CoreView *view1 = [[CoreView alloc]initWithFrame:CGRectMake(0, i, size_width, 60)];
         view1.coreLab.text = nil;
-        view1.coreLab.text = cityStr[0];
+        if ([cityStr[0] length]) {
+            view1.coreLab.text = cityStr[0];
+        }else{
+            view1.coreLab.text = @"网速太慢了";
+        }
         UIView *viewling = [self.view viewWithTag:1024];
         [viewling addSubview:view1];
         
@@ -536,9 +545,9 @@ static NSString *const identider = @"cell";
     
     int h;
     if (size_width<350) {
-        h = 680;
+        h = 755;
     }else{
-        h = 730;
+        h = 805;
     }
     
     //创建tableView的HeaderView
@@ -687,13 +696,13 @@ static NSString *const identider = @"cell";
                 
                 NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:string5]];
                 [webVC.webView loadRequest:request];
-                
-                
-                
-                
                 webVC.qiandao = @"qiandao";
-                
+                //WKWebViewController *webVC = [[WKWebViewController alloc]init];
+                //[webVC loadWithString:@"https://h5.youzan.com/v2/apps/checkin?alias=pyg4ki8j"];
                 [weakSelf.navigationController pushViewController:webVC animated:YES];
+                
+                
+                
                 
                 
             }else{
@@ -739,8 +748,35 @@ static NSString *const identider = @"cell";
             
 };
     
+    //################商城模块########################
+    TwoButtonView *fourButtonView = [[TwoButtonView alloc]initWithFrame:CGRectMake(0, threeButtonView.height+threeButtonView.y+5, size_width, 70)];
+    
+    fourButtonView.carImg.image = [UIImage imageNamed:@"商城"];
+    fourButtonView.cardImg.image = [UIImage imageNamed:@"保养"];
+    
+    [fourButtonView.carBtn setTitle:@"小帮商城" forState:UIControlStateNormal];
+    [fourButtonView.cardBtn setTitle:@"保养预约" forState:UIControlStateNormal];
+    
+    [headerView addSubview:fourButtonView];
+    
+    fourButtonView.buttonClick = ^(NSInteger tag){
+        if (tag==200) {
+            weakSelf.tabBarController.selectedIndex=2;
+        }
+    
+        if (tag==300) {
+            CarsPinPaiViewController *carPinPai = [[CarsPinPaiViewController alloc]init];
+            carPinPai.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:carPinPai animated:YES];
+            
+        }
+    
+    };
+    
+    
+    
       //################积分板模块####################
-    self.countView = [[CountsView alloc]initWithFrame:CGRectMake(0, threeButtonView.height+threeButtonView.y+5, size_width, 130)];
+    self.countView = [[CountsView alloc]initWithFrame:CGRectMake(0, fourButtonView.height+fourButtonView.y+5, size_width, 130)];
     
     NSDate * senddate=[NSDate date];
     NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
@@ -965,8 +1001,13 @@ static NSString *const identider = @"cell";
                 tickVC.tickid = dict5[@"id"];
                 [weakSelf.navigationController pushViewController:tickVC animated:YES];
             }else{
-                weakSelf.tabBarController.selectedIndex=2;
+                //weakSelf.tabBarController.selectedIndex=2;
+                UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                LikesViewController *tabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"LikesViewController"];
+                tabBarController.hidesBottomBarWhenPushed = YES;
                 
+                [weakSelf.navigationController pushViewController:tabBarController animated:YES];
+
             }
             
             
@@ -1008,7 +1049,7 @@ static NSString *const identider = @"cell";
             _realTimeFeedsViewController.isLoadLoacalData = NO;
             _realTimeFeedsViewController.isAutoStartLoadData = YES;
             _realTimeFeedsViewController.fetchRequest = [[UMComAllNewFeedsRequest alloc]initWithCount:5];
-            
+           
             dispatch_async(dispatch_get_main_queue(), ^{
                 _realTimeFeedsViewController.tableView.frame = CGRectMake(0, tabHeaderView.y+tabHeaderView.height, size_width, size_height-50);
                 [self addChildViewController:_realTimeFeedsViewController];
