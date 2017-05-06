@@ -32,8 +32,8 @@ static NSString *SHARE_DESC = @"desc";
 
 @property(nonatomic,strong)NSArray *logTypeArrM;
 @property(nonatomic,strong)UIButton *shareBtn;
-
-
+@property(nonatomic,strong)UIButton *searchBtn;
+@property(nonatomic,strong)NSString *aoutMyMessage;
 - (void)showShareData:(id)data;
 
 - (void)reloadButtonAction;
@@ -41,7 +41,7 @@ static NSString *SHARE_DESC = @"desc";
 - (void)shareButtonAction;
 
 - (void)loadWithString:(NSString *)urlStr;
--(void)timerCallback;
+//-(void)timerCallback;
 -(void)webViewFail;
 +(void)showAlertMessageWithMessage:(NSString*)message duration:(NSTimeInterval)time;
 @end

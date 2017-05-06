@@ -69,7 +69,9 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
         //使用你的消息通知处理
     }
      */
-   //初始化应用，appKey和appSecret从后台申请得
+    
+    
+    //初始化应用，appKey和appSecret从后台申请得
     [SMSSDK registerApp:SMSAppKey withSecret:SMSSecret];
     
     //设置微信AppId、appSecret，分享url
@@ -100,14 +102,14 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
         
         [UINavigationBar appearance].translucent = NO;
         //状态栏控件白色
-        [UINavigationBar appearance].barStyle = UIBarStyleBlackOpaque;
+        [UINavigationBar appearance].barStyle = UIBarStyleBlackOpaque ;
+        //导航栏系统按键白色
+        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
         
-        [[UINavigationBar appearance]setBarTintColor:[UIColor colorWithRed:255/255.0 green:132/255.0 blue:1/255.0 alpha:1.0]];
+        [[UINavigationBar appearance]setBarTintColor:[UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:1.0]];
         
-        
-       
         [[UINavigationBar appearance] setTitleTextAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:[UIColor purpleColor], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:17.0], NSFontAttributeName, nil]];
+         [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:17.0], NSFontAttributeName, nil]];
     }
     
     LoginViewController *logVC = [[LoginViewController alloc]init];
@@ -116,7 +118,6 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
 
     return YES;
 }
-
 
 
 -(void)WZXLaunchView{
@@ -134,6 +135,7 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
                 [launchAd setWebImageWithURL:HomePageImgURL options:JWWebImageDefault result:^(UIImage *image, NSURL *url) {
                     //3.异步加载图片完成回调(设置图片尺寸)
                     weakSelf.adFrame = CGRectMake(0, 0, size_width, size_height);
+                    
                 } adClickBlock:^{
                     /// 点击广告
                     

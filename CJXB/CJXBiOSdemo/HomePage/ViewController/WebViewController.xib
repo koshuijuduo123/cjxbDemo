@@ -25,7 +25,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7M7-k1-GDJ">
                     <rect key="frame" x="0.0" y="431" width="370" height="50"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_bg_chat_h.png" translatesAutoresizingMaskIntoConstraints="NO" id="I8S-mG-VAr">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="评论框.png" translatesAutoresizingMaskIntoConstraints="NO" id="I8S-mG-VAr">
                             <rect key="frame" x="70" y="2" width="223" height="46"/>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="说点什么吧" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="11g-Ri-XBn">
@@ -35,7 +35,7 @@
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7iY-D2-h0U">
                             <rect key="frame" x="298" y="5" width="70" height="40"/>
-                            <color key="backgroundColor" red="0.99215686274509807" green="0.62352941176470589" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.066666666666666666" green="0.77254901960784317" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="分享送积分">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,7 +46,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbm-8h-UAz">
                             <rect key="frame" x="5" y="5" width="60" height="40"/>
-                            <color key="backgroundColor" red="0.99215686274509807" green="0.62352941176470589" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.066666666666666666" green="0.76470588235294112" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="dbm-8h-UAz" secondAttribute="height" multiplier="1.5:1" id="02h-82-DgY"/>
                             </constraints>
@@ -87,6 +87,6 @@
         </view>
     </objects>
     <resources>
-        <image name="cell_bg_chat_h.png" width="251" height="44"/>
+        <image name="评论框.png" width="447" height="90"/>
     </resources>
 </document>

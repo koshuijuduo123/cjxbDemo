@@ -9,11 +9,11 @@ typedef void(^ButtonClcik) (NSString *string);
 typedef void (^WebBack)();
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import "YZSDK.h"
+#import "LoginDataModel.h"
 @class IMYWebView;
 
-
 @interface WebViewController : UIViewController
-
 @property(nonatomic,copy)NSString *titleLab; //分享标题
 
 @property(nonatomic,copy)UIImage *titleImg; //分享图片

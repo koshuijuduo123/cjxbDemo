@@ -35,12 +35,15 @@
 #import "UMComDiscoverViewController.h"
 #import "MyCarTypeTableViewCell.h"
 #import "MyNewsViewController.h"
+#import "MyWKWebViewController.h"
+#import "AboutMyInfoMessageViewController.h"
 @interface MineViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(nonatomic,strong)NSArray *arr0;
 @property(nonatomic,strong)NSArray *arr1;
 @property(nonatomic,strong)NSArray *arr2;
-
+@property(nonatomic,strong)NSArray *imageArray0;
 @property(nonatomic,strong)NSArray *imageArray1;
 @property(nonatomic,strong)NSArray *imageArray2;
 
@@ -178,7 +181,7 @@
             [weakSelf.tableView stopLoading];
         });
     } LoadingView:loadingViewCircle];
-    [self.tableView setJElasticPullToRefreshFillColor:[UIColor colorWithRed:255/255.0 green:132/255.0 blue:1/255.0 alpha:1.0]];
+    [self.tableView setJElasticPullToRefreshFillColor:[UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:1.0]];
     [self.tableView setJElasticPullToRefreshBackgroundColor:self.tableView.backgroundColor];
     
 
@@ -186,7 +189,7 @@
 
 -(UIImage *)getImageWithAlpha:(CGFloat)alpha{
     //创建color对象
-    UIColor *color = [UIColor colorWithRed:255/255.0 green:132/255.0 blue:1/255.0 alpha:alpha];
+    UIColor *color = [UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:alpha];
     //声明一个绘制大小
     CGSize colorSize = CGSizeMake(1, 1);
     
@@ -270,7 +273,7 @@
     [headerView addSubview:label];
     
     //注册登录消息通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationAction:) name:@"Login" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationActions:) name:@"Login" object:nil];
     
     //注册退出消息通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RuturnAction) name:@"Ruturn" object:nil];
@@ -393,12 +396,13 @@
         
     };
     
-    
+    self.arr0 = @[@"我的会员电子券",@"我的订单"];
     self.arr1 = @[@"我的爱车",@"我的驾驶证",@"收藏文章"];
-    self.arr2 = @[@"个人信息",@"周边商户",@"帮友之家"];
+    self.arr2 = @[@"个人信息",@"周边商户",@"帮友之家",@"关于我们"];
     
+    self.imageArray0 = @[@"电子券",@"订单"];
     self.imageArray1 = @[@"我的爱车",@"驾驶证",@"我的收藏"];
-    self.imageArray2 = @[@"个人信息",@"合作",@"朋友圈"];
+    self.imageArray2 = @[@"个人信息",@"合作",@"朋友圈",@"个人信息"];
     
 
     
@@ -409,7 +413,7 @@
 
 
 //接到通知后执行的方法
-- (void)notificationAction:(NSNotification *)notification{
+- (void)notificationActions:(NSNotification *)notification{
     NSDictionary *userInfo = notification.userInfo;
     //动画类型
     _touView.jfLab.counterAnimationType = PPCounterAnimationTypeEaseOut;
@@ -612,7 +616,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section==0) {
-        return 1;
+        return self.arr0.count;
     }else if (section==1){
         return self.arr1.count;
     }else{
@@ -626,10 +630,16 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (indexPath.section==0) {
-        cell.titleLab.text = @"我的电子劵";
-        cell.imgView.image = [UIImage imageNamed:@"电子券"];
+        cell.titleLab.text = self.arr0[indexPath.row];
+        NSString *imageName = self.imageArray0[indexPath.row];
+        cell.imgView.image = [UIImage imageNamed:imageName];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.contentLab.text= [NSString stringWithFormat:@"共有%@张",self.rcount];
+        if (indexPath.row==0) {
+            cell.contentLab.text= [NSString stringWithFormat:@"共有%@张",self.rcount];
+            
+        }else{
+            cell.contentLab.text = @"查看订单状态";
+        }
         
     }
     
@@ -701,6 +711,9 @@
            
             cell.contentLab.text = @"车友动态随时掌握";
         }
+        if(indexPath.row==3){
+            cell.contentLab.text = @"了解小帮";
+        }
         
         /*
         if (indexPath.row==3) {
@@ -746,11 +759,21 @@
         [UMComLoginManager performLogin:ws completion:^(id responseObject, NSError *error) {
             if (!error) {
                 
-                MyDianJuanViewcontrollerViewController *DianVC = [[MyDianJuanViewcontrollerViewController alloc]init];
+                if (indexPath.row==0) {
+                    MyDianJuanViewcontrollerViewController *DianVC = [[MyDianJuanViewcontrollerViewController alloc]init];
+                    
+                    DianVC.hidesBottomBarWhenPushed = YES;
+                    
+                    [ws.navigationController pushViewController:DianVC animated:YES];
+                    
+                }else{
+                    MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+                    webVC.hidesBottomBarWhenPushed = YES;
+                    webVC.loadUrl = @"https://h5.youzan.com/v2/usercenter/bak26wpu";
+                    [ws.navigationController pushViewController:webVC animated:YES];
                 
-                DianVC.hidesBottomBarWhenPushed = YES;
                 
-                [ws.navigationController pushViewController:DianVC animated:YES];
+                }
                 
             }
         }];
@@ -846,7 +869,11 @@
             
             
         }
-        
+        if (indexPath.row==3) {
+            AboutMyInfoMessageViewController *aboutVC = [[AboutMyInfoMessageViewController alloc]init];
+            aboutVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:aboutVC animated:YES];
+        }
         
         /*
         if (indexPath.row==3) {
@@ -906,78 +933,6 @@
 }
 
 
--(void)hsUpdateApp{
-    NSDictionary *infoDic=[[NSBundle mainBundle] infoDictionary];
-    NSString *currentVersion=infoDic[@"CFBundleShortVersionString"];//为当前工程项目版本号
-    
-    NSString *storeAppID = @"1163572663";//配置自己项目在商店的ID
-    NSError *error;
-    NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",storeAppID]]] returningResponse:nil error:nil];
-    
-    
-    
-    
-    
-    if (response == nil) {
-        
-        return;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    if (error) {
-        
-        return;
-    }
-    
-    NSArray *array = appInfoDic[@"results"];
-    if (array.count < 1) {
-        
-        return;
-    }
-    NSDictionary *dic = array[0];
-    
-    //商店版本号
-    NSString *appStoreVersion = dic[@"version"];
-    
-    currentVersion = [currentVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
-    if (currentVersion.length==2) {
-        currentVersion  = [currentVersion stringByAppendingString:@"0"];
-    }else if (currentVersion.length==1){
-        currentVersion  = [currentVersion stringByAppendingString:@"00"];
-    }
-    appStoreVersion = [appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
-    if (appStoreVersion.length==2) {
-        appStoreVersion  = [appStoreVersion stringByAppendingString:@"0"];
-    }else if (appStoreVersion.length==1){
-        appStoreVersion  = [appStoreVersion stringByAppendingString:@"00"];
-    }
-    
-    //4当前版本号小于商店版本号,就更新
-    if([currentVersion floatValue] < [appStoreVersion floatValue])
-    {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertController *alercConteoller = [UIAlertController alertControllerWithTitle:@"版本有更新" message:[NSString stringWithFormat:@"新版本(%@),是否更新?\n新版本更新内容:\n%@",dic[@"version"],dic[@"releaseNotes"]] preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                //此处加入应用在app store的地址，方便用户去更新，一种实现方式如下
-                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/id%@?ls=1&mt=8", storeAppID]];
-                [[UIApplication sharedApplication] openURL:url];
-            }];
-            UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            [alercConteoller addAction:actionYes];
-            [alercConteoller addAction:actionNo];
-            [self presentViewController:alercConteoller animated:YES completion:nil];
-            
-        });
-        
-    }else{
-        dispatch_async(dispatch_get_main_queue(), ^{
-        });
-    }
-    
-}
-
 
 
 /*
@@ -1022,19 +977,6 @@
     
     
     
-}
-*/
-/*
--(UILabel *)creatCellInLabel:(NSString *)string{
-    UILabel *label = [[UILabel alloc] init]; //定义一个在cell最右边显示的label
-    label.text = string;
-    label.font = [UIFont boldSystemFontOfSize:14];
-    [label sizeToFit];
-    label.backgroundColor = [UIColor clearColor];
-    label.frame =CGRectMake(size_width -label.frame.size.width - 30, 15, label.frame.size.width, label.frame.size.height);
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1.0];
-    return label;
 }
 */
 

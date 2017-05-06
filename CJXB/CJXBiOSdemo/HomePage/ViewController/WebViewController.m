@@ -22,7 +22,7 @@
 #import "MyNewsModel.h"
 #import "MyLoveNewsEntity.h"
 #import "MyCarModel.h"
-
+#import "MyWKWebViewController.h"
 #import "MJRefresh.h"
 @interface WebViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UMSocialUIDelegate,IMYWebViewDelegate,HZPhotoBrowserDelegate,selectIndexPathDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *sheetBtn;
@@ -50,13 +50,13 @@
 @property(nonatomic,strong)NSArray *logTypeArrM;
 @property(nonatomic,strong)UIButton *shareBtn;
 
-
+@property(nonatomic,assign)BOOL isPushShoping;//是否跳转到商城链接
 @end
 
 @implementation WebViewController
 -(NSArray *)logTypeArrM{
     if (!_logTypeArrM) {
-        self.logTypeArrM = @[@"分享此文章",@"收藏此文章"];
+        self.logTypeArrM = @[@"分享此文章",@"收藏此文章",@"用浏览器打开",@"复制链接"];
     }
     return _logTypeArrM;
 }
@@ -73,7 +73,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    //赋初始值
+    self.isLookImg = YES;
     if (self.AppDelegateSele==-1) {
         self.navigationController.navigationBar.translucent = YES;
     }else{
@@ -194,9 +195,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.automaticallyAdjustsScrollViewInsets = YES;
-    //赋初始值
-    self.isLookImg = YES;
-    
     self.sheetBtn.layer.cornerRadius = 10.0;
     self.sheetBtn.clipsToBounds = YES;
     
@@ -239,12 +237,12 @@
     [self.view addSubview:self.hud];
     
     UIButton * backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    backButton.frame = CGRectMake(0, 0, 30, 30);
+    backButton.frame = CGRectMake(0, 0, 25, 25);
     [backButton setBackgroundImage:[UIImage imageNamed:@"返回1"] forState:UIControlStateNormal];
     
     
     
-    [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+   [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithCustomView:backButton];
     
     UIBarButtonItem *negative = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -272,9 +270,10 @@
     
     if (![self.webView usingUIWebView]) {
         
-        self.progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 0, size_width, 10)];
+        self.progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 0, size_width, 40)];
         
         self.progressView.progressViewStyle = UIProgressViewStyleBar;
+        self.progressView.progressTintColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:29/255.0 alpha:1.0];
         
         [self.webView addSubview:_progressView];
         
@@ -313,11 +312,11 @@
 
 -(void)logTypeArrMAction:(UIButton *)btn{
     CGPoint point = CGPointMake(btn.superview.center.x,btn.frame.origin.y + 45);
-    JGPopView *view2 = [[JGPopView alloc] initWithOrigin:point Width:btn.frame.size.width*4  Height:40 * 2 Type:JGTypeOfUpRight Color:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
+    JGPopView *view2 = [[JGPopView alloc] initWithOrigin:point Width:btn.frame.size.width*7  Height:50 * 4 Type:JGTypeOfUpRight Color:[UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:1.0]];
     view2.dataArray = self.logTypeArrM;
-    view2.fontSize = 15;
-    view2.row_height = 40;
-    view2.titleTextColor = [UIColor blackColor];
+    view2.fontSize = 18;
+    view2.row_height = 50;
+    view2.titleTextColor = [UIColor whiteColor];
     view2.delegate = self;
     [view2 popView];
 }
@@ -434,10 +433,6 @@
     
 }
 
-
-
-
-
 #pragma mark- IMYWebView代理
 //提示框
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
@@ -517,14 +512,10 @@
 
 }
 
-
-
-
-
 //此方法可以获取网页上的数据
 
 - (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
-
+    
     //将url转换为string
     NSString *requestString = [[request URL] absoluteString];
     //判断是否有跳转链接
@@ -532,40 +523,58 @@
     {
         NSURL *url = [request URL];
         if([[UIApplication sharedApplication]canOpenURL:url])
-        {
-             [webView loadRequest:request];
-            
-            if ([self.webView usingUIWebView]) {
-                [self.hud show:YES];
-                UIImageView *imgView = [_hud viewWithTag:7777];
-                [imgView startAnimating];
-                self.hud.labelText = @"小帮加载中...";
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-                
-            }
-            self.isLookImg = NO;
+       {
+           self.isLookImg = NO;
+           if ([[url absoluteString] rangeOfString:@"youzan"].location !=NSNotFound) {
+               //[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webView.URL.absoluteString]]];
+               
+               self.isPushShoping = YES;
+               MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+               webVC.loadUrl = requestString;
+               [self.navigationController pushViewController:webVC animated:YES];
+               
+           }else{
+               self.isPushShoping = NO;
+               
+               if ([self.webView usingUIWebView]) {
+                   [self.hud show:YES];
+                   UIImageView *imgView = [_hud viewWithTag:7777];
+                   [imgView startAnimating];
+                   self.hud.labelText = @"小帮加载中...";
+                   [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+                   
+               }
+               [webView loadRequest:request];
+           }
+           
+
            
         }
+        
         return NO;
     }
+        
     
     if (self.isLookImg==YES) {
-        //hasPrefix 判断创建的字符串内容是否以pic:字符开始
-        if ([requestString hasPrefix:@"myweb:imageClick:"]) {
-            NSString *imageUrl = [requestString substringFromIndex:@"myweb:imageClick:".length];
-            if (_imageArray.count != 0) {
-                
-                HZPhotoBrowser *browserVc = [[HZPhotoBrowser alloc] init];
-                browserVc.imageCount = self.imageArray.count; // 图片总数
-                browserVc.currentImageIndex = [_imageArray indexOfObject:imageUrl];//当前点击的图片
-                browserVc.delegate = self;
-                [browserVc show];
-                }
-            return NO;
-        }
         
-    }
-    return YES;
+            //hasPrefix 判断创建的字符串内容是否以pic:字符开始
+            if ([requestString hasPrefix:@"myweb:imageClick:"]) {
+                NSString *imageUrl = [requestString substringFromIndex:@"myweb:imageClick:".length];
+                if (_imageArray.count != 0) {
+                    
+                    HZPhotoBrowser *browserVc = [[HZPhotoBrowser alloc] init];
+                    browserVc.imageCount = self.imageArray.count; // 图片总数
+                    browserVc.currentImageIndex = [_imageArray indexOfObject:imageUrl];//当前点击的图片
+                    browserVc.delegate = self;
+                    [browserVc show];
+                }
+                return NO;
+            }
+            
+        }
+        return YES;
+        
+    
 }
 
     
@@ -574,14 +583,14 @@
 
 //web页面加载出错时，走这个方法
 - (void)webView:(IMYWebView*)webView didFailLoadWithError:(NSError*)error{
-    
     if ([error code]==NSURLErrorCancelled) {
         return;
     }
-    
-    
-    
-    [self webViewFail];
+   
+    if (_isPushShoping==NO) {
+        [self webViewFail];
+        
+    }
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
@@ -737,9 +746,10 @@
         self.string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",self.articleId,model.myid];
     }
     
+    self.titleLab = self.webView.title;
     
     if (!self.titleLab) {
-        self.titleLab = @"我的收藏页面";
+        self.titleLab = @"发现一篇来自车驾小帮的好文章";
     }
     //[UMSocialData defaultData].extConfig.smsData =string5;
     
@@ -871,6 +881,7 @@
 
 - (void)selectIndexPathRow:(NSInteger)index{
     [self.shareBtn setTitle:[self.logTypeArrM objectAtIndex:index] forState:UIControlStateNormal];
+    
     if (index==0) {
         [self shareButtonAction:self.shareBtn];
     }
@@ -917,6 +928,26 @@
         
         
         }
+    
+    
+    if (index==2) {
+        //用浏览器打开
+        [[UIApplication sharedApplication] openURL: [ NSURL URLWithString:_webView.URL.absoluteString]];
+    }
+    
+    if (index==3) {
+        //复制链接
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = _webView.URL.absoluteString;
+        if (pasteboard.string.length) {
+            [WebViewController showAlertMessageWithMessage:@"复制成功" duration:1.0];
+            
+        }else{
+            [WebViewController showAlertMessageWithMessage:@"复制失败" duration:1.0];
+        }
+
+    }
+    
     
 }
 

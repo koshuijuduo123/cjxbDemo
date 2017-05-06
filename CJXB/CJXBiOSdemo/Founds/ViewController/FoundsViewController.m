@@ -97,7 +97,7 @@ CGFloat const TitilesViewH = 44;
     [self.view addSubview:titlesView];
     //下面的指示器view
     UIView *indicatorView = [[UIView alloc] init];
-    indicatorView.backgroundColor = [UIColor colorWithRed:50/255.0 green:148/255.0 blue:252/255.0 alpha:1.0];
+    indicatorView.backgroundColor = [UIColor colorWithRed:4/255.0 green:169/255.0 blue:13/255.0 alpha:1.0];
     indicatorView.height = 5;
     indicatorView.tag = -1;
     indicatorView.y = titlesView.height - indicatorView.height;
@@ -116,7 +116,7 @@ CGFloat const TitilesViewH = 44;
         [button setTitleEdgeInsets:UIEdgeInsetsMake(5, 0, 0, 0)];
         [button setTitle:vc.title forState:UIControlStateNormal];
         [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithRed:50/255.0 green:148/255.0 blue:252/255.0 alpha:1.0] forState:UIControlStateDisabled];
+        [button setTitleColor:[UIColor colorWithRed:4/255.0 green:169/255.0 blue:13/255.0 alpha:1.0] forState:UIControlStateDisabled];
         button.titleLabel.font = [UIFont boldSystemFontOfSize:15];
         [button addTarget:self action:@selector(titleClick:) forControlEvents:UIControlEventTouchUpInside];
         [titlesView addSubview:button];

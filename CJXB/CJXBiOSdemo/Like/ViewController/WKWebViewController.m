@@ -12,7 +12,6 @@
 #import "UMSocial.h"
 #import "WXApi.h"
 #import "UMSocialWechatHandler.h"
-
 #import "MJRefresh.h"
 
 @interface WKWebViewController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate,selectIndexPathDelegate,UMSocialUIDelegate>
@@ -22,7 +21,7 @@
 @property(nonatomic,strong)UIProgressView *progressView; //进度条
 
 @property(nonatomic,strong)NSDictionary *shareDic;//分享数据
-
+@property(nonatomic,assign)BOOL isLoadingOver;//页面是否加载完毕
 @end
 
 @implementation WKWebViewController
@@ -33,20 +32,10 @@
     return _shareDic;
 }
 
-
-//- (BOOL)navigationShouldPopOnBackButton {
-//    if ([self.webView canGoBack]) {
-//        [self.webView goBack];
-//        self.navigationItem.leftItemsSupplementBackButton = YES;
-//        self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
-//        return NO;
-//    } else {
-//        return YES;
-//    }
-//}
-
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+   
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -59,7 +48,7 @@
     [self addWKWebView];
     [super viewDidLoad];
     self.navigationItem.title = @"小帮商城";
-    
+   
     //进入刷新状态
     _webView.scrollView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 进入刷新状态后会自动调用这个block
@@ -116,13 +105,14 @@
 
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    self.isLoadingOver = YES;
     
     self.tabBarController.tabBar.hidden = NO;
     [YZSDK initYouzanWithWKWebView:webView];
     //是否添加返回按钮
     if ([_webView canGoBack]) {
             UIButton * backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-            backButton.frame = CGRectMake(0, 0, 30, 30);
+            backButton.frame = CGRectMake(0, 0, 25, 25);
             [backButton setBackgroundImage:[UIImage imageNamed:@"返回1"] forState:UIControlStateNormal];
             [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
             UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithCustomView:backButton];
@@ -140,6 +130,7 @@
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
     NSURL *url = navigationAction.request.URL;
+    
     if(![[url absoluteString] hasPrefix:@"http"]){
         
        YZNotice *noticeFromYZ = [YZSDK noticeFromYouzanWithUrl:url];
@@ -258,11 +249,11 @@
 
 -(void)logTypeArrMAction:(UIButton *)btn{
     CGPoint point = CGPointMake(btn.superview.center.x,btn.frame.origin.y + 45);
-    JGPopView *view2 = [[JGPopView alloc] initWithOrigin:point Width:btn.frame.size.width*5  Height:40 * 3 Type:JGTypeOfUpRight Color:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
+    JGPopView *view2 = [[JGPopView alloc] initWithOrigin:point Width:btn.frame.size.width*7  Height:50 * 3 Type:JGTypeOfUpRight Color:[UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:1.0]];
     view2.dataArray = self.logTypeArrM;
-    view2.fontSize = 15;
-    view2.row_height = 40;
-    view2.titleTextColor = [UIColor blackColor];
+    view2.fontSize = 18;
+    view2.row_height = 50;
+    view2.titleTextColor = [UIColor whiteColor];
     view2.delegate = self;
     [view2 popView];
 }
@@ -294,8 +285,10 @@
 
 //若是二级的web页面，则返回上一级web界面
 -(void)back:(UIBarButtonItem *)sender{
+    
     if ([self.webView canGoBack]) {
         [self.webView goBack];
+        
         if (_webView.backForwardList.backList.count==1) {
             
             self.navigationItem.leftBarButtonItems = nil;
@@ -309,6 +302,7 @@
 
 #pragma mark - UIScrollView代理
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
     if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.frame.size.height) {
         //滑到底部加载更多
         return;
@@ -318,21 +312,24 @@
         return;
     }
     
-    
-    
-    static float newx = 0;
-    static float oldIx = 0;
-    newx= scrollView.contentOffset.y;
-    if (newx != oldIx ) {
-        if (newx > oldIx) {
-            self.tabBarController.tabBar.hidden = NO;
-            _webView.frame = CGRectMake(0, 0, size_width, size_height-59);
-        }else if(newx < oldIx){
-            self.tabBarController.tabBar.hidden = YES;
-             _webView.frame = CGRectMake(0, 0, size_width, size_height-15);
+    if (_isLoadingOver) {
+        
+        static float newx = 0;
+        static float oldIx = 0;
+        newx= scrollView.contentOffset.y;
+        if (newx != oldIx ) {
+            if (newx > oldIx) {
+                self.tabBarController.tabBar.hidden = YES;
+                _webView.frame = CGRectMake(0, 0, size_width, size_height-15);
+            }else if(newx < oldIx){
+                self.tabBarController.tabBar.hidden = NO;
+                _webView.frame = CGRectMake(0, 0, size_width, size_height-59);
+            }
+            oldIx = newx;
         }
-        oldIx = newx;
+        
     }
+    
 
 }
 
@@ -348,10 +345,10 @@
     [self.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.webView];
     
-    self.progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, size_width, 10)];
+    self.progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, size_width, 40)];
     
     self.progressView.progressViewStyle = UIProgressViewStyleBar;
-    
+     self.progressView.progressTintColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:29/255.0 alpha:1.0];
     //[self.webView addSubview:_progressView];
     [self.navigationController.navigationBar addSubview:_progressView];
     
@@ -430,7 +427,7 @@
 -(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response{
     if (response.responseCode==UMSResponseCodeSuccess) {
         [WKWebViewController showAlertMessageWithMessage:@"分享成功" duration:1.0];
-}
+    }
     
 }
 

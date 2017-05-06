@@ -74,8 +74,6 @@
     
     [self setupTableView];
     [self addResfresh];
-    
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"NewsTableViewCell" bundle:nil] forCellReuseIdentifier:@"NewsTableViewCell"];
     _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     
@@ -99,12 +97,13 @@
 
 //添加上拉加载数据
 -(void)addResfresh{
+    __weak typeof (self)weakSelf = self;
     //添加下拉刷新
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         //下拉刷新的时候，将请求的page改为1
-        [self.dataSourceDic setObject:@"1" forKey:@"p"];
-        [self requestDataList];
-        self.isUp = NO;
+        [weakSelf.dataSourceDic setObject:@"1" forKey:@"p"];
+        [weakSelf requestDataList];
+        weakSelf.isUp = NO;
         
     }];
     
@@ -126,13 +125,13 @@
     //添加上拉加载
     self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         //上拉加载时将当前请求页数加一
-        NSInteger p = [[self.dataSourceDic objectForKey:@"p"]integerValue];
+        NSInteger p = [[weakSelf.dataSourceDic objectForKey:@"p"]integerValue];
         p++;
         NSString *stringTitleNumber =[NSString stringWithFormat:@"%ld",(long)p];
-        [self.dataSourceDic setObject:stringTitleNumber forKey:@"p"];
-        [self requestDataList];
+        [weakSelf.dataSourceDic setObject:stringTitleNumber forKey:@"p"];
+        [weakSelf requestDataList];
         
-        _isUp = YES;
+        weakSelf.isUp = YES;
     }];
     
     
@@ -243,7 +242,10 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsTableViewCell" forIndexPath:indexPath];
+    
+    
     NSDictionary *dic = self.dataSourceArray[indexPath.row];
+    
     [cell.titleImageView sd_setImageWithURL:dic[@"img"] placeholderImage:[UIImage imageNamed:@"zwt"]];
     if ([dic[@"zhuanfa"] integerValue]<40) {
         cell.zhuanfaImg.hidden=YES;
@@ -252,6 +254,7 @@
     }
     
     cell.titleLab.text = dic[@"title"];
+    
     
     NSString *string1 = [NSString stringWithFormat:@"%@",dic[@"zfpoints"]];
     
@@ -280,13 +283,8 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    if (size_width<=320) {
+   if (size_width<=320) {
         return 100;
-        
-        
-        
     }else if(size_width==375){
         return 100;
     }else{

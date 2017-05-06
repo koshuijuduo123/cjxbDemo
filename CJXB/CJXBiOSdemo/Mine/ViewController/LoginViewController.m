@@ -19,6 +19,7 @@
 #import <SMS_SDK/SMSSDK.h>
 #import <SMS_SDK/Extend/SMSSDKResultHanderDef.h>
 #import <SMS_SDK/Extend/SMSSDKUserInfo.h>
+#import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
 #import <MessageUI/MessageUI.h>
 
 
@@ -56,7 +57,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-    
+    //默认不启用通讯录好友
+    [SMSSDK enableAppContactFriends:NO];
    
     
 }
@@ -135,36 +137,18 @@
             return ;
         }
         
-        
-        
-        
-        
-        
-        [SMSSDK  getVerificationCodeByMethod:SMSGetCodeMethodSMS
+[SMSSDK  getVerificationCodeByMethod:SMSGetCodeMethodSMS
                                  phoneNumber:self.phoneTextFirld.text
                                         zone:@"86"
                             customIdentifier:nil
                                       result:^(NSError *error) {
-                                          
-                                      
-                                          if (!error) {
-                                              
-                                              [LoginViewController showAlertMessageWithMessage:@"验证码已发送" duration:1.0];
-                                              
-                                              
-                                          }else{
-                                             [LoginViewController showAlertMessageWithMessage:@"发送失败" duration:1.0];
-                                              
-                                              return ;
-                                          }
-                                          
-                                          
-                                          
-                                      }];
-        
-        
-        
-        
+if (!error) {
+    [LoginViewController showAlertMessageWithMessage:@"验证码已发送" duration:1.0];
+}else{
+[LoginViewController showAlertMessageWithMessage:@"发送失败" duration:1.0];
+return ;
+}
+}];
         __block int timeout=60; //倒计时时间
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
@@ -219,7 +203,12 @@
     if ([self.phoneTextFirld.text isEqualToString:@"15090356563"]&&[self.maTextFirld.text isEqualToString:@"12345"]) {
         [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"getuserinfo",@"username":@"XB_100007791",@"password":@"1cb25ef7210542d8cb8cdbee1edd081a"} finish:^(id responseObject) {
             
-            
+            if([responseObject[@"IsError"] integerValue]==1) {
+                [self hidenHUD];
+                [LoginViewController showAlertMessageWithMessage:@"网络不稳定，请再获取一次验证码" duration:2.0];
+                return ;
+                
+            }else{
             
             LoginDataModel *model = [[LoginDataModel alloc]init];
             [model setValuesForKeysWithDictionary:responseObject[@"Data"]];
@@ -244,18 +233,6 @@
             userAccounts.gender = [NSNumber numberWithInteger:[model.sex integerValue]];
             
             userAccounts.icon_url = model.headimgurl;
-            //userAccounts.score = [NSNumber numberWithInteger:[model.points integerValue]];
-           
-            //钱
-            //userAccount.custom = [NSString stringWithFormat:@"%@",model.money ];
-            //userAccount.score = [NSNumber numberWithInteger:[model.points integerValue]];
-            
-            
-            
-            
-            
-            
-            
             [UMComPushRequest loginWithCustomAccountForUser:userAccounts completion:^(id responseObject, NSError *error)  {
                 
                 if (!error) {
@@ -288,49 +265,17 @@
                         [self callBlockWithResult:YES];
 
                         [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
-                        
-                        
-                        
-                        
-                    }];
-
-                    
-                    
-                    
-                    
-                    
-                    
-                }else{
+                        }];
+                    }else{
                     [self hidenHUD];
                     [LoginViewController showAlertMessageWithMessage:@"登录失败" duration:1.0];
                 }
-
-                
-                
-                
-                
-                
-                
             }];
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        } enError:^(NSError *error) {
-            
+            }
+            } enError:^(NSError *error) {
+            [self hidenHUD];
+            [LoginViewController showAlertMessageWithMessage:@"网络出问题了，去问问神奇海螺吧" duration:2.0];
         }];
-        
-        
-        
         return;
         
     }
@@ -339,186 +284,83 @@
     //短信验证登录
     [SMSSDK    commitVerificationCode:self.maTextFirld.text
 phoneNumber:self.phoneTextFirld.text
-zone:@"86"
-                              result:^(SMSSDKUserInfo *userInfo, NSError *error) {
-                              if (!error) {
-                                      
-                            
-                                [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"loginorregister",@"key":@"d7ce1e8949bc",@"phone":self.phoneTextFirld.text,@"code":self.maTextFirld.text} finish:^(id responseObject) {
-                                      LoginDataModel *model = [[LoginDataModel alloc]init];
-                                      if([responseObject[@"IsError"] integerValue]==1) {
-                                        [self hidenHUD];
-                                              [LoginViewController showAlertMessageWithMessage:@"网络不稳定，请再获取一次验证码" duration:2.0];
-                                              return ;
+zone:@"86"result:^(SMSSDKUserInfo *userInfo, NSError *error) {
+    
+    if (!error) {
+    [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"loginorregister",@"key":@"d7ce1e8949bc",@"phone":self.phoneTextFirld.text,@"code":self.maTextFirld.text} finish:^(id responseObject) {
+    LoginDataModel *model = [[LoginDataModel alloc]init];
+    if([responseObject[@"IsError"] integerValue]==1) {
+    [self hidenHUD];
+    [LoginViewController showAlertMessageWithMessage:@"网络不稳定，请再获取一次验证码" duration:2.0];
+    return ;
                                               
-                                          
-                                          }else{
-                                              [model setValuesForKeysWithDictionary:responseObject[@"Data"]];
-                                              model.myid = [responseObject[@"Data"] objectForKey:@"id"];
-                                              
-                                              
-                                              
-                                              if ([model.nickname isEqualToString:@""]) {
-                                                 
-                                                  model.nickname = [NSString stringWithFormat:@"%@",model.username];
-                                              }
-                                          }
- 
- 
-                                          
- 
-                                          
-                                          UMComUserAccount *userAccounts = [[UMComUserAccount alloc] init];
-                                          //userAccounts.score = [NSNumber numberWithInteger:[model.points integerValue]];
-                                          
-                                          userAccounts.usid = [NSString stringWithFormat:@"%@",model.username];
-                                          userAccounts.name = model.nickname;
+    }else{
+    [model setValuesForKeysWithDictionary:responseObject[@"Data"]];
+    model.myid = [responseObject[@"Data"] objectForKey:@"id"];
+        
+    if ([model.nickname isEqualToString:@""]) {
+    model.nickname = [NSString stringWithFormat:@"%@",model.username];
+    }
+    }
+   UMComUserAccount *userAccounts = [[UMComUserAccount alloc] init];
+   userAccounts.usid = [NSString stringWithFormat:@"%@",model.username];
+   userAccounts.name = model.nickname;
+   if (![model.headimgurl isEqualToString:@""]) {
+   userAccounts.icon_url = model.headimgurl;
+   }else{
+   userAccounts.icon_url = UMLoginImgURL;
+   }
                                     
-                                    if (![model.headimgurl isEqualToString:@""]) {
-                                         userAccounts.icon_url = model.headimgurl;
-                                        }else{
-                                        userAccounts.icon_url = UMLoginImgURL;
-                                                
-                                        }
-                                    
-                                          userAccounts.gender = [NSNumber numberWithInteger:[model.sex integerValue]];
+   userAccounts.gender = [NSNumber numberWithInteger:[model.sex integerValue]];
  
-                                          __weak typeof(self)weakSelf = self;
-
-                                          [UMComPushRequest loginWithCustomAccountForUser:userAccounts completion:^(id responseObject, NSError *error)  {
-                                              
-                                              if (!error) {
-                                                  //登录成功
-                                                  [weakSelf hidenHUD];
-                                                 NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
-                                                  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                                  [userDefaults setObject: data forKey: @"kUserDefaultsCookie"];
-                                                  [userDefaults synchronize];
+    __weak typeof(self)weakSelf = self;
+   [UMComPushRequest loginWithCustomAccountForUser:userAccounts completion:^(id responseObject, NSError *error)  {
+    if (!error) {
+    //登录成功
+    [weakSelf hidenHUD];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject: data forKey: @"kUserDefaultsCookie"];
+    [userDefaults synchronize];
                                                   
-                                                  
-                                                  
-                                                  
-                                                  UMComUser *user = responseObject;
-                                                  UMComLoginManager *meng = [UMComLoginManager shareInstance];
-                                                  
-                                                  if (user.registered==0) {
-                                                      if (meng.didUpdateFinish) {
-                                                          // 注册后因为用户名有错误，已经修改过用户名，直接显示推荐话题和推荐用户页面
-                                                          [meng showRecommendViewControllerWithLoginViewController:weakSelf loginComletion:^{
-                                                              
-                                                              [weakSelf dismissViewControllerAnimated:YES completion:^{
-                                                                  
-                                                                  //将登录数据存入本地
-                                                                  [UserDefault saveUserInfo:model];
-                                                            NSDictionary *dic = model.keyValues;
-                                                                  
-                                                                  //发送通知
-                                                                  //创建通知
-                                                                  NSNotification *notification = [NSNotification notificationWithName:@"Login" object:nil userInfo:dic];
-                                                                  [[NSNotificationCenter defaultCenter] postNotification:notification];
-                                                                  
-                                                                  
-                                                                  [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
-                                                                  
-                                                                  
-                                                                  
-                                                                  
-                                                              }];
-                                                              
-                                                          }];
-                                                      }else{
-                                                          // 注册后用户名正确，没有修改过用户名，则显示用户信息修改页面
-                                                          [meng showUserAccountSettingViewController:weakSelf userAccont:userAccounts error:nil completion:^(UIViewController *viewController, UMComUserAccount *userAccount) {
-                                                              
-                                                              model.headimgurl = userAccount.icon_url;
-                                                              model.nickname = userAccount.name;
-                                                              
-                                                              model.sex = [NSString stringWithFormat:@"%@",userAccount.gender];
-                                                              
-                                                              
-                                                              
-                                                              //显示推荐话题和推荐用户页面
-                                                              [meng showRecommendViewControllerWithLoginViewController:self loginComletion:^{
-                                                                 
-                                                                  [weakSelf dismissViewControllerAnimated:YES completion:^{
-                                                                      
-                                                                      
-                                                                      //将登录数据存入本地
-                                                                      [UserDefault saveUserInfo:model];
-                                                                                                                                           NSDictionary *dic = model.keyValues;
-                                                                      
-                                                                      //发送通知
-                                                                      //创建通知
-                                                                      NSNotification *notification = [NSNotification notificationWithName:@"Login" object:nil userInfo:dic];
-                                                                      [[NSNotificationCenter defaultCenter] postNotification:notification];
-                                                                  
-                                                                      
-                                                                      
-                                                                      
-                                                                      [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
-                                                                      
-                                                                      
-                                                                      
-                                                                      
-                                                                  }];
-                                                              }];
-                                                          }];
-                                                      }
+    [weakSelf dismissViewControllerAnimated:YES completion:^{
+    //将登录数据存入本地
+    [UserDefault saveUserInfo:model];
+    NSDictionary *dic = model.keyValues;
+    //发送通知
+    //创建通知
+    NSNotification *notification = [NSNotification notificationWithName:@"Login" object:nil userInfo:dic];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
                                                       
-                                                      
-                                                      return ;
-                                                      
-                                                  }
-                                                  [weakSelf dismissViewControllerAnimated:YES completion:^{
-                                                      //将登录数据存入本地
-                                                      [UserDefault saveUserInfo:model];
-                                                      
-                                                      NSDictionary *dic = model.keyValues;
-                                                      
-                                                      //发送通知
-                                                      //创建通知
-                                                      NSNotification *notification = [NSNotification notificationWithName:@"Login" object:nil userInfo:dic];
-                                                      [[NSNotificationCenter defaultCenter] postNotification:notification];
-                                                      
-                                                      NSNotification *notification2 = [NSNotification notificationWithName:kUMComUnreadNotificationRefreshNotification object:nil userInfo:nil];
+    NSNotification *notification2 = [NSNotification notificationWithName:kUMComUnreadNotificationRefreshNotification object:nil userInfo:nil];
                                                       [[NSNotificationCenter defaultCenter] postNotification:notification2];
                                                       
-                                                      NSNotification *notification3 = [NSNotification notificationWithName:@"Count" object:nil userInfo:nil];
-                                                      [[NSNotificationCenter defaultCenter] postNotification:notification3];
-                                                      //传递给有赞
-                                                      [self callBlockWithResult:YES];
+    NSNotification *notification3 = [NSNotification notificationWithName:@"Count" object:nil userInfo:nil];
+  [[NSNotificationCenter defaultCenter] postNotification:notification3];
+    //传递给有赞
+    [self callBlockWithResult:YES];
                                                       
-                                                      [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
+  [LoginViewController showAlertMessageWithMessage:@"成功登录" duration:1.0];
                                                       
-                                                  }];
+  }];
                                                   
-                                              }else{
-                                                  [weakSelf hidenHUD];
-                                                  [LoginViewController showAlertMessageWithMessage:@"登录失败" duration:1.0];
-                                              }
+  }else{
+  [weakSelf hidenHUD];
+  [LoginViewController showAlertMessageWithMessage:@"登录失败" duration:1.0];
+  }
                                               
-                                     }];
-                                          
-                                    } enError:^(NSError *error) {
-                                          [self hidenHUD];
-                                        
-                                      }];
-                                      
-                                      
-                                      
-                                  }else{
-                                      [self hidenHUD];
-                                      
-                                      [LoginViewController showAlertMessageWithMessage:@"验证失败" duration:1.0];
-                                      
-                                  }
-                                  }];
+  }];
+  } enError:^(NSError *error) {
+  [self hidenHUD];
+  [LoginViewController showAlertMessageWithMessage:@"网络出问题了，去问问神奇海螺吧" duration:2.0];
+  }];
+  }else{
+  [self hidenHUD];
+  [LoginViewController showAlertMessageWithMessage:@"验证失败" duration:1.0];
+  }
+  }];
     
 }
-
-
-
-
 
 //返回
 - (IBAction)fanButtonAction:(UIButton *)sender {

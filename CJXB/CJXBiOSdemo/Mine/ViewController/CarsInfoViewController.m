@@ -56,7 +56,10 @@ static NSString *const ImgCell = @"ImgCell";
     
     [self.navigationController pushViewController:webVC animated:YES];
 }
-
+//返回首页
+- (IBAction)backHomePageAction:(UIButton *)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 
 #pragma mark - UItableViewDelegate

@@ -43,7 +43,7 @@
 - (IBAction)clickedTheButton:(UIButton *)sender {
     //判断当前点击的按钮是哪个
     if (sender.tag==KSummaryButton_Tag) {
-        [self.summaryButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [self.summaryButton setTitleColor:[UIColor colorWithRed:4/255.0 green:169/255.0 blue:13/255.0 alpha:1.0] forState:UIControlStateNormal];
         [self.routeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
      
         if (self.index==3) {
@@ -61,7 +61,7 @@
     }else{
         
         [self.summaryButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        [self.routeButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [self.routeButton setTitleColor:[UIColor colorWithRed:4/255.0 green:169/255.0 blue:13/255.0 alpha:1.0] forState:UIControlStateNormal];
         
         
         if (self.index==3) {

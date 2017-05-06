@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Ip2-P9-3U0" customClass="UMTabHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="53"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="空心圆.png" translatesAutoresizingMaskIntoConstraints="NO" id="U6U-Ep-sPH">
+                    <rect key="frame" x="67" y="22" width="10" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="10" id="I2F-6g-jDX"/>
+                        <constraint firstAttribute="width" secondItem="U6U-Ep-sPH" secondAttribute="height" multiplier="1:1" id="OVB-vd-aGp"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UzT-PW-zmi">
+                    <rect key="frame" x="79" y="12" width="45" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="换一批"/>
+                    <connections>
+                        <action selector="buttonAction:" destination="Ip2-P9-3U0" eventType="touchUpInside" id="VFJ-yA-yZa"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最新热点" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CI5-Q0-YBW">
+                    <rect key="frame" x="2" y="18" width="60" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvR-Tn-dhT">
+                    <rect key="frame" x="303" y="5" width="30" height="43"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="k2T-ti-3wG"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="分类.png"/>
+                    <connections>
+                        <action selector="umMyMessageAction:" destination="Ip2-P9-3U0" eventType="touchUpInside" id="h0a-1e-j60"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="UzT-PW-zmi" secondAttribute="trailing" constant="5" id="4fK-3R-iGg"/>
+                <constraint firstItem="UzT-PW-zmi" firstAttribute="leading" secondItem="U6U-Ep-sPH" secondAttribute="trailing" constant="2" id="AT2-k2-ZEK"/>
+                <constraint firstItem="wvR-Tn-dhT" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="EFV-gA-Emz"/>
+                <constraint firstItem="CI5-Q0-YBW" firstAttribute="leading" secondItem="Ip2-P9-3U0" secondAttribute="leading" constant="2" id="Ip7-oK-KdN"/>
+                <constraint firstItem="CI5-Q0-YBW" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="JjF-8k-3FX"/>
+                <constraint firstItem="UzT-PW-zmi" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="Rrb-3d-Q45"/>
+                <constraint firstItem="wvR-Tn-dhT" firstAttribute="leading" secondItem="UzT-PW-zmi" secondAttribute="trailing" constant="5" id="Ypz-r2-t4w"/>
+                <constraint firstItem="wvR-Tn-dhT" firstAttribute="top" secondItem="Ip2-P9-3U0" secondAttribute="top" constant="2" id="dPa-kZ-BJ6"/>
+                <constraint firstItem="UzT-PW-zmi" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="iwr-6T-NWV"/>
+                <constraint firstItem="UzT-PW-zmi" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="ml9-7q-EM3"/>
+                <constraint firstItem="U6U-Ep-sPH" firstAttribute="leading" secondItem="CI5-Q0-YBW" secondAttribute="trailing" constant="5" id="re3-sr-MOI"/>
+                <constraint firstAttribute="trailing" secondItem="wvR-Tn-dhT" secondAttribute="trailing" constant="15" id="tGx-Qh-sCn"/>
+                <constraint firstItem="U6U-Ep-sPH" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="zI3-Tm-VXe"/>
+                <constraint firstAttribute="bottom" secondItem="wvR-Tn-dhT" secondAttribute="bottom" constant="5" id="zih-Ri-OCT"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="4fK-3R-iGg"/>
+                    <exclude reference="Ypz-r2-t4w"/>
+                    <exclude reference="dPa-kZ-BJ6"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="TimeRequestLab" destination="CI5-Q0-YBW" id="SeH-Nw-OoG"/>
+                <outlet property="shuoshuoBtn" destination="UzT-PW-zmi" id="3jD-VR-9Hc"/>
+                <outlet property="umMyInfoMessageBtn" destination="wvR-Tn-dhT" id="w4N-Yd-tzn"/>
+            </connections>
+            <point key="canvasLocation" x="296" y="93.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="分类.png" width="32" height="32"/>
+        <image name="空心圆.png" width="16" height="16"/>
+    </resources>
+</document>

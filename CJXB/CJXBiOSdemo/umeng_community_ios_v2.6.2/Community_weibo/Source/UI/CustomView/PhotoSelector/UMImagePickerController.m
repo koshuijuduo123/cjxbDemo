@@ -59,7 +59,7 @@ static NSArray *groupTypes;
         [self.navigationItem setLeftBarButtonItem:cancelButton animated:NO];
     }else{
         [self setForumUIBackButton];
-//        [self setBackButtonWithTitle:UMComLocalizedString(@"um_com_cancel", @"取消")];
+        //[self setBackButtonWithTitle:UMComLocalizedString(@"um_com_cancel", @"取消")];
     }
 
 }

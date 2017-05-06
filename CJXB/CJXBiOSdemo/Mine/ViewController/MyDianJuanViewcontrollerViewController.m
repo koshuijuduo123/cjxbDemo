@@ -38,6 +38,8 @@
 @property(nonatomic,strong)NSString *sCount;//判断失效不失效的参数
 @property(nonatomic,strong)NSMutableDictionary *dictArrObj;//去重数据字典
 @property(nonatomic,strong)NSMutableArray *soureArr;//转接数组
+
+
 @end
 
 @implementation MyDianJuanViewcontrollerViewController
@@ -205,26 +207,38 @@
         }
         
         
-         NSMutableDictionary *dicts = [NSMutableDictionary dictionary];
+         NSMutableDictionary *addDicts = [NSMutableDictionary dictionary];
        for (NSDictionary *dict in arr) {
-            if (![self.soureArr containsObject:dict]) {
-                [dicts setObject:@"0" forKey:dict[@"couponid"]];
-                [self.dictArrObj setObject:dict forKey:dict[@"couponid"]];
-                
-                [self.soureArr addObject:dict];
+           if (_isSummary==NO) {
+               [self.soureArr addObject:dict];
+           }else{
+               if (![self.soureArr containsObject:dict]) {
+                   [addDicts setObject:@"0" forKey:dict[@"couponid"]];
+                   [self.dictArrObj setObject:dict forKey:dict[@"couponid"]];
+                   
+                   [self.soureArr addObject:dict];
+               }
+               
+           }
+           
+           
+           
+        }
+        
+        if (_isSummary==YES) {
+            self.dataSourceArr =[NSMutableArray arrayWithArray:_dictArrObj.allValues];
+            for (NSDictionary *dic in self.soureArr) {
+                NSString   *numbers = [addDicts objectForKey:dic[@"couponid"]];
+                NSInteger nums =  [numbers integerValue]+1;
+                [addDicts setObject:[NSString stringWithFormat:@"%ld",(long)nums] forKey:dic[@"couponid"]];
             }
             
+            
+            self.couponidDic = [NSMutableDictionary dictionaryWithDictionary:addDicts];
+            
+        }else{
+            self.dataSourceArr =[NSMutableArray arrayWithArray:_soureArr];
         }
-        
-        self.dataSourceArr =[NSMutableArray arrayWithArray:_dictArrObj.allValues];
-        for (NSDictionary *dic in self.soureArr) {
-          NSString   *numbers = [dicts objectForKey:dic[@"couponid"]];
-            NSInteger nums =  [numbers integerValue]+1;
-                [dicts setObject:[NSString stringWithFormat:@"%ld",nums] forKey:dic[@"couponid"]];
-        }
-        
-        
-        self.couponidDic = [NSMutableDictionary dictionaryWithDictionary:dicts];
         
         
         [self.tableView reloadData];

@@ -17,12 +17,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d2i-Nv-RHi">
-                    <rect key="frame" x="0.0" y="268" width="278" height="50"/>
+                    <rect key="frame" x="0.0" y="268" width="139" height="50"/>
+                    <color key="backgroundColor" red="0.066666666669999999" green="0.7843137255" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="3QW-yP-Wc7"/>
+                        <constraint firstAttribute="height" constant="50" id="YNm-b1-Cjo"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="保养此车型" backgroundImage="咨询.png">
+                    <state key="normal" title="保养此车型">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -37,14 +38,30 @@
                         <outlet property="delegate" destination="-1" id="gnK-jK-eh4"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iap-XN-Vh6">
+                    <rect key="frame" x="139" y="268" width="139" height="50"/>
+                    <color key="backgroundColor" red="0.91764705882352937" green="0.14509803921568629" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="返回首页">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="backHomePageAction:" destination="-1" eventType="touchUpInside" id="dN1-Qd-ArW"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="d2i-Nv-RHi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9KN-ID-Q12"/>
-                <constraint firstAttribute="bottom" secondItem="d2i-Nv-RHi" secondAttribute="bottom" id="Nkk-qE-Qx8"/>
+                <constraint firstAttribute="bottom" secondItem="iap-XN-Vh6" secondAttribute="bottom" id="7Vf-W8-ujk"/>
+                <constraint firstAttribute="trailing" secondItem="iap-XN-Vh6" secondAttribute="trailing" id="7ra-a7-GMD"/>
+                <constraint firstItem="d2i-Nv-RHi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8F6-Ho-g0u"/>
+                <constraint firstItem="iap-XN-Vh6" firstAttribute="leading" secondItem="d2i-Nv-RHi" secondAttribute="trailing" id="AvJ-0S-SGQ"/>
+                <constraint firstAttribute="bottom" secondItem="d2i-Nv-RHi" secondAttribute="bottom" id="Bn8-Ox-ZJS"/>
+                <constraint firstItem="iap-XN-Vh6" firstAttribute="leading" secondItem="d2i-Nv-RHi" secondAttribute="trailing" id="DOH-rU-vfb"/>
+                <constraint firstItem="iap-XN-Vh6" firstAttribute="top" secondItem="wgd-46-mcH" secondAttribute="bottom" id="Th6-Bm-fEi"/>
                 <constraint firstItem="wgd-46-mcH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="WuP-8e-bmX"/>
-                <constraint firstItem="d2i-Nv-RHi" firstAttribute="top" secondItem="wgd-46-mcH" secondAttribute="bottom" id="gmU-ko-pfQ"/>
-                <constraint firstAttribute="trailing" secondItem="d2i-Nv-RHi" secondAttribute="trailing" id="ihB-sE-ana"/>
+                <constraint firstItem="iap-XN-Vh6" firstAttribute="height" secondItem="d2i-Nv-RHi" secondAttribute="height" id="gqq-c0-Yjb"/>
+                <constraint firstItem="iap-XN-Vh6" firstAttribute="width" secondItem="d2i-Nv-RHi" secondAttribute="width" id="iRQ-DT-R4N"/>
                 <constraint firstAttribute="trailing" secondItem="wgd-46-mcH" secondAttribute="trailing" id="ilh-DF-7y9"/>
                 <constraint firstItem="wgd-46-mcH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="j2t-CI-zDw"/>
             </constraints>
@@ -52,7 +69,4 @@
             <point key="canvasLocation" x="227" y="52"/>
         </view>
     </objects>
-    <resources>
-        <image name="咨询.png" width="165" height="41"/>
-    </resources>
 </document>

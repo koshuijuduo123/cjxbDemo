@@ -226,7 +226,8 @@ static UIImage* g_um_micro_topic_notice_img = nil;
     self.addImgViewItemSize = itemWidth;
     
     
-    [self setTitleViewWithTitle:UMComLocalizedString(@"um_com_micro_editTitle", @"车友新鲜事")];
+   // [self setTitleViewWithTitle:UMComLocalizedString(@"um_com_micro_editTitle", @"车友新鲜事")];
+    [self setTitle:UMComLocalizedString(@"um_com_micro_editTitle", @"车友新鲜事") font:UMComFontNotoSansLightWithSafeSize(18) titleColor:[UIColor whiteColor]];
     [self topicsAddOneTopic:self.topic];
     //创建textView
     [self createTextView];
@@ -243,7 +244,7 @@ static UIImage* g_um_micro_topic_notice_img = nil;
     leftCustomButtonView.frame = CGRectMake(0, 0, 14, 14);
     UIBarButtonItem *leftButtonItem =  [[UMComBarButtonItem alloc] initWithCustomView:leftCustomButtonView];
     [self.navigationItem setLeftBarButtonItem:leftButtonItem];
-    
+   
     UMComButton* rightCustomButtonView = [[UMComButton alloc] initWithNormalImageName:@"um_edit_send" target:self action:@selector(postContent)];
     rightCustomButtonView.frame = CGRectMake(0, 0, 20, 14);
     UIBarButtonItem *rightButtonItem =  [[UMComBarButtonItem alloc] initWithCustomView:rightCustomButtonView];

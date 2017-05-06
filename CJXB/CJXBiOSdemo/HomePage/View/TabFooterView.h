@@ -37,6 +37,7 @@ typedef void(^ButtonJuanClick) (NSInteger tag);
 @property (weak, nonatomic) IBOutlet UILabel *countLab6;
 @property (weak, nonatomic) IBOutlet UILabel *yuLab6;
 
+
 @property (weak, nonatomic) IBOutlet UIImageView *Zimg1;
 @property (weak, nonatomic) IBOutlet UIImageView *Zimg2;
 @property (weak, nonatomic) IBOutlet UIImageView *Zimg3;
@@ -45,15 +46,14 @@ typedef void(^ButtonJuanClick) (NSInteger tag);
 @property (weak, nonatomic) IBOutlet UIImageView *Zimg5;
 @property (weak, nonatomic) IBOutlet UIImageView *Zimg6;
 
-
 @property(nonatomic,copy)ButtonJuanClick buttonJuanClick;
 
 @property(nonatomic,copy)NSArray *dataArr;//接受传递过来的数据
 
--(instancetype)initWithFrame:(CGRect)frame withDataSourceArray:(NSArray *)array;
+-(instancetype)initWithFrame:(CGRect)frame withDataSourceArray:(NSMutableArray *)array;
 
 
--(void)updataWith:(NSArray *)data;
+-(void)updataWith:(NSMutableArray *)data;
 
 
 //对数据源再次进行赋值

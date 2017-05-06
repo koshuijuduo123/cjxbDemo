@@ -185,6 +185,12 @@
 - (void)addAdImgView{
     [self addSubview:self.adImgView];
     [self addSubview:self.skipButton];
+    //UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((size_width-300)/2, size_height-40, 300, 40)];
+    //label.text = GongSiName;
+    //label.font = [UIFont systemFontOfSize:9.0];
+    //label.numberOfLines = 2;
+    //label.textColor = [UIColor whiteColor];
+    //[self addSubview:label];
     [self animateStart];
 }
 #pragma mark - 清理缓冲

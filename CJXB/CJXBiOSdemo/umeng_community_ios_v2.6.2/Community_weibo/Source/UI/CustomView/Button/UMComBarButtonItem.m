@@ -61,7 +61,7 @@
     [self.customButtonView setFrame:CGRectMake(0, 0, 65, 35)];
     [self.customButtonView setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.customButtonView setTitle:title forState:UIControlStateNormal];
-    [self.customButtonView setTitleColor:[UMComTools colorWithHexString:FontColorBlue] forState:UIControlStateNormal];
+    [self.customButtonView setTitleColor:[UMComTools colorWithHexString:WhirteColor] forState:UIControlStateNormal];
 
     [self.customButtonView addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     

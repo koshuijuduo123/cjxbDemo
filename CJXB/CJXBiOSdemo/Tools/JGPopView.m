@@ -307,6 +307,7 @@
 {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.backGoundView.frame.size.width - 5, self.backGoundView.frame.size.height) style:UITableViewStylePlain];
+        [_tableView setSeparatorColor:[UIColor blackColor]];
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;

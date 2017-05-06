@@ -28,10 +28,10 @@
 {
     [super viewDidLoad];
     if ([[UIDevice currentDevice].systemVersion floatValue] < 7) {
-        [self.navigationBar setBackgroundColor:[UMComTools colorWithHexString:@"#f7f7f8"]];
+        [self.navigationBar setBackgroundColor:[UMComTools colorWithHexString:@"#2E3132"]];
         [self.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
     }else{
-        [self.navigationBar setBarTintColor:[UMComTools colorWithHexString:@"#f7f7f8"]];
+        [self.navigationBar setBarTintColor:[UMComTools colorWithHexString:@"#2E3132"]];
     }
     // Do any additional setup after loading the view from its nib.
 }

@@ -109,6 +109,6 @@
         </view>
     </objects>
     <resources>
-        <image name="zwt.png" width="600" height="400"/>
+        <image name="zwt.png" width="122" height="107"/>
     </resources>
 </document>

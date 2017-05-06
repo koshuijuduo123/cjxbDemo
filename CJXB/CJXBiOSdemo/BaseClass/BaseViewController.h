@@ -25,5 +25,8 @@
 //不用点击就会消失的提示框
 +(void)showAlertMessageWithMessage:(NSString*)message duration:(NSTimeInterval)time;
 
+//提示更新
+-(void)hsUpdateApp;
+
 
 @end

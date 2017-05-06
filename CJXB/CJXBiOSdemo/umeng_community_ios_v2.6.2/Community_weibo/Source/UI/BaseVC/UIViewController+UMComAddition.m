@@ -82,8 +82,10 @@ const char kAnimating;
 
 - (void)setRightButtonWithTitle:(NSString *)title action:(SEL)action
 {
+    
     UIBarButtonItem *rightButtonItem = [[UMComBarButtonItem alloc] initWithTitle:title target:self action:action];
     rightButtonItem.customView.frame = CGRectMake(0, 0, 40, 35);
+    
     self.navigationItem.rightBarButtonItem = rightButtonItem;
 }
 
@@ -91,12 +93,13 @@ const char kAnimating;
 {
     UMComBarButtonItem *rightButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:imageName target:self action:action];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
+    
 }
 
 - (void)setTitleViewWithTitle:(NSString *)title
 {
     [self setForumUITitle:title];
-//    [self setTitle:title font:UMComFontNotoSansLightWithSafeSize(18) titleColor:[UIColor blackColor]];
+    [self setTitle:title font:UMComFontNotoSansLightWithSafeSize(18) titleColor:[UIColor whiteColor]];
 }
 
 - (void)setForumUITitle:(NSString *)title

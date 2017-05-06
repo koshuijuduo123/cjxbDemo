@@ -119,6 +119,9 @@
 //    
 //}
 
+-(void)searchAction:(UIButton *)btn{
+    [self loadWithString:@"https://h5.youzan.com/v2/search?q=&kdt_id=18819560"];
+}
 
 
 #pragma mark - Action
@@ -148,19 +151,39 @@
 
 - (void)initBarButtonItem {
     
-    self.shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    [_shareBtn setImage:[UIImage imageNamed:@"选项"] forState:UIControlStateNormal];
+    if (![_aoutMyMessage isEqualToString:@"aboutMyMessage"]) {
+        self.shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [_shareBtn setImage:[UIImage imageNamed:@"选项"] forState:UIControlStateNormal];
+        
+        [_shareBtn addTarget:self action:@selector(logTypeArrMAction:) forControlEvents:UIControlEventTouchUpInside ];
+        
+        _shareBtn.frame = CGRectMake(5, 0, 30, 30);
+        
+        UIView *rightShareBtn = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 30.0, 30.0)];
+        [rightShareBtn addSubview:_shareBtn];
+        
+        UIBarButtonItem *menuButton1 = [[UIBarButtonItem alloc]initWithCustomView:rightShareBtn];
+        self.searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [_searchBtn setImage:[UIImage imageNamed:@"搜索"] forState:UIControlStateNormal];
+        
+        [_searchBtn addTarget:self action:@selector(searchAction:) forControlEvents:UIControlEventTouchUpInside ];
+        
+        _searchBtn.frame = CGRectMake(5, 0, 20, 20);
+        
+        UIView *rightSearchBtn = [[UIView alloc]initWithFrame:CGRectMake(0, 0.0, 50.0, 20.0)];
+        [rightSearchBtn addSubview:_searchBtn];
+        
+        UIBarButtonItem *menuButton2 = [[UIBarButtonItem alloc]initWithCustomView:rightSearchBtn];
+        
+        
+        
+        self.navigationItem.rightBarButtonItems = @[menuButton1,menuButton2];
+        
+    }
     
-    [_shareBtn addTarget:self action:@selector(logTypeArrMAction:) forControlEvents:UIControlEventTouchUpInside ];
-    
-    _shareBtn.frame = CGRectMake(5, 0, 30, 30);
-    
-    UIView *rightShareBtn = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 30.0, 30.0)];
-    [rightShareBtn addSubview:_shareBtn];
-    
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]initWithCustomView:rightShareBtn];
-    self.navigationItem.rightBarButtonItem = menuButton;
 }
 
 - (void)loadWithString:(NSString *)urlStr {

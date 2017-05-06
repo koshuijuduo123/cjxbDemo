@@ -47,4 +47,4 @@
 //汽车品牌列表
 #define CarPinPai @"https://comm.app.autohome.com.cn/comm_v1.0.0/ashx/brand-pm1-ts366195739525494900.json"
 
-
+#define GongSiName @"Copyright (c) 2017年 新乡市新谷动力网络技术服务有限公司  All rights reserved"

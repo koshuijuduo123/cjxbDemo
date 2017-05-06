@@ -15,13 +15,12 @@
 #import "TabHeaderView.h"
 #import "TabFooterView.h"
 #import "WebViewController.h"
-#import "LikesViewController.h"
-#import "TickentInFoViewController.h"
+
 #import "UserDefault.h"
 #import "MapModel.h"
 #import "MapDefaults.h"
 #import "CoreView.h"
-#import "UMDoorView.h"
+#import "UMTabHeaderView.h"
 
 #import "UMComFeedTableViewController.h"
 #import "UMComFindViewController.h"
@@ -50,6 +49,9 @@
 #import "WeatherView.h"
 #import "UILabel+PPCounter.h"
 #import "UIScrollView+JElasticPullToRefresh.h"
+#import "OpenGoodsService.h"
+#import "OpenTradeService.h"
+#import "MyWKWebViewController.h"
 #import <CoreLocation/CoreLocation.h> //核心定位框架
 #import <AudioToolbox/AudioToolbox.h>
 #define KTableView_Height 620 //tableView的高度
@@ -80,8 +82,8 @@
 @property(nonatomic,strong)UIView *customNavibarView;
 
 @property(nonatomic,strong)UMComFeedTableViewController *realTimeFeedsViewController;
-@property(nonatomic,strong)UMDoorView *umDoorView;
 
+@property(nonatomic,strong)UMTabHeaderView *umDoorView;
 
 @end
 static NSString *const identider = @"cell";
@@ -384,7 +386,7 @@ static NSString *const identider = @"cell";
                     
                     if ([model.nickname isEqualToString:@""]) {
                         
-                        model.nickname = [NSString stringWithFormat:@"帮主%@",model.myid];
+                        model.nickname = [NSString stringWithFormat:@"%@",model.username];
                     }
                     
                     //将登录数据存入本地
@@ -416,7 +418,7 @@ static NSString *const identider = @"cell";
             [weakSelf.tableView stopLoading];
         });
     } LoadingView:loadingViewCircle];
-    [self.tableView setJElasticPullToRefreshFillColor:[UIColor colorWithRed:255/255.0 green:132/255.0 blue:1/255.0 alpha:1.0]];
+    [self.tableView setJElasticPullToRefreshFillColor:[UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:1.0]];
     
     [self.tableView setJElasticPullToRefreshBackgroundColor:self.tableView.backgroundColor];
     
@@ -430,7 +432,7 @@ static NSString *const identider = @"cell";
 //根据透明度绘制一个图片
 -(UIImage *)getImageWithAlpha:(CGFloat)alpha{
     //创建color对象
-    UIColor *color = [UIColor colorWithRed:255/255.0 green:132/255.0 blue:1/255.0 alpha:alpha];
+    UIColor *color = [UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:alpha];
     //声明一个绘制大小
     CGSize colorSize = CGSizeMake(1, 1);
     
@@ -530,11 +532,11 @@ static NSString *const identider = @"cell";
     //初始化自定义导航栏视图
     self.customNavibarView = [[UIView alloc]initWithFrame:CGRectMake(0, -20, size_width, 64)];
     
-    _customNavibarView.backgroundColor = [UIColor colorWithRed:255/255.0 green:132/255.0 blue:1/255.0 alpha:1.0];
+    _customNavibarView.backgroundColor = [UIColor colorWithRed:46/255.0 green:49/255.0 blue:50/255.0 alpha:1.0];
     [self.navigationController.navigationBar addSubview:_customNavibarView];
     
     UIImageView *imgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"xblogo"]];
-    imgView.frame = CGRectMake(-5,15, 160, 50);
+    imgView.frame = CGRectMake(-5,20, 150, 40);
     [_customNavibarView addSubview:imgView];
     
     WeatherView *weatView = [[WeatherView alloc]initWithFrame:CGRectMake(size_width/2, 20, size_width/2, 40)];
@@ -545,9 +547,9 @@ static NSString *const identider = @"cell";
     
     int h;
     if (size_width<350) {
-        h = 755;
+        h = 555;
     }else{
-        h = 805;
+        h = 605;
     }
     
     //创建tableView的HeaderView
@@ -638,12 +640,7 @@ static NSString *const identider = @"cell";
                 [weakSelf.navigationController pushViewController:carVC animated:YES];
                 
             }
-            
-            
-            
-            
-            
-        }else{
+            }else{
            //判断点击的是驾照
             if ([app1 searchMessageEntity].count>0) {
                
@@ -857,50 +854,6 @@ static NSString *const identider = @"cell";
     };
     
     
-    //################车友动态######################
-    
-    self.umDoorView = [[UMDoorView alloc]initWithFrame:CGRectMake(5, self.countView.y+self.countView.height+5, size_width-10, 200)];
-    NSNotification *notification2 = [NSNotification notificationWithName:kUMComUnreadNotificationRefreshNotification object:nil userInfo:nil];
-    [[NSNotificationCenter defaultCenter] postNotification:notification2];
-    
-    __block JSBadgeView *bageView =[_umDoorView.unPushLab viewWithTag:9999];
-    
-    _umDoorView.buttonUMPushAction = ^(NSString *string){
-      
-        if ([string isEqualToString:@"success"]) {
-            if (bageView.badgeText==nil) {
-                //跳转友盟
-                UIViewController *communityViewController = [UMCommunity getFeedsViewController];
-                communityViewController.hidesBottomBarWhenPushed = YES;
-                [weakSelf.navigationController pushViewController:communityViewController animated:YES];
-                
-            }else{
-                UMComNoticeSystemViewController *noticeVC = [[UMComNoticeSystemViewController alloc]init];
-                noticeVC.hidesBottomBarWhenPushed = YES;
-                [weakSelf.navigationController pushViewController:noticeVC animated:YES];
-                
-                
-            }
-        }
-        
-        if ([string isEqualToString:@"分类按钮"]) {
-            //弹出视图
-            UMComDiscoverViewController *discover = [[UMComDiscoverViewController alloc]init];
-            discover.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:discover animated:YES];
-            
-            
-        }
-        
-        
-    };
-    
-    
-    [headerView addSubview:_umDoorView];
-    
-    
-       
-    
 }
 
 
@@ -923,153 +876,179 @@ static NSString *const identider = @"cell";
         
     }];
     
-    
-    NSDictionary *parmDic2 = @{@"exec":@"recommendcoupon"};
-    
-    [NetworkManger requestPOSTWithURLStr:URL_WriteBook parmDic:parmDic2 finish:^(id responseObject) {
-        self.juanDataSource = [NSMutableDictionary dictionaryWithDictionary:responseObject];
-        NSArray *array1 = [NSArray array];
-        array1 = self.juanDataSource[@"Data"];
-        
-        //屏幕适配
-        int viewHeihgt;
-        if (size_width<=350) {
-            viewHeihgt=645+size_height-50;
+    OpenGoodsService *service = [[YZSDK sharedInstance] getService:@protocol(OpenGoodsServiceProtocol)];
+
+    [service getGoodsItemsFields:@"title,price,pic_url,num,detail_url" search:nil goodsState: YZGoodsOnSaleState  tagId:@"95358910" pageNO:@"0" pageSize:@"6" orderByWay: YZGOodsORderByCreateDescWay callback:^(NSDictionary *response, NSError *error) {
+        if (!error) {
+            self.juanDataSource = [NSMutableDictionary dictionaryWithDictionary:response[@"response"]];
+            NSMutableArray *array1 = [NSMutableArray array];
+            array1 = self.juanDataSource[@"items"];
+            //屏幕适配
+            int viewHeihgt;
+            viewHeihgt=755+size_height;
+            
+            UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, viewHeihgt)];
+            
+            self.tableView.tableFooterView = footerView;
+            
+            footerView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
+            if (array1.count<6) {
+                [service getGoodsItemsFields:@"title,price,pic_url,num,detail_url" search:nil goodsState:YZGoodsSoldOutState  tagId:@"95358910" pageNO:@"0" pageSize:@"6" orderByWay: YZGOodsORderByCreateDescWay callback:^(NSDictionary *response, NSError *error) {
+                    if (!error) {
+                        NSDictionary *dic =[NSDictionary dictionaryWithDictionary:response[@"response"]];
+                        NSArray *arr = [NSArray arrayWithArray:dic[@"items"]];
+                        
+                        NSMutableArray *array2 = [NSMutableArray array];
+                        array2 =[NSMutableArray arrayWithArray:self.juanDataSource[@"items"]];
+                        
+                        for (NSDictionary *dict in arr) {
+                            [array2 addObject:dict];
+                        }
+                        
+                        self.tabFoterView = [[TabFooterView alloc]initWithFrame:CGRectMake(0, 0, size_width, viewHeihgt-size_height) withDataSourceArray:array2];
+                        [footerView addSubview:_tabFoterView];
+                        [self xuanZheQiWithArr:array2];
+                        [self umMessageWith:footerView];
+                    }
+                    
+                    
+                }];
+            }else{
+                self.tabFoterView = [[TabFooterView alloc]initWithFrame:CGRectMake(0, 0, size_width, viewHeihgt-size_height) withDataSourceArray:array1];
+                [footerView addSubview:_tabFoterView];
+                [self xuanZheQiWithArr:array1];
+                
+                [self umMessageWith:footerView];
+                
+            }
+            
+    }
+    }];
+}
+
+-(void)xuanZheQiWithArr:(NSMutableArray *)sarr{
+     __weak HomePageViewController *weakSelf = self;
+    __block NSArray *arr = [NSArray arrayWithArray:sarr];
+    _tabFoterView.buttonJuanClick = ^(NSInteger tag){
+        MyWKWebViewController *tickVC = [[MyWKWebViewController alloc]init];
+        tickVC.hidesBottomBarWhenPushed = YES;
+        if (tag==800) {
+            //NSLog(@"电子劵1");
+            NSDictionary *dict = arr[0];
+            tickVC.loadUrl = nil;
+            tickVC.loadUrl = dict[@"detail_url"];
+            
+            [weakSelf.navigationController pushViewController:tickVC animated:YES];
+            
+            
+            
+        }else if (tag==801){
+            //NSLog(@"电子劵2");
+            NSDictionary *dict1 = arr[1];
+            tickVC.loadUrl = nil;
+            tickVC.loadUrl = dict1[@"detail_url"];
+            [weakSelf.navigationController pushViewController:tickVC animated:YES];
+            
+        }else if (tag==802){
+            //NSLog(@"电子劵3");
+            NSDictionary *dict2 = arr[2];
+            tickVC.loadUrl = nil;
+            tickVC.loadUrl = dict2[@"detail_url"];
+            [weakSelf.navigationController pushViewController:tickVC animated:YES];
+        }else if (tag==803){
+            //NSLog(@"电子劵4");
+            NSDictionary *dict3 = arr[3];
+            tickVC.loadUrl = nil;
+            tickVC.loadUrl = dict3[@"detail_url"];
+            [weakSelf.navigationController pushViewController:tickVC animated:YES];
+        }else if(tag==804){
+            //NSLog(@"电子劵5");
+            NSDictionary *dict4 = arr[4];
+            tickVC.loadUrl = nil;
+            tickVC.loadUrl = dict4[@"detail_url"];
+            [weakSelf.navigationController pushViewController:tickVC animated:YES];
+        }else if (tag==805){
+            //NSLog(@"电子劵6");
+            NSDictionary *dict5 = arr[5];
+            tickVC.loadUrl = nil;
+            tickVC.loadUrl = dict5[@"detail_url"];
+            [weakSelf.navigationController pushViewController:tickVC animated:YES];
         }else{
-            viewHeihgt=615+size_height-50;
+            weakSelf.tabBarController.selectedIndex=2;
+            //                    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            //                    LikesViewController *tabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"LikesViewController"];
+            //                    tabBarController.hidesBottomBarWhenPushed = YES;
+            //
+            //                    [weakSelf.navigationController pushViewController:tabBarController animated:YES];
+            
         }
         
         
         
-        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, viewHeihgt)];
-        
-        self.tableView.tableFooterView = footerView;
-        
-        footerView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
-        
-        
-        
-        
-        self.tabFoterView = [[TabFooterView alloc]initWithFrame:CGRectMake(0, 0, size_width, viewHeihgt-size_height) withDataSourceArray:array1];
-        [footerView addSubview:_tabFoterView];
-        
-        
-        __weak HomePageViewController *weakSelf = self;
-        __block NSArray *arr = [NSArray arrayWithArray:array1];
-        _tabFoterView.buttonJuanClick = ^(NSInteger tag){
-            TickentInFoViewController *tickVC = [[TickentInFoViewController alloc]init];
-            tickVC.hidesBottomBarWhenPushed = YES;
-            if (tag==800) {
-                //NSLog(@"电子劵1");
-                NSDictionary *dict = arr[0];
-                tickVC.tickid = nil;
-                tickVC.tickid = dict[@"id"];
-                
-                [weakSelf.navigationController pushViewController:tickVC animated:YES];
-                
-                
-                
-            }else if (tag==801){
-                //NSLog(@"电子劵2");
-                NSDictionary *dict1 = arr[1];
-                tickVC.tickid = nil;
-                tickVC.tickid = dict1[@"id"];
-                [weakSelf.navigationController pushViewController:tickVC animated:YES];
-                
-            }else if (tag==802){
-                //NSLog(@"电子劵3");
-                NSDictionary *dict2 = arr[2];
-                tickVC.tickid = nil;
-                tickVC.tickid = dict2[@"id"];
-                [weakSelf.navigationController pushViewController:tickVC animated:YES];
-            }else if (tag==803){
-                //NSLog(@"电子劵4");
-                NSDictionary *dict3 = arr[3];
-                tickVC.tickid = nil;
-                tickVC.tickid = dict3[@"id"];
-                [weakSelf.navigationController pushViewController:tickVC animated:YES];
-            }else if(tag==804){
-                //NSLog(@"电子劵5");
-                NSDictionary *dict4 = arr[4];
-                tickVC.tickid = nil;
-                tickVC.tickid = dict4[@"id"];
-                [weakSelf.navigationController pushViewController:tickVC animated:YES];
-            }else if (tag==805){
-                //NSLog(@"电子劵6");
-                NSDictionary *dict5 = arr[5];
-                tickVC.tickid = nil;
-                tickVC.tickid = dict5[@"id"];
-                [weakSelf.navigationController pushViewController:tickVC animated:YES];
-            }else{
-                //weakSelf.tabBarController.selectedIndex=2;
-                UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                LikesViewController *tabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"LikesViewController"];
-                tabBarController.hidesBottomBarWhenPushed = YES;
-                
-                [weakSelf.navigationController pushViewController:tabBarController animated:YES];
+    };
 
-            }
-            
-            
-            
-        };
-        
-        
-        TabHeaderView *tabHeaderView = [[TabHeaderView alloc]initWithFrame:CGRectMake(0, _tabFoterView.y+_tabFoterView.height+5, size_width, 40)];
-        
-        tabHeaderView.TimeRequestLab.text = @"最新动态";
-        [tabHeaderView.shuoshuoBtn setTitle:@"+发布动态／提问" forState: UIControlStateNormal];
-        
-        
-        tabHeaderView.buttonHeaderClick = ^(NSString *string){
-          
-            if ([string isEqualToString:@"success"]) {
-                NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
-                
-                if (cookies.count) {
-                    UMComEditViewController *editViewController = [[UMComEditViewController alloc] init];
-                    
-                    UMComNavigationController *editNaviController = [[UMComNavigationController alloc] initWithRootViewController:editViewController];
-                    [self presentViewController:editNaviController animated:YES completion:nil];
-                
-                }else{
-                    LoginViewController *logVC = [[LoginViewController alloc]init];
-                    
-                    [logVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-                    
-                    [self presentViewController:logVC animated:YES completion:nil];
-                }
-                }
-            
-        };
-        [footerView addSubview:tabHeaderView];
-        dispatch_async(dispatch_queue_create("cjxb", DISPATCH_QUEUE_CONCURRENT), ^{
-            self.realTimeFeedsViewController = [[UMComFeedTableViewController alloc] init];
-            
-            _realTimeFeedsViewController.isLoadLoacalData = NO;
-            _realTimeFeedsViewController.isAutoStartLoadData = YES;
-            _realTimeFeedsViewController.fetchRequest = [[UMComAllNewFeedsRequest alloc]initWithCount:5];
-           
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _realTimeFeedsViewController.tableView.frame = CGRectMake(0, tabHeaderView.y+tabHeaderView.height, size_width, size_height-50);
-                [self addChildViewController:_realTimeFeedsViewController];
-                
-                [footerView addSubview:_realTimeFeedsViewController.tableView];
-            });
-        });
-        
-        
-    } enError:^(NSError *error) {
-        
-    }];
-    
-    
-    
-    
-    
-    
 }
 
+
+-(void)umMessageWith:(UIView *)fatherView{
+    __weak HomePageViewController *weakSelf = self;
+    self.umDoorView = [[UMTabHeaderView alloc]initWithFrame:CGRectMake(0, _tabFoterView.y+_tabFoterView.height+5, size_width, 40)];
+    
+    _umDoorView.TimeRequestLab.text = @"最新动态";
+    [_umDoorView.shuoshuoBtn setTitle:@"+发布动态／提问" forState: UIControlStateNormal];
+    NSNotification *notification2 = [NSNotification notificationWithName:kUMComUnreadNotificationRefreshNotification object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification2];
+    
+    
+    _umDoorView.buttonHeaderClick = ^(NSString *string){
+        
+        if ([string isEqualToString:@"success"]) {
+            NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
+            
+            if (cookies.count) {
+                UMComEditViewController *editViewController = [[UMComEditViewController alloc] init];
+                
+                UMComNavigationController *editNaviController = [[UMComNavigationController alloc] initWithRootViewController:editViewController];
+                [weakSelf presentViewController:editNaviController animated:YES completion:nil];
+                
+            }else{
+                LoginViewController *logVC = [[LoginViewController alloc]init];
+                
+                [logVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+                
+                [weakSelf presentViewController:logVC animated:YES completion:nil];
+            }
+        }
+        
+        if ([string isEqualToString:@"分类按钮"]) {
+            //弹出视图
+            UMComDiscoverViewController *discover = [[UMComDiscoverViewController alloc]init];
+            discover.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:discover animated:YES];
+            
+            
+        }
+        
+        
+        
+    };
+    [fatherView addSubview:_umDoorView];
+    dispatch_async(dispatch_queue_create("cjxb", DISPATCH_QUEUE_CONCURRENT), ^{
+        self.realTimeFeedsViewController = [[UMComFeedTableViewController alloc] init];
+        
+        _realTimeFeedsViewController.isLoadLoacalData = NO;
+        _realTimeFeedsViewController.isAutoStartLoadData = YES;
+        _realTimeFeedsViewController.fetchRequest = [[UMComAllNewFeedsRequest alloc]initWithCount:5];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _realTimeFeedsViewController.tableView.frame = CGRectMake(0, _umDoorView.y+_umDoorView.height, size_width, size_height-50);
+            [self addChildViewController:_realTimeFeedsViewController];
+            
+            [fatherView addSubview:_realTimeFeedsViewController.tableView];
+        });
+    });
+
+}
 
 
 
@@ -1090,7 +1069,7 @@ static NSString *const identider = @"cell";
     cell.textLabel.font = [UIFont systemFontOfSize:15.0];
     
     
-    cell.imageView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"热点"] ofType:@"png"]];
+    cell.imageView.image = [UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"热点"]];
     
     cell.textLabel.text = dic[@"title"];
     // 添加右侧尖头

@@ -50,7 +50,7 @@
                 <outlet property="TimeRequestLab" destination="DFp-3k-0yJ" id="Lf5-ig-KOR"/>
                 <outlet property="shuoshuoBtn" destination="jI0-qX-pQ0" id="OpX-dC-Ci6"/>
             </connections>
-            <point key="canvasLocation" x="231" y="484.5"/>
+            <point key="canvasLocation" x="291" y="277.5"/>
         </view>
     </objects>
     <resources>

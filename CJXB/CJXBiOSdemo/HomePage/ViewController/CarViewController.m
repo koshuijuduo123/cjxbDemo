@@ -109,12 +109,9 @@
     //遍历防止重复添加
     for (CarEntity *entity in [app searchMovieEntiity]) {
         NSString *string = [NSString stringWithFormat:@"豫%@",self.phoneTextFirld.text];
-        if ([entity.hphm isEqualToString:string]) {
+        if ([entity.hphm caseInsensitiveCompare:string]==NSOrderedSame) {
             
              [CarViewController showAlertMessageWithMessage:@"此车辆已入库，换辆看看" duration:2.0];
-            
-            
-            
             return;
 
         }
