@@ -818,7 +818,7 @@
             
             
         }else{
-            [WebViewController showAlertMessageWithMessage:@"登录后才可赚取积分" duration:2.0];
+            [WebViewController showAlertMessageWithMessage:@"登录后才可赚取助力值" duration:2.0];
             
         }
 }

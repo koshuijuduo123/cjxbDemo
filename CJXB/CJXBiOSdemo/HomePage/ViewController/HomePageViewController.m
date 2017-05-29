@@ -661,10 +661,10 @@ static NSString *const identider = @"cell";
     //###################ThreeButton模块####################
     TwoButtonView *threeButtonView = [[TwoButtonView alloc]initWithFrame:CGRectMake(0, twoButtonView.height+twoButtonView.y+5, size_width, 70)];
     threeButtonView.carImg.image = [UIImage imageNamed:@"签到"];
-    threeButtonView.cardImg.image = [UIImage imageNamed:@"兑换"];
+    threeButtonView.cardImg.image = [UIImage imageNamed:@"圈子"];
     
     [threeButtonView.carBtn setTitle:@"签到积分" forState:UIControlStateNormal];
-    [threeButtonView.cardBtn setTitle:@"礼品兑换" forState:UIControlStateNormal];
+    [threeButtonView.cardBtn setTitle:@"帮友圈子" forState:UIControlStateNormal];
     
     [headerView addSubview:threeButtonView];
     
@@ -674,35 +674,31 @@ static NSString *const identider = @"cell";
             NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
             
             if (cookies.count) {
-                WebViewController *webVC = [[WebViewController alloc]init];
+//                WebViewController *webVC = [[WebViewController alloc]init];
+//                webVC.hidesBottomBarWhenPushed = YES;
+//                
+//                webVC.isUIWebView = YES;
+//                webVC.title = @"签到送积分";
+//                webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
+//                
+//                [webVC.view addSubview:webVC.webView];
+//                
+//                NSString *string5 = [NSString stringWithFormat:qiandaoCounts];
+//                
+//                NSURL *url1 = [[NSURL alloc]initWithString:string5];
+//                
+//                NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//                [cookieStorage setCookies:cookies forURL:url1 mainDocumentURL:nil];
+//                
+//                
+//                NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:string5]];
+//                [webVC.webView loadRequest:request];
+//                webVC.qiandao = @"qiandao";
+                MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+                webVC.loadUrl = @"https://h5.youzan.com/v2/apps/checkin?alias=pyg4ki8j";
                 webVC.hidesBottomBarWhenPushed = YES;
-                
-                webVC.isUIWebView = YES;
-                webVC.title = @"签到送积分";
-                webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-                
-                [webVC.view addSubview:webVC.webView];
-                
-                NSString *string5 = [NSString stringWithFormat:qiandaoCounts];
-                
-                NSURL *url1 = [[NSURL alloc]initWithString:string5];
-                
-                NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                [cookieStorage setCookies:cookies forURL:url1 mainDocumentURL:nil];
-                
-                
-                NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:string5]];
-                [webVC.webView loadRequest:request];
-                webVC.qiandao = @"qiandao";
-                //WKWebViewController *webVC = [[WKWebViewController alloc]init];
-                //[webVC loadWithString:@"https://h5.youzan.com/v2/apps/checkin?alias=pyg4ki8j"];
                 [weakSelf.navigationController pushViewController:webVC animated:YES];
-                
-                
-                
-                
-                
-            }else{
+                }else{
                 
                 LoginViewController *logVC = [[LoginViewController alloc]init];
                 logVC.hidesBottomBarWhenPushed = YES;
@@ -710,35 +706,32 @@ static NSString *const identider = @"cell";
                 [logVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
                 [weakSelf presentViewController:logVC animated:YES completion:nil];
             }
+            }else {
             
-            
-            
-        }else {
-            
-            WebViewController *webVC = [[WebViewController alloc]init];
-            webVC.qiandao = @"YES";
-            webVC.title = @"礼品兑换";
-            webVC.hidesBottomBarWhenPushed = YES;
-            webVC.isUIWebView = YES;
-            
-            
-            
-            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-            
-            [webVC.view addSubview:webVC.webView];
-            LoginDataModel *model   =  [UserDefault getUserInfo];
-            
-            NSString *string5 = [NSString stringWithFormat:lipinDuiHuanURL,model.myid];
-            
-            NSURL *url1 = [[NSURL alloc]initWithString:string5];
-            NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url1];
-            
-            
-            
-            [webVC.webView loadRequest:request];
-            
-            [weakSelf.navigationController pushViewController:webVC animated:YES];
-            
+//            WebViewController *webVC = [[WebViewController alloc]init];
+//            webVC.qiandao = @"YES";
+//            webVC.title = @"礼品兑换";
+//            webVC.hidesBottomBarWhenPushed = YES;
+//            webVC.isUIWebView = YES;
+//            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
+//            
+//            [webVC.view addSubview:webVC.webView];
+//            LoginDataModel *model   =  [UserDefault getUserInfo];
+//            
+//            NSString *string5 = [NSString stringWithFormat:lipinDuiHuanURL,model.myid];
+//            
+//            NSURL *url1 = [[NSURL alloc]initWithString:string5];
+//            NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url1];
+//            
+//            
+//            
+//            [webVC.webView loadRequest:request];
+//            
+//            [weakSelf.navigationController pushViewController:webVC animated:YES];
+                UIViewController *communityViewController = [UMCommunity getFeedsViewController];
+                communityViewController.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:communityViewController animated:YES];
+          
             
         }
             
@@ -769,8 +762,6 @@ static NSString *const identider = @"cell";
         }
     
     };
-    
-    
     
       //################积分板模块####################
     self.countView = [[CountsView alloc]initWithFrame:CGRectMake(0, fourButtonView.height+fourButtonView.y+5, size_width, 130)];
@@ -819,7 +810,7 @@ static NSString *const identider = @"cell";
                 webVC.hidesBottomBarWhenPushed = YES;
                
                 
-                webVC.navigationItem.title = @"积分纪录";
+                webVC.title = @"助力值纪录";
                 webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
                 
                 
@@ -878,7 +869,7 @@ static NSString *const identider = @"cell";
     
     OpenGoodsService *service = [[YZSDK sharedInstance] getService:@protocol(OpenGoodsServiceProtocol)];
 
-    [service getGoodsItemsFields:@"title,price,pic_url,num,detail_url" search:nil goodsState: YZGoodsOnSaleState  tagId:@"95358910" pageNO:@"0" pageSize:@"6" orderByWay: YZGOodsORderByCreateDescWay callback:^(NSDictionary *response, NSError *error) {
+    [service getGoodsItemsFields:@"title,price,pic_url,num,detail_url,origin_price" search:nil goodsState: YZGoodsOnSaleState  tagId:@"95358910" pageNO:@"0" pageSize:@"6" orderByWay: YZGOodsORderByCreateDescWay callback:^(NSDictionary *response, NSError *error) {
         if (!error) {
             self.juanDataSource = [NSMutableDictionary dictionaryWithDictionary:response[@"response"]];
             NSMutableArray *array1 = [NSMutableArray array];
@@ -893,7 +884,7 @@ static NSString *const identider = @"cell";
             
             footerView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
             if (array1.count<6) {
-                [service getGoodsItemsFields:@"title,price,pic_url,num,detail_url" search:nil goodsState:YZGoodsSoldOutState  tagId:@"95358910" pageNO:@"0" pageSize:@"6" orderByWay: YZGOodsORderByCreateDescWay callback:^(NSDictionary *response, NSError *error) {
+                [service getGoodsItemsFields:@"title,price,pic_url,num,detail_url,origin_price" search:nil goodsState:YZGoodsSoldOutState  tagId:@"95358910" pageNO:@"0" pageSize:@"6" orderByWay: YZGOodsORderByCreateDescWay callback:^(NSDictionary *response, NSError *error) {
                     if (!error) {
                         NSDictionary *dic =[NSDictionary dictionaryWithDictionary:response[@"response"]];
                         NSArray *arr = [NSArray arrayWithArray:dic[@"items"]];
@@ -1021,10 +1012,20 @@ static NSString *const identider = @"cell";
         }
         
         if ([string isEqualToString:@"分类按钮"]) {
-            //弹出视图
-            UMComDiscoverViewController *discover = [[UMComDiscoverViewController alloc]init];
-            discover.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:discover animated:YES];
+            JSBadgeView *bageView =  [weakSelf.umDoorView viewWithTag:9999];
+            if (bageView.badgeText) {
+                UMComNoticeSystemViewController *userNewaNoticeViewController = [[UMComNoticeSystemViewController alloc] init];
+                userNewaNoticeViewController.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController  pushViewController:userNewaNoticeViewController animated:YES];
+            }else{
+                //弹出视图
+                UMComDiscoverViewController *discover = [[UMComDiscoverViewController alloc]init];
+                discover.hidesBottomBarWhenPushed = YES;
+                [weakSelf.navigationController pushViewController:discover animated:YES];
+                
+            }
+            
+            
             
             
         }
@@ -1159,10 +1160,6 @@ static NSString *const identider = @"cell";
         [cookieString deleteCharactersInRange:NSMakeRange(cookieString.length - 1, 1)];
     }
     
-
-    
-    
-    
     //[webVC.webView setMediaPlaybackRequiresUserAction:NO];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url1];
     if (cookies.count) {
@@ -1171,9 +1168,6 @@ static NSString *const identider = @"cell";
         
         [request addValue:cookie forHTTPHeaderField:@"Cookie"];
     }
-    
-
-    
     
     [webVC.webView loadRequest:request];
     
@@ -1366,13 +1360,6 @@ static NSString *const identider = @"cell";
     
     scrollView.bounces = (scrollView.contentOffset.y >= size_height) ? NO : YES;
 }
-
-
-
-
-
-
-
 
 -(void)dealloc{
     

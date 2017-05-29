@@ -74,8 +74,6 @@
 
 
 
-
-
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -119,6 +117,7 @@
     originOffset = self.navigationController.navigationBar.frame.origin;
     self.findButton.center = CGPointMake(self.view.frame.size.width-27, self.findButton.center.y);
     self.findButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+     _findButton.hidden = NO;
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
         weakSelf.findButton.alpha = 1;
@@ -135,6 +134,7 @@
     self.navigationController.navigationBar.translucent = YES;
     [self hidenKeyBoard];
     self.findButton.alpha = 0;
+    _findButton.hidden = YES;
     [self.menuView removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }

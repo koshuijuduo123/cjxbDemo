@@ -20,7 +20,7 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
     animation.keyPath = @"transform.scale";
-    animation.values = @[@1.0,@1.3,@0.9,@1.15,@0.95,@1.02,@1.0];
+    animation.values = @[@1.0,@1.2,@0.9,@1.15,@0.95,@1.02,@1.0];
     animation.duration = 3;
     animation.calculationMode = kCAAnimationCubic;
     //把动画添加上去就OK了

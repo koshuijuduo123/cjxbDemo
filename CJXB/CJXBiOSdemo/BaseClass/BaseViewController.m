@@ -84,12 +84,6 @@
 }
 
 
-
-
-
-
-
-
 //不用点击自动消失的提示框
 +(void)showAlertMessageWithMessage:(NSString*)message duration:(NSTimeInterval)time
 {

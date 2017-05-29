@@ -315,7 +315,7 @@
                 webVC.hidesBottomBarWhenPushed = YES;
                
                 webVC.isUIWebView = YES;
-                webVC.title = @"积分纪录";
+                webVC.title = @"助力值纪录";
                 webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
                 
                 [webVC.view addSubview:webVC.webView];

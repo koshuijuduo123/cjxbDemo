@@ -51,6 +51,12 @@
             self.titleLab4.font = [UIFont systemFontOfSize:15.0];
             self.titleLab5.font = [UIFont systemFontOfSize:15.0];
             self.titleLabel6.font = [UIFont systemFontOfSize:15.0];
+            self.yuanJiaLab.font = [UIFont systemFontOfSize:10.0];
+            self.yuanJiaLab2.font = [UIFont systemFontOfSize:10.0];
+            self.yuanJiaLab3.font = [UIFont systemFontOfSize:10.0];
+            self.yuanJiaLab4.font = [UIFont systemFontOfSize:10.0];
+            self.yuanJiaLab5.font = [UIFont systemFontOfSize:10.0];
+            self.yuanJiaLab6.font = [UIFont systemFontOfSize:10.0];
         }
         
         
@@ -68,12 +74,31 @@
             self.titleLab5.text = [array[4] objectForKey:@"title"];
             self.titleLabel6.text = [array[5] objectForKey:@"title"];
         
-        self.countLab1.text =[NSString stringWithFormat:@"¥%@",[array[0] objectForKey:@"price"]];
-        self.countLab2.text = [NSString stringWithFormat:@"¥%@",[array[1] objectForKey:@"price"]];
-        self.countLab3.text = [NSString stringWithFormat:@"¥%@",[array[2] objectForKey:@"price"]];
-        self.countLab4.text = [NSString stringWithFormat:@"¥%@",[array[3] objectForKey:@"price"]];
-        self.countLab5.text = [NSString stringWithFormat:@"¥%@",[array[4] objectForKey:@"price"]];
-        self.countLab6.text = [NSString stringWithFormat:@"¥%@",[array[5] objectForKey:@"price"]];
+        for (int i = 0; i<6; i++) {
+           NSString *deleteAfterPriceStr =[self deleteTheDecimalPointAfterTheNumber:[array[i] objectForKey:@"price"]];
+            switch (i) {
+                case 0:
+                    self.countLab1.text = [NSString stringWithFormat:@"¥%@",deleteAfterPriceStr];
+                    break;
+                case 1:
+                    self.countLab2.text = [NSString stringWithFormat:@"¥%@",deleteAfterPriceStr];
+                    break;
+                case 2:
+                    self.countLab3.text = [NSString stringWithFormat:@"¥%@",deleteAfterPriceStr];
+                    break;
+                case 3:
+                    self.countLab4.text = [NSString stringWithFormat:@"¥%@",deleteAfterPriceStr];
+                    break;
+                case 4:
+                    self.countLab5.text = [NSString stringWithFormat:@"¥%@",deleteAfterPriceStr];
+                    break;
+                    
+                default:
+                    self.countLab6.text = [NSString stringWithFormat:@"¥%@",deleteAfterPriceStr];
+                    break;
+            }
+        }
+        
         
         self.yuLab1.text = [NSString stringWithFormat:@"剩:%@",[array[0] objectForKey:@"num"]];
         self.yuLab2.text = [NSString stringWithFormat:@"剩:%@",[array[1] objectForKey:@"num"]];
@@ -81,7 +106,20 @@
         self.yuLab4.text = [NSString stringWithFormat:@"剩:%@",[array[3] objectForKey:@"num"]];
         self.yuLab5.text =[NSString stringWithFormat:@"剩:%@", [array[4] objectForKey:@"num"]];
         self.yuLab6.text = [NSString stringWithFormat:@"剩:%@",[array[5] objectForKey:@"num"]];
-
+        
+        self.yuanJiaLab.text = [NSString stringWithFormat:@"原价:%@",[array[0] objectForKey:@"origin_price"]];
+        self.yuanJiaLab2.text = [NSString stringWithFormat:@"原价:%@",[array[1] objectForKey:@"origin_price"]];
+        self.yuanJiaLab3.text = [NSString stringWithFormat:@"原价:%@",[array[2] objectForKey:@"origin_price"]];
+        self.yuanJiaLab4.text = [NSString stringWithFormat:@"原价:%@",[array[3] objectForKey:@"origin_price"]];
+        self.yuanJiaLab5.text = [NSString stringWithFormat:@"原价:%@",[array[4] objectForKey:@"origin_price"]];
+        self.yuanJiaLab6.text = [NSString stringWithFormat:@"原价:%@",[array[5] objectForKey:@"origin_price"]];
+        [self underlineUsePriceWithObject:_yuanJiaLab];
+        [self underlineUsePriceWithObject:_yuanJiaLab2];
+        [self underlineUsePriceWithObject:_yuanJiaLab3];
+        [self underlineUsePriceWithObject:_yuanJiaLab4];
+        [self underlineUsePriceWithObject:_yuanJiaLab5];
+        [self underlineUsePriceWithObject:_yuanJiaLab6];
+        
         //是否抢光
         [self hiddinWith:array];
         
@@ -89,6 +127,18 @@
     
     return self;
     
+}
+
+-(void)underlineUsePriceWithObject:(UILabel *)label{
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:label.text];
+    
+    [attributedString addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, label.text.length)];
+    label.attributedText = attributedString;
+}
+
+-(NSString *)deleteTheDecimalPointAfterTheNumber:(NSString *)price{
+    NSString *string = [NSString stringWithFormat:@"%.1f",[price floatValue]];
+    return string;
 }
 
 //优惠劵详情点击按钮
@@ -154,6 +204,14 @@
     self.yuLab4.text = [data[3] objectForKey:@"num"];
     self.yuLab5.text = [data[4] objectForKey:@"num"];
     self.yuLab6.text = [data[5] objectForKey:@"num"];
+    
+    self.yuanJiaLab.text = [data[0] objectForKey:@"origin_price"];
+    self.yuanJiaLab2.text = [data[1] objectForKey:@"origin_price"];
+    self.yuanJiaLab3.text = [data[2] objectForKey:@"origin_price"];
+    self.yuanJiaLab4.text = [data[3] objectForKey:@"origin_price"];
+    self.yuanJiaLab5.text = [data[4] objectForKey:@"origin_price"];
+    self.yuanJiaLab6.text = [data[5] objectForKey:@"origin_price"];
+    
 }
 
 

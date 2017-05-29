@@ -22,6 +22,7 @@
 
 @property(nonatomic,strong)NSDictionary *shareDic;//分享数据
 @property(nonatomic,assign)BOOL isLoadingOver;//页面是否加载完毕
+@property(nonatomic,assign)BOOL isBackButton;//是否点击的返回按钮
 @end
 
 @implementation WKWebViewController
@@ -32,17 +33,6 @@
     return _shareDic;
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
-   
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    
-    
-}
 - (void)viewDidLoad {
     
     [self addWKWebView];
@@ -50,12 +40,12 @@
     self.navigationItem.title = @"小帮商城";
    
     //进入刷新状态
+    __weak __typeof(self)weakSelf = self;
     _webView.scrollView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 进入刷新状态后会自动调用这个block
-        [self.webView reload];
-        [_webView.scrollView.header endRefreshing];
+        [weakSelf.webView reload];
+        [weakSelf.webView.scrollView.header endRefreshing];
     }];
-
     
 }
 
@@ -100,14 +90,21 @@
     
 }
 
+
+
 #pragma mark - WKWebView Delegate
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation{
+    if (_isLoadingOver) {
+        [self showTabBar];
+        _webView.frame = CGRectMake(0, 0, size_width, size_height-15-self.tabBarController.tabBar.frame.size.height);
+    }
+}
 
 
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    self.isLoadingOver = YES;
     
-    self.tabBarController.tabBar.hidden = NO;
+    self.isLoadingOver = YES;
     [YZSDK initYouzanWithWKWebView:webView];
     //是否添加返回按钮
     if ([_webView canGoBack]) {
@@ -116,20 +113,19 @@
             [backButton setBackgroundImage:[UIImage imageNamed:@"返回1"] forState:UIControlStateNormal];
             [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
             UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithCustomView:backButton];
-            
+        
             UIBarButtonItem *negative = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-            
+        
             negative.width = -15;
             self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negative,btn, nil];
     }else{
         self.navigationItem.leftBarButtonItems = nil;
     }
-
+    
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    
-    NSURL *url = navigationAction.request.URL;
+   NSURL *url = navigationAction.request.URL;
     
     if(![[url absoluteString] hasPrefix:@"http"]){
         
@@ -287,8 +283,8 @@
 -(void)back:(UIBarButtonItem *)sender{
     
     if ([self.webView canGoBack]) {
+        self.isBackButton = YES;
         [self.webView goBack];
-        
         if (_webView.backForwardList.backList.count==1) {
             
             self.navigationItem.leftBarButtonItems = nil;
@@ -297,40 +293,139 @@
         
         self.navigationItem.leftBarButtonItems = nil;
     }
+    
 }
 
 
 #pragma mark - UIScrollView代理
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    static float lastOffY  = 0;
+    float curOffY = scrollView.contentOffset.y;
     
-    if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.frame.size.height) {
-        //滑到底部加载更多
+    if (scrollView.frame.size.height >= scrollView.contentSize.height ||     //内容高度低于scrollView高度，不隐藏
+        fabs(curOffY)  +size_height> scrollView.contentSize.height || //拉至最底部时，不做处理
+        curOffY < 0                                                          //拉至最顶部时，不做处理
+        )
+    {
         return;
     }
-    if (scrollView.contentOffset.y <= 0) {
-        //滑到顶部更新
-        return;
-    }
+   
     
     if (_isLoadingOver) {
         
-        static float newx = 0;
-        static float oldIx = 0;
-        newx= scrollView.contentOffset.y;
-        if (newx != oldIx ) {
-            if (newx > oldIx) {
-                self.tabBarController.tabBar.hidden = YES;
-                _webView.frame = CGRectMake(0, 0, size_width, size_height-15);
-            }else if(newx < oldIx){
-                self.tabBarController.tabBar.hidden = NO;
-                _webView.frame = CGRectMake(0, 0, size_width, size_height-59);
+        if (curOffY - lastOffY > 40)
+        {
+            //向上
+            lastOffY = curOffY;
+            if (_isBackButton) {
+                [self showTabBar];
+            }else{
+                [self hideTabBar];
+                
             }
-            oldIx = newx;
+            _webView.frame = CGRectMake(0, 0, size_width, size_height-15);
+            
+            _isBackButton = NO;
+            
+        }
+        else if(lastOffY -curOffY >40)
+        {
+            //向下
+            lastOffY = curOffY;
+            [self showTabBar];
+            
+            _webView.frame = CGRectMake(0, 0, size_width, size_height-15-self.tabBarController.tabBar.frame.size.height);
+            
         }
         
+    }else{
+        _isLoadingOver = YES;
     }
     
+    
+   
 
+}
+
+
+//显示标签栏
+- (void)showTabBar
+{
+    if (self.tabBarController.tabBar.hidden == NO)
+    {
+        return;
+    }
+    
+    UIView *contentView;
+    if ([[self.tabBarController.view.subviews objectAtIndex:0] isKindOfClass:[UITabBar class]])
+        contentView = [self.tabBarController.view.subviews objectAtIndex:1];
+    else
+        contentView = [self.tabBarController.view.subviews objectAtIndex:0];
+    
+    contentView.frame = CGRectMake(contentView.bounds.origin.x,
+                                   contentView.bounds.origin.y,
+                                   contentView.bounds.size.width,
+                                   contentView.bounds.size.height - self.tabBarController.tabBar.frame.size.height);
+    
+    CATransition *animation = [CATransition animation];
+    animation.duration = 0.2f;
+    animation.type = kCATransitionMoveIn;
+    animation.subtype = kCATransitionFromTop;
+    self.tabBarController.tabBar.hidden = NO;
+    [self.tabBarController.tabBar.layer addAnimation:animation forKey:@"animation2"];
+    
+    
+//    CATransition *animation1 = [CATransition animation];
+//    animation1.duration = 0.4f;
+//    animation1.type = kCATransitionMoveIn;
+//    animation1.subtype = kCATransitionFromBottom;
+//    self.navigationController.navigationBarHidden = NO;
+//    [self.navigationController.navigationBar.layer addAnimation:animation1 forKey:@"animation3"];
+   
+    
+}
+//隐藏标签栏
+- (void)hideTabBar
+{
+    if (self.tabBarController.tabBar.hidden == YES)
+    {
+        return;
+    }
+    UIView *contentView;
+    if ( [[self.tabBarController.view.subviews objectAtIndex:0] isKindOfClass:[UITabBar class]] )
+        contentView = [self.tabBarController.view.subviews objectAtIndex:1];
+    else
+        contentView = [self.tabBarController.view.subviews objectAtIndex:0];
+    contentView.frame = CGRectMake(contentView.bounds.origin.x,
+                                   contentView.bounds.origin.y,
+                                   contentView.bounds.size.width,
+                                   contentView.bounds.size.height + self.tabBarController.tabBar.frame.size.height);
+    
+    
+//    CATransition *animation1 = [CATransition animation];
+//    animation1.timingFunction=UIViewAnimationCurveEaseInOut;
+//    animation1.duration = 0.4f;
+//    animation1.delegate =self;
+//    animation1.type = kCATransitionReveal;
+//    animation1.subtype = kCATransitionFromTop;
+//    self.navigationController.navigationBarHidden = YES;
+//    [self.navigationController.navigationBar.layer addAnimation:animation1 forKey:@"animation0"];
+    
+    //定义个转场动画
+    CATransition *animation = [CATransition animation];
+    //转场动画持续时间
+    animation.duration = 0.2f;
+    //计时函数，从头到尾的流畅度？？？
+    animation.timingFunction=UIViewAnimationCurveEaseInOut;
+    //转场动画类型
+    animation.type = kCATransitionReveal;
+    //转场动画子类型
+    animation.subtype = kCATransitionFromBottom;
+    //动画时你需要的实现
+    self.tabBarController.tabBar.hidden = YES;
+    //添加动画 （转场动画是添加在层上的动画）
+    [self.tabBarController.tabBar.layer addAnimation:animation forKey:@"animation1"];
+    
 }
 
 

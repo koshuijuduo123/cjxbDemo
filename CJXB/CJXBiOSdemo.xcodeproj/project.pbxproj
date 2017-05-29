@@ -40,9 +40,6 @@
 		B00A3D711D7C1FD2005B19E5 /* CarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B00A3D6F1D7C1FD2005B19E5 /* CarViewController.m */; };
 		B00A3D721D7C1FD2005B19E5 /* CarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B00A3D701D7C1FD2005B19E5 /* CarViewController.xib */; };
 		B00D2EAE1DDC0F9B003D71E4 /* TabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B00D2EAD1DDC0F9B003D71E4 /* TabBarButton.m */; };
-		B00D2EB61DDC308E003D71E4 /* 兑换.png in Resources */ = {isa = PBXBuildFile; fileRef = B00D2EB31DDC308E003D71E4 /* 兑换.png */; };
-		B00D2EB71DDC308E003D71E4 /* 兑换@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B00D2EB41DDC308E003D71E4 /* 兑换@2x.png */; };
-		B00D2EB81DDC308E003D71E4 /* 兑换@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B00D2EB51DDC308E003D71E4 /* 兑换@3x.png */; };
 		B00DD41C1EAEF0B4000FC4ED /* zwt.png in Resources */ = {isa = PBXBuildFile; fileRef = B00DD41B1EAEF0B4000FC4ED /* zwt.png */; };
 		B00EB9FB1E728DA1003E77A9 /* MyNewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B00EB9FA1E728DA1003E77A9 /* MyNewsModel.m */; };
 		B00EB9FF1E729B8A003E77A9 /* MyNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B00EB9FD1E729B8A003E77A9 /* MyNewsViewController.m */; };
@@ -134,6 +131,9 @@
 		B054803E1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B054803D1E8BA22F00A56ABA /* UIViewController+BackButtonHandler.m */; };
 		B054804E1E8BA24900A56ABA /* libYouzan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05480431E8BA24900A56ABA /* libYouzan.a */; };
 		B054804F1E8BA24900A56ABA /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = B05480461E8BA24900A56ABA /* read_me.txt */; };
+		B05656CA1ECAF78F00583642 /* 圈子.png in Resources */ = {isa = PBXBuildFile; fileRef = B05656C71ECAF78F00583642 /* 圈子.png */; };
+		B05656CB1ECAF78F00583642 /* 圈子@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B05656C81ECAF78F00583642 /* 圈子@2x.png */; };
+		B05656CC1ECAF78F00583642 /* 圈子@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B05656C91ECAF78F00583642 /* 圈子@3x.png */; };
 		B05FD69C1D76C409003CDBCE /* TickentInFoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B05FD69A1D76C409003CDBCE /* TickentInFoViewController.m */; };
 		B05FD69D1D76C409003CDBCE /* TickentInFoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05FD69B1D76C409003CDBCE /* TickentInFoViewController.xib */; };
 		B05FD6A01D76D060003CDBCE /* HeaderHeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B05FD69F1D76D060003CDBCE /* HeaderHeView.m */; };
@@ -557,9 +557,6 @@
 		B00A3D701D7C1FD2005B19E5 /* CarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarViewController.xib; sourceTree = "<group>"; };
 		B00D2EAC1DDC0F9B003D71E4 /* TabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarButton.h; sourceTree = "<group>"; };
 		B00D2EAD1DDC0F9B003D71E4 /* TabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarButton.m; sourceTree = "<group>"; };
-		B00D2EB31DDC308E003D71E4 /* 兑换.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "兑换.png"; sourceTree = "<group>"; };
-		B00D2EB41DDC308E003D71E4 /* 兑换@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "兑换@2x.png"; sourceTree = "<group>"; };
-		B00D2EB51DDC308E003D71E4 /* 兑换@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "兑换@3x.png"; sourceTree = "<group>"; };
 		B00DD41B1EAEF0B4000FC4ED /* zwt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zwt.png; sourceTree = "<group>"; };
 		B00EB9E01E7287F7003E77A9 /* CJXBiOSdemo 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CJXBiOSdemo 2.xcdatamodel"; sourceTree = "<group>"; };
 		B00EB9F91E728DA0003E77A9 /* MyNewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNewsModel.h; sourceTree = "<group>"; };
@@ -685,6 +682,9 @@
 		B054804B1E8BA24900A56ABA /* OpenTradeServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTradeServiceProtocol.h; sourceTree = "<group>"; };
 		B054804C1E8BA24900A56ABA /* YZSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDK.h; sourceTree = "<group>"; };
 		B054804D1E8BA24900A56ABA /* YZSDKDefination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDKDefination.h; sourceTree = "<group>"; };
+		B05656C71ECAF78F00583642 /* 圈子.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈子.png"; sourceTree = "<group>"; };
+		B05656C81ECAF78F00583642 /* 圈子@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈子@2x.png"; sourceTree = "<group>"; };
+		B05656C91ECAF78F00583642 /* 圈子@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈子@3x.png"; sourceTree = "<group>"; };
 		B05FD6991D76C409003CDBCE /* TickentInFoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickentInFoViewController.h; sourceTree = "<group>"; };
 		B05FD69A1D76C409003CDBCE /* TickentInFoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickentInFoViewController.m; sourceTree = "<group>"; };
 		B05FD69B1D76C409003CDBCE /* TickentInFoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TickentInFoViewController.xib; sourceTree = "<group>"; };
@@ -2521,13 +2521,13 @@
 				B04A73051DB2306F00B9DA6D /* 驾驶信息.png */,
 				B04A73071DB2307300B9DA6D /* 驾驶信息@2x.png */,
 				B04A73091DB2307700B9DA6D /* 驾驶信息@3x.png */,
+				B05656C71ECAF78F00583642 /* 圈子.png */,
+				B05656C81ECAF78F00583642 /* 圈子@2x.png */,
+				B05656C91ECAF78F00583642 /* 圈子@3x.png */,
 				B0BA87971EB06C48005CBF5C /* 返回1.png */,
 				B04A72991DB2209E00B9DA6D /* 签到.png */,
 				B0E0B8F51DB2132F00420287 /* 签到@2x.png */,
 				B0E0B8F71DB2133600420287 /*  签到@3x.png */,
-				B00D2EB31DDC308E003D71E4 /* 兑换.png */,
-				B00D2EB41DDC308E003D71E4 /* 兑换@2x.png */,
-				B00D2EB51DDC308E003D71E4 /* 兑换@3x.png */,
 				B0FE0EEF1D7D06F1004F7CA6 /* 未选中状态@2x.png */,
 				B0FE0EF01D7D06F1004F7CA6 /* 选中按钮@2x.png */,
 				B0C376E81D7169C4008A74E1 /* 咨询@2x.png */,
@@ -3278,6 +3278,7 @@
 				B0A5A9E21EB0A2A1001AEB82 /* 搜索.png in Resources */,
 				B07D887B1E83C5BC00B91653 /* 热点@2x.png in Resources */,
 				B0BA879D1EB06CF8005CBF5C /* 选项@2x.png in Resources */,
+				B05656CA1ECAF78F00583642 /* 圈子.png in Resources */,
 				B04A72A71DB2269200B9DA6D /* 我的爱车@2x.png in Resources */,
 				B0A254051DDB105B00EEA050 /* UMSnsAccountViewController.xib in Resources */,
 				B005BDEE1DC6EA3400EAC91F /* 中雨.png in Resources */,
@@ -3290,7 +3291,6 @@
 				B04A73061DB2306F00B9DA6D /* 驾驶信息.png in Resources */,
 				B03A44B41EB3315700282D63 /* 分类@2x.png in Resources */,
 				B0A254501DDB105C00EEA050 /* UMComEditTopicsTableViewCell.xib in Resources */,
-				B00D2EB61DDC308E003D71E4 /* 兑换.png in Resources */,
 				B0A2546F1DDB105C00EEA050 /* UMComPostReplyEditView.xib in Resources */,
 				B0A254871DDB105C00EEA050 /* UMComUserTableViewCell.xib in Resources */,
 				B0BBAFD51DC2F32B00A4CE60 /* azz.png in Resources */,
@@ -3334,6 +3334,7 @@
 				B04A72A61DB2269200B9DA6D /* 我的爱车.png in Resources */,
 				B0A254241DDB105C00EEA050 /* UMComCommentInput.xib in Resources */,
 				B0297B3C1DB89B7B00F76D4E /* 定位.png in Resources */,
+				B05656CC1ECAF78F00583642 /* 圈子@3x.png in Resources */,
 				B006F9381DD3153400656C33 /* wawago1@2x.png in Resources */,
 				B0FB56651DB4CDB600C405DA /* dstp.png in Resources */,
 				B0F7BF991D794F0000675BDE /* 鸟的煽动动画0008.png in Resources */,
@@ -3398,7 +3399,6 @@
 				B0D458FD1D77C1E30051DAD4 /* xiaobangLogo.png in Resources */,
 				B0B193911DAB9A4F0079AA62 /* WebCell.xib in Resources */,
 				B0A5A9E31EB0A2A1001AEB82 /* 搜索@2x.png in Resources */,
-				B00D2EB71DDC308E003D71E4 /* 兑换@2x.png in Resources */,
 				B0A254541DDB105C00EEA050 /* UMComFriendTableViewCell.xib in Resources */,
 				B0E0B8F61DB2132F00420287 /* 签到@2x.png in Resources */,
 				B0BBAFDE1DC3242600A4CE60 /* coupon_yellow.png in Resources */,
@@ -3406,6 +3406,7 @@
 				B0C32A2B1D6EC90C00EB589E /* tabBar_housekeeper_normal@2x.png in Resources */,
 				B0A691E21D701D9B0084ADC9 /* TwoButtonView.xib in Resources */,
 				B04A72DE1DB229FA00B9DA6D /* 钱包@3x.png in Resources */,
+				B05656CB1ECAF78F00583642 /* 圈子@2x.png in Resources */,
 				B04A730A1DB2307700B9DA6D /* 驾驶信息@3x.png in Resources */,
 				B07D887E1E83C73900B91653 /* 转发.png in Resources */,
 				B04A72F71DB22BD200B9DA6D /* 积分@3x.png in Resources */,
@@ -3420,7 +3421,6 @@
 				B0BBAFDD1DC3242600A4CE60 /* coupon_red.png in Resources */,
 				B041CA191DBB4750008C411B /* 民警@2x.png in Resources */,
 				B0A254001DDB105B00EEA050 /* UMSCommentInputController.xib in Resources */,
-				B00D2EB81DDC308E003D71E4 /* 兑换@3x.png in Resources */,
 				B0C32A341D6EC90C00EB589E /* tabBar_myorder_normal@3x.png in Resources */,
 				B04A729A1DB2209E00B9DA6D /* 签到.png in Resources */,
 				B0A254691DDB105C00EEA050 /* UMComCommentTableViewCell.xib in Resources */,

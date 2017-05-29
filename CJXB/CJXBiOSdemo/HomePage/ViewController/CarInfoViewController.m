@@ -60,7 +60,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"CarInfoTableViewCell" bundle:nil] forCellReuseIdentifier:@"CarInfoTableViewCell"];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    
+     _tableView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
     self.title = @"违章纪录";
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     

@@ -591,20 +591,10 @@
             
             _bigView.webView.scrollView.bounces = NO;
             
-            
             NSString *string4 = nil;
-            
-            
-            
             string4 = [NSString stringWithFormat:@"http://x.xiaobang520.com/coupon/couponshandler.ashx?exec=getcoupon&couponid=%@",str1];
             
-            
-            
-            
             NSURL *url1 = [[NSURL alloc]initWithString:string4];
-            
-            
-            
             [_bigView.webView loadHTMLString:self.htmlDic[@"introduce"] baseURL:url1];
         
             
@@ -732,13 +722,6 @@
     
     
 }
-
-
-
-
-
-
-
 
 #pragma mark - UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView{

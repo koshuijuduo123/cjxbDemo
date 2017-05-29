@@ -45,7 +45,7 @@
                         <action selector="buttonAction:" destination="Vqd-mB-buo" eventType="touchUpInside" id="BQJ-ZZ-j5r"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的积分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sby-vO-0wj">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的助力值" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sby-vO-0wj">
                     <rect key="frame" x="40" y="11" width="100" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="mZG-Fc-QW2"/>

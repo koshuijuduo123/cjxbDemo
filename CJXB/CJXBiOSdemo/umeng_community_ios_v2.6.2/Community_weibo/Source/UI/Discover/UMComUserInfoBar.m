@@ -104,7 +104,7 @@ const CGFloat g_UMComUserInfoBar_SpaceBetweenNameAndMedal = 5;//勋章和名字�
         
         LoginDataModel *model = [UserDefault getUserInfo];
         NSNumber *userCounts = [NSNumber numberWithInteger:[model.points integerValue]];
-        _score.text = [NSString stringWithFormat:UMComLocalizedString(@"um_com_scoreCount_template", @"积分 %@"), countString(userCounts)];
+        _score.text = [NSString stringWithFormat:UMComLocalizedString(@"um_com_scoreCount_template", @"助力值 %@"), countString(userCounts)];
         [_avatar setImageURL:[user.icon_url small_url_string] placeHolderImage:UMComImageWithImageName(@"um_forum_post_default")];
         [self hideInfoSubviews:NO];
         _loginTip.hidden = YES;

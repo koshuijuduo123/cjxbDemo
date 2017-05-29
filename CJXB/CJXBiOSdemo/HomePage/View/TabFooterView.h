@@ -45,6 +45,14 @@ typedef void(^ButtonJuanClick) (NSInteger tag);
 
 @property (weak, nonatomic) IBOutlet UIImageView *Zimg5;
 @property (weak, nonatomic) IBOutlet UIImageView *Zimg6;
+@property (weak, nonatomic) IBOutlet UILabel *yuanJiaLab;
+@property (weak, nonatomic) IBOutlet UILabel *yuanJiaLab2;
+@property (weak, nonatomic) IBOutlet UILabel *yuanJiaLab3;
+@property (weak, nonatomic) IBOutlet UILabel *yuanJiaLab4;
+@property (weak, nonatomic) IBOutlet UILabel *yuanJiaLab5;
+@property (weak, nonatomic) IBOutlet UILabel *yuanJiaLab6;
+
+
 
 @property(nonatomic,copy)ButtonJuanClick buttonJuanClick;
 
