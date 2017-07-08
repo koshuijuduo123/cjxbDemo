@@ -446,25 +446,9 @@ didCompleteWithError:(nullable NSError *)error
             
             
             [WeakSelf sourcePlease];
-        
-        
         }
         
-        
-            
-        
-        
-        
-        
-        
     };
-    
-    
-    
-    
-    
-    
-    
     return foundView;
 }
 

@@ -409,11 +409,6 @@ static NSString *const identider = @"cell";
                 
             }
             
-
-            
-            
-            
-            
             
             [weakSelf.tableView stopLoading];
         });
@@ -663,7 +658,7 @@ static NSString *const identider = @"cell";
     threeButtonView.carImg.image = [UIImage imageNamed:@"签到"];
     threeButtonView.cardImg.image = [UIImage imageNamed:@"圈子"];
     
-    [threeButtonView.carBtn setTitle:@"签到积分" forState:UIControlStateNormal];
+    [threeButtonView.carBtn setTitle:@"助力值签到" forState:UIControlStateNormal];
     [threeButtonView.cardBtn setTitle:@"帮友圈子" forState:UIControlStateNormal];
     
     [headerView addSubview:threeButtonView];
@@ -674,28 +669,28 @@ static NSString *const identider = @"cell";
             NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
             
             if (cookies.count) {
-//                WebViewController *webVC = [[WebViewController alloc]init];
-//                webVC.hidesBottomBarWhenPushed = YES;
-//                
-//                webVC.isUIWebView = YES;
-//                webVC.title = @"签到送积分";
-//                webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-//                
-//                [webVC.view addSubview:webVC.webView];
-//                
-//                NSString *string5 = [NSString stringWithFormat:qiandaoCounts];
-//                
-//                NSURL *url1 = [[NSURL alloc]initWithString:string5];
-//                
-//                NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-//                [cookieStorage setCookies:cookies forURL:url1 mainDocumentURL:nil];
-//                
-//                
-//                NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:string5]];
-//                [webVC.webView loadRequest:request];
-//                webVC.qiandao = @"qiandao";
-                MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
-                webVC.loadUrl = @"https://h5.youzan.com/v2/apps/checkin?alias=pyg4ki8j";
+                WebViewController *webVC = [[WebViewController alloc]init];
+                webVC.hidesBottomBarWhenPushed = YES;
+                
+                webVC.isUIWebView = YES;
+                webVC.title = @"签到送积分";
+                webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
+                
+                [webVC.view addSubview:webVC.webView];
+                
+                NSString *string5 = [NSString stringWithFormat:qiandaoCounts];
+                
+                NSURL *url1 = [[NSURL alloc]initWithString:string5];
+                
+                NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+                [cookieStorage setCookies:cookies forURL:url1 mainDocumentURL:nil];
+                
+                
+                NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:string5]];
+                [webVC.webView loadRequest:request];
+                webVC.qiandao = @"qiandao";
+//                MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+//                webVC.loadUrl = @"https://h5.youzan.com/v2/apps/checkin?alias=pyg4ki8j";
                 webVC.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:webVC animated:YES];
                 }else{
@@ -708,32 +703,10 @@ static NSString *const identider = @"cell";
             }
             }else {
             
-//            WebViewController *webVC = [[WebViewController alloc]init];
-//            webVC.qiandao = @"YES";
-//            webVC.title = @"礼品兑换";
-//            webVC.hidesBottomBarWhenPushed = YES;
-//            webVC.isUIWebView = YES;
-//            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-//            
-//            [webVC.view addSubview:webVC.webView];
-//            LoginDataModel *model   =  [UserDefault getUserInfo];
-//            
-//            NSString *string5 = [NSString stringWithFormat:lipinDuiHuanURL,model.myid];
-//            
-//            NSURL *url1 = [[NSURL alloc]initWithString:string5];
-//            NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url1];
-//            
-//            
-//            
-//            [webVC.webView loadRequest:request];
-//            
-//            [weakSelf.navigationController pushViewController:webVC animated:YES];
                 UIViewController *communityViewController = [UMCommunity getFeedsViewController];
                 communityViewController.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:communityViewController animated:YES];
-          
-            
-        }
+          }
             
             
 };
@@ -924,9 +897,9 @@ static NSString *const identider = @"cell";
         MyWKWebViewController *tickVC = [[MyWKWebViewController alloc]init];
         tickVC.hidesBottomBarWhenPushed = YES;
         if (tag==800) {
-            //NSLog(@"电子劵1");
+            
             NSDictionary *dict = arr[0];
-            tickVC.loadUrl = nil;
+            //tickVC.loadUrl = nil;
             tickVC.loadUrl = dict[@"detail_url"];
             
             [weakSelf.navigationController pushViewController:tickVC animated:YES];
@@ -934,44 +907,49 @@ static NSString *const identider = @"cell";
             
             
         }else if (tag==801){
-            //NSLog(@"电子劵2");
+            
             NSDictionary *dict1 = arr[1];
-            tickVC.loadUrl = nil;
+            //tickVC.loadUrl = nil;
             tickVC.loadUrl = dict1[@"detail_url"];
             [weakSelf.navigationController pushViewController:tickVC animated:YES];
             
         }else if (tag==802){
-            //NSLog(@"电子劵3");
+            
             NSDictionary *dict2 = arr[2];
-            tickVC.loadUrl = nil;
+            //tickVC.loadUrl = nil;
             tickVC.loadUrl = dict2[@"detail_url"];
             [weakSelf.navigationController pushViewController:tickVC animated:YES];
         }else if (tag==803){
-            //NSLog(@"电子劵4");
+            
             NSDictionary *dict3 = arr[3];
-            tickVC.loadUrl = nil;
+            //tickVC.loadUrl = nil;
             tickVC.loadUrl = dict3[@"detail_url"];
             [weakSelf.navigationController pushViewController:tickVC animated:YES];
         }else if(tag==804){
-            //NSLog(@"电子劵5");
+            
             NSDictionary *dict4 = arr[4];
-            tickVC.loadUrl = nil;
+            //tickVC.loadUrl = nil;
             tickVC.loadUrl = dict4[@"detail_url"];
             [weakSelf.navigationController pushViewController:tickVC animated:YES];
         }else if (tag==805){
-            //NSLog(@"电子劵6");
+            
             NSDictionary *dict5 = arr[5];
-            tickVC.loadUrl = nil;
+            //tickVC.loadUrl = nil;
             tickVC.loadUrl = dict5[@"detail_url"];
             [weakSelf.navigationController pushViewController:tickVC animated:YES];
         }else{
-            weakSelf.tabBarController.selectedIndex=2;
+            //weakSelf.tabBarController.selectedIndex=2;
             //                    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             //                    LikesViewController *tabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"LikesViewController"];
             //                    tabBarController.hidesBottomBarWhenPushed = YES;
             //
             //                    [weakSelf.navigationController pushViewController:tabBarController animated:YES];
-            
+           // tickVC.loadUrl = nil;
+            tickVC.loadUrl = @"https://h5.youzan.com/v2/tag/19cwk6yup";
+            [weakSelf.navigationController pushViewController:tickVC animated:YES];
+        
+        
+        
         }
         
         

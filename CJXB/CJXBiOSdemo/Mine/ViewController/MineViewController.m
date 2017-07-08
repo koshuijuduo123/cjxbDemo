@@ -11,7 +11,6 @@
 #import "LoginViewController.h"
 #import "YZSDK.h"
 #import "MessageEntity.h"
-#import "FuwuViewController.h"
 #import "AppDelegate.h"
 #import "MyCarViewController.h"
 #import "CarViewController.h"
@@ -398,11 +397,11 @@
     
     self.arr0 = @[@"我的会员电子券",@"我的订单"];
     self.arr1 = @[@"我的爱车",@"我的驾驶证",@"收藏文章"];
-    self.arr2 = @[@"个人信息",@"周边商户",@"帮友之家",@"关于我们"];
+    self.arr2 = @[@"个人信息",@"礼品兑换",@"帮友之家",@"关于我们"];
     
     self.imageArray0 = @[@"电子券",@"订单"];
     self.imageArray1 = @[@"我的爱车",@"驾驶证",@"我的收藏"];
-    self.imageArray2 = @[@"个人信息",@"合作",@"朋友圈",@"个人信息"];
+    self.imageArray2 = @[@"个人信息",@"积分",@"朋友圈",@"个人信息"];
     
 
     
@@ -705,7 +704,7 @@
         }
         if (indexPath.row==1) {
             
-            cell.contentLab.text = @"周边汽车服务一览";
+            cell.contentLab.text = @"助力值兑换礼品";
         }
         if (indexPath.row==2) {
            
@@ -851,11 +850,24 @@
         
         
         if (indexPath.row==1) {
-            FuwuViewController *fuwuVC = [[FuwuViewController alloc]init];
+
+            WebViewController *webVC = [[WebViewController alloc]init];
+            webVC.qiandao = @"YES";
+            webVC.title = @"礼品兑换";
+            webVC.hidesBottomBarWhenPushed = YES;
+            webVC.isUIWebView = YES;
+            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
+        
+            [webVC.view addSubview:webVC.webView];
+            LoginDataModel *model   =  [UserDefault getUserInfo];
             
-            fuwuVC.hidesBottomBarWhenPushed = YES;
+            NSString *string5 = [NSString stringWithFormat:lipinDuiHuanURL,model.myid];
             
-            [self.navigationController pushViewController:fuwuVC animated:YES];
+            NSURL *url1 = [[NSURL alloc]initWithString:string5];
+            NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url1];
+            [webVC.webView loadRequest:request];
+                        
+            [self.navigationController pushViewController:webVC animated:YES];
             
             
         }

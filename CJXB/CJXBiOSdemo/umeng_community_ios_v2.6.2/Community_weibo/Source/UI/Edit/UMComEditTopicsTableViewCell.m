@@ -29,6 +29,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
     self.labelName.font =  UMComFontNotoSansLightWithSafeSize(15.5);
     self.labelDesc.font =  UMComFontNotoSansLightWithSafeSize(14);
     self.labelName.textColor = [UMComTools colorWithHexString:FontColorBlue];

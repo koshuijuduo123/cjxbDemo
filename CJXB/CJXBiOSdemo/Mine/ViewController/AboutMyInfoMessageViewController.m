@@ -9,6 +9,7 @@
 #import "AboutMyInfoMessageViewController.h"
 #import "MyCarTypeTableViewCell.h"
 #import "MyWKWebViewController.h"
+#import "FuwuViewController.h"
 @interface AboutMyInfoMessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *gongSiName;
@@ -47,7 +48,7 @@ static NSString *const MYCell = @"MYCell";
     self.title = @"关于我们";
     self.gongSiName.text = GongSiName;
    
-    _dataSourceArr = @[@"小帮简介",@"我们的网站",@"用户协议",@"隐私政策",@"小帮的感谢信"].mutableCopy;
+    _dataSourceArr = @[@"小帮简介",@"我们的网站",@"用户协议",@"隐私政策",@"小帮的感谢信",@"周边汽车服务"].mutableCopy;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -108,7 +109,7 @@ static NSString *const MYCell = @"MYCell";
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = _dataSourceArr[indexPath.row];
-        if (indexPath.row==5) {
+        if (indexPath.row==6) {
             cell.imageView.image = [UIImage imageNamed:@"new"];
         }else{
             cell.imageView.image = nil;
@@ -145,7 +146,18 @@ static NSString *const MYCell = @"MYCell";
             myWebVC.loadUrl = @"https://h5.youzan.com/v2/feature/nk5k5ako";
             myWebVC.title = @"小帮感谢信";
         }
+        
         if (indexPath.row==5) {
+            FuwuViewController *fuwuVC = [[FuwuViewController alloc]init];
+            
+            fuwuVC.hidesBottomBarWhenPushed = YES;
+            
+            [self.navigationController pushViewController:fuwuVC animated:YES];
+            return;
+        }
+        
+        
+        if (indexPath.row==6) {
             NSString *storeAppID = @"1163572663";
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/id%@?ls=1&mt=8", storeAppID]];
             [[UIApplication sharedApplication] openURL:url];

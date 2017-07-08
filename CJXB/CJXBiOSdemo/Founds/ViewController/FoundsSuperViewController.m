@@ -10,6 +10,7 @@
 #import "MJRefresh.h"
 #import "MJRefreshGifHeader.h"
 #import "NewsTableViewCell.h"
+#import "BigNewsTableViewCell.h"
 #import "NetworkManger.h"
 #import "WebViewController.h"
 #import "LoginDataModel.h"
@@ -75,6 +76,8 @@
     [self setupTableView];
     [self addResfresh];
     [self.tableView registerNib:[UINib nibWithNibName:@"NewsTableViewCell" bundle:nil] forCellReuseIdentifier:@"NewsTableViewCell"];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"BigNewsTableViewCell" bundle:nil] forCellReuseIdentifier:@"BigNewsTableViewCell"];
     _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     
 }
@@ -241,55 +244,121 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsTableViewCell" forIndexPath:indexPath];
-    
-    
     NSDictionary *dic = self.dataSourceArray[indexPath.row];
     
-    [cell.titleImageView sd_setImageWithURL:dic[@"img"] placeholderImage:[UIImage imageNamed:@"zwt"]];
-    if ([dic[@"zhuanfa"] integerValue]<40) {
-        cell.zhuanfaImg.hidden=YES;
-    }else{
-        cell.zhuanfaImg.hidden = NO;
-    }
-    
-    cell.titleLab.text = dic[@"title"];
-    
-    
-    NSString *string1 = [NSString stringWithFormat:@"%@",dic[@"zfpoints"]];
-    
-    if ([string1 isEqualToString:@"0"])  {
-        cell.baoCountLab.text =@"x2";
+    if ([dic[@"jfcount"] integerValue]>=600) {
+      BigNewsTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"BigNewsTableViewCell" forIndexPath:indexPath];
+        
+        [cell.titleImageView sd_setImageWithURL:dic[@"img"] placeholderImage:[UIImage imageNamed:@"zwt"]];
+        if ([dic[@"jfcount"] integerValue]>=700) {
+            cell.hotNewsImg.hidden=YES;
+            cell.actionImg.hidden = NO;
+        }else{
+            cell.actionImg.hidden =YES;
+            cell.hotNewsImg.hidden = NO;
+        }
+        
+        cell.titleLab.text = dic[@"title"];
+        
+        NSString *string1 = [NSString stringWithFormat:@"%@",dic[@"zfpoints"]];
+        
+        if ([string1 isEqualToString:@"0"])  {
+            cell.baoCountLab.text =@"x2";
+            
+            
+        }else{
+            cell.baoCountLab.text = [NSString stringWithFormat:@"x%@",string1];
+        }
+        
+        cell.chatCountLab.text = [NSString stringWithFormat:@"%@",dic[@"see"]];
         
         
-    }else{
-        cell.baoCountLab.text = [NSString stringWithFormat:@"x%@",string1];
-    }
-    
-    cell.chatCountLab.text = [NSString stringWithFormat:@"%@",dic[@"see"]];
-    
-    
-    NSString *string = [NSString stringWithFormat:@"%@",dic[@"addtime"]];
-    
-    if (string.length>11) {
-        cell.timeLab.text  =[string substringWithRange:NSMakeRange(5,11)];
+        NSString *string = [NSString stringWithFormat:@"%@",dic[@"addtime"]];
         
+        if (string.length>11) {
+            cell.timeLab.text  =[string substringWithRange:NSMakeRange(5,11)];
+            
+        }else{
+            cell.timeLab.text = string;
+        }
+        
+        
+        if (size_width<=320) {
+            cell.authorLab.text = [dic[@"author"] substringFromIndex:4];
+        }else{
+            cell.authorLab.text = dic[@"author"];
+        }
+        
+        
+        return cell;
+
     }else{
-        cell.timeLab.text = string;
+        NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsTableViewCell" forIndexPath:indexPath];
+        [cell.titleImageView sd_setImageWithURL:dic[@"img"] placeholderImage:[UIImage imageNamed:@"zwt"]];
+        if ([dic[@"zhuanfa"] integerValue]<40) {
+            cell.zhuanfaImg.hidden=YES;
+        }else{
+            cell.zhuanfaImg.hidden = NO;
+        }
+        
+        cell.titleLab.text = dic[@"title"];
+        
+        
+        NSString *string1 = [NSString stringWithFormat:@"%@",dic[@"zfpoints"]];
+        
+        if ([string1 isEqualToString:@"0"])  {
+            cell.baoCountLab.text =@"x2";
+            
+            
+        }else{
+            cell.baoCountLab.text = [NSString stringWithFormat:@"x%@",string1];
+        }
+        
+        cell.chatCountLab.text = [NSString stringWithFormat:@"%@",dic[@"see"]];
+        
+        
+        NSString *string = [NSString stringWithFormat:@"%@",dic[@"addtime"]];
+        
+        if (string.length>11) {
+            cell.timeLab.text  =[string substringWithRange:NSMakeRange(5,11)];
+            
+        }else{
+            cell.timeLab.text = string;
+        }
+        
+        
+        return cell;
     }
     
     
-    return cell;
+    
+    
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-   if (size_width<=320) {
-        return 100;
-    }else if(size_width==375){
-        return 100;
+   
+    NSDictionary *dic = self.dataSourceArray[indexPath.row];
+    if ([dic[@"jfcount"] integerValue]>=600) {
+        if (size_width<=375) {
+            return 200;
+            
+        }else{
+            return 250;
+        }
+        
     }else{
-        return 110;
+        if (size_width<=320) {
+            return 100;
+        }else if(size_width==375){
+            return 100;
+        }else{
+            return 110;
+        }
+        
     }
+    
+    
 }
 
 //点击cell触发

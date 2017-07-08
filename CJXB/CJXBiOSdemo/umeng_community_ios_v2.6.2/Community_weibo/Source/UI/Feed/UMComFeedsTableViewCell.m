@@ -118,6 +118,7 @@
     self.cellSubviewCommonWidth = feedStyle.subViewWidth;
     [self reloadDetaiViewWithFeedStyle:feedStyle viewWidth:tableView.frame.size.width];
   
+    
     if ([self.feed.liked boolValue]) {
         [self.likeButton setImage:UMComImageWithImageName(@"um_micro_like_highlight") forState:UIControlStateNormal];
     }else{

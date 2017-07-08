@@ -15,6 +15,12 @@
 
 }
 
+//成为第一响应者
+-(BOOL)canBecomeFirstResponder{
+    return YES;
+}
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

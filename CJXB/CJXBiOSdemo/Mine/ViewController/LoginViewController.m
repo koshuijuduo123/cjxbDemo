@@ -74,11 +74,6 @@
        
             button.layer.cornerRadius = 5.0;
             button.clipsToBounds = YES;
-            
-        
-        
-        
-        
     }
     
     [self borderWith:self.maBtn];
@@ -298,17 +293,17 @@ zone:@"86"result:^(SMSSDKUserInfo *userInfo, NSError *error) {
     [model setValuesForKeysWithDictionary:responseObject[@"Data"]];
     model.myid = [responseObject[@"Data"] objectForKey:@"id"];
         
-    if ([model.nickname isEqualToString:@""]) {
+    if (model.nickname==nil||model.nickname.length==0) {
     model.nickname = [NSString stringWithFormat:@"%@",model.username];
     }
     }
    UMComUserAccount *userAccounts = [[UMComUserAccount alloc] init];
    userAccounts.usid = [NSString stringWithFormat:@"%@",model.username];
    userAccounts.name = model.nickname;
-   if (![model.headimgurl isEqualToString:@""]) {
-   userAccounts.icon_url = model.headimgurl;
+   if (model.headimgurl==nil||model.headimgurl.length==0) {
+       userAccounts.icon_url = UMLoginImgURL;
    }else{
-   userAccounts.icon_url = UMLoginImgURL;
+       userAccounts.icon_url = model.headimgurl;
    }
                                     
    userAccounts.gender = [NSNumber numberWithInteger:[model.sex integerValue]];

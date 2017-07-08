@@ -188,6 +188,6 @@
     <resources>
         <image name="azz.png" width="168" height="168"/>
         <image name="coupon_yellow.png" width="164" height="111"/>
-        <image name="zwt.png" width="600" height="400"/>
+        <image name="zwt.png" width="122" height="107"/>
     </resources>
 </document>

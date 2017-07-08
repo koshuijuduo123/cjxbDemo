@@ -121,6 +121,7 @@
 
 -(void)searchAction:(UIButton *)btn{
     [self loadWithString:@"https://h5.youzan.com/v2/search?q=&kdt_id=18819560"];
+    
 }
 
 

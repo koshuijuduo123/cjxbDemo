@@ -358,6 +358,8 @@
         return;
     }
     UMComTopicFeedViewController *oneFeedViewController = [[UMComTopicFeedViewController alloc] initWithTopic:topic];
+    oneFeedViewController.hidesBottomBarWhenPushed = YES;
+    
     [self.navigationController  pushViewController:oneFeedViewController animated:YES];
 }
 

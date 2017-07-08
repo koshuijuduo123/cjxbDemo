@@ -61,19 +61,19 @@ UITableViewDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //注册cell
+    [self.tableView registerNib:[UINib nibWithNibName:@"FuwuTableViewCell" bundle:nil] forCellReuseIdentifier:@"FuwuTableViewCell"];
     
     self.tableView.estimatedRowHeight =50;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    self.title = @"合作商户";
+    self.title = @"周边汽车服务";
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self loadData];
     [self addResfresh];
     
-    //注册cell
-    [self.tableView registerNib:[UINib nibWithNibName:@"FuwuTableViewCell" bundle:nil] forCellReuseIdentifier:@"FuwuTableViewCell"];
     
         
 }
@@ -86,29 +86,16 @@ UITableViewDelegate>
     NSDictionary *parmDics = @{@"exec":@"getlist",@"p":@"1"};
     self.parmDic = [NSMutableDictionary dictionaryWithDictionary:parmDics];
     
-    [NetworkManger requestPOSTWithURLStr:URL_compand parmDic:self.parmDic finish:^(id responseObject) {
-        [self hidenHUD];
-        self.backView.hidden = YES;
-        
-        
-        
-        for (NSDictionary *arr in responseObject[@"Data"]) {
-            [self.dataSourceArr addObject:arr];
-        }
-        [self requesDataList];
-        [self.tableView reloadData];
-        
-    } enError:^(NSError *error) {
-        
-    }];
     
-    
+    [self requesDataList];
     
 }
 
 //请求数据
 -(void)requesDataList{
     [NetworkManger requestPOSTWithURLStr:URL_compand parmDic:self.parmDic finish:^(id responseObject) {
+        [self hidenHUD];
+        self.backView.hidden = YES;
         
         if (!_isUp) {
             [self.dataSourceArr removeAllObjects];

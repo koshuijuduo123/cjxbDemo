@@ -322,10 +322,17 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TickectsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TickectsTableViewCell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (_isSummary==YES) {
+        //添加长按手势
+        UILongPressGestureRecognizer * longPressGesture =[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+        
+        longPressGesture.minimumPressDuration=0.5f;//设置长按 时间
+        [cell addGestureRecognizer:longPressGesture];
+        
+        
         NSDictionary *dict = self.dataSourceArr[indexPath.row];
-       
+        
         cell.Zimg.hidden = YES;
         
         cell.tickNameLab.text =dict[@"name"];
@@ -496,6 +503,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
        
     TickentInFoViewController *tickVC = [[TickentInFoViewController alloc]init];
+    //点击cell后恢复原色
+    [self performSelector:@selector(cancleSelect)withObject:nil afterDelay:0.5f];
+    
     
     if (_isSummary==YES) {
         NSDictionary *dic = self.dataSourceArr[indexPath.row];
@@ -521,6 +531,71 @@
     
     
 }
+
+
+- (void)cancleSelect
+
+{
+    
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow]animated:YES];
+    
+}
+
+
+
+
+
+-(void)cellLongPress:(UILongPressGestureRecognizer *)longRecognizer{
+    
+    
+    if (longRecognizer.state==UIGestureRecognizerStateBegan) {
+        //成为第一响应者，需重写该方法
+        [self becomeFirstResponder];
+        
+        CGPoint location = [longRecognizer locationInView:self.tableView];
+        NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint:location];
+        
+        //可以得到此时你点击的哪一行
+        NSDictionary *dict = self.dataSourceArr[indexPath.row];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"请商家输入验证密码" preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            
+        }];
+        
+        
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            //输入框传值
+            NSString *string = [alert.textFields firstObject].text;
+            
+            [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/coupon/couponshandler.ashx" parmDic:@{@"exec":@"usecoupon",@"username":[UserDefault getUserInfo].username,@"password":[UserDefault getUserInfo].password,@"id":dict[@"id"],@"code":string} finish:^(id responseObject) {
+                
+                
+                [TickentInFoViewController showAlertMessageWithMessage:responseObject[@"Message"] duration:2.0];
+                
+                
+            } enError:^(NSError *error) {
+                
+            }];
+            
+            
+            
+            
+        }];
+        
+        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+        
+        [alert addAction:action1];
+        [alert addAction:action2];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        
+    }
+    
+    
+}
+
 
 
 

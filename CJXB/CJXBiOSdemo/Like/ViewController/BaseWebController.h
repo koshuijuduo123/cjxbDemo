@@ -44,4 +44,6 @@ static NSString *SHARE_DESC = @"desc";
 //-(void)timerCallback;
 -(void)webViewFail;
 +(void)showAlertMessageWithMessage:(NSString*)message duration:(NSTimeInterval)time;
+-(void)searchAction:(UIButton*)btn;
+
 @end
