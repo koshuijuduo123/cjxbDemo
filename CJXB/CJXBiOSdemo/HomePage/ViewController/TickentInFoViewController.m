@@ -387,22 +387,22 @@
     if ([self.MyTick isEqualToString:@"my"]) {
         if ([self.tickDic[@"sycount"] integerValue]==0||[morelocationString compare:self.dataSourceDic[@"endtime"]]==NSOrderedDescending) {
             
-            [heView.quButton setTitle:@"已经结束了" forState:(UIControlStateNormal)];
+            [heView.quButton setTitle:@"无法领取" forState:(UIControlStateNormal)];
             heView.quButton.backgroundColor = [UIColor darkGrayColor];
             
         }else{
-            [heView.quButton setTitle:@"立即领取" forState:(UIControlStateNormal)];
+            [heView.quButton setTitle:@"无法领取" forState:(UIControlStateNormal)];
             heView.quButton.backgroundColor = [UIColor orangeColor];
         }
  
     }else{
         if ([self.dataSourceDic[@"sycount"] integerValue]==0||[morelocationString compare:self.dataSourceDic[@"endtime"]]==NSOrderedDescending) {
             
-            [heView.quButton setTitle:@"已经结束了" forState:(UIControlStateNormal)];
+            [heView.quButton setTitle:@"无法领取" forState:(UIControlStateNormal)];
             heView.quButton.backgroundColor = [UIColor darkGrayColor];
             
         }else{
-            [heView.quButton setTitle:@"立即领取" forState:(UIControlStateNormal)];
+            [heView.quButton setTitle:@"无法领取" forState:(UIControlStateNormal)];
             heView.quButton.backgroundColor = [UIColor orangeColor];
         }
         

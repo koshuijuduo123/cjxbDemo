@@ -137,11 +137,15 @@
             if (cookies.count) {
                 [self myDianZiQuanCount];
                 [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"getuserinfo"} finish:^(id responseObject) {
+                    if ([responseObject[@"Data"]isKindOfClass:[NSNull class]]) {
+                        [MineViewController showAlertMessageWithMessage:@"更新失败" duration:1.0];
+                        return ;
+                    }
+                    
                     
                     LoginDataModel *model = [[LoginDataModel alloc]init];
                     [model setValuesForKeysWithDictionary:responseObject[@"Data"]];
                     model.myid = [responseObject[@"Data"] objectForKey:@"id"];
-                    
                     
                     
                     if ([model.nickname isEqualToString:@""]) {
@@ -397,15 +401,11 @@
     
     self.arr0 = @[@"我的会员电子券",@"我的订单"];
     self.arr1 = @[@"我的爱车",@"我的驾驶证",@"收藏文章"];
-    self.arr2 = @[@"个人信息",@"礼品兑换",@"帮友之家",@"关于我们"];
+    self.arr2 = @[@"个人信息",@"礼品兑换",@"我的帮友圈",@"关于我们"];
     
     self.imageArray0 = @[@"电子券",@"订单"];
     self.imageArray1 = @[@"我的爱车",@"驾驶证",@"我的收藏"];
     self.imageArray2 = @[@"个人信息",@"积分",@"朋友圈",@"个人信息"];
-    
-
-    
-    
     
 }
 
@@ -453,7 +453,6 @@
         _notice.vipNameLab.text = [NSString stringWithFormat:@"%@会员",userInfo[@"vipname"]];
     }
    
-    
     
     
     [self.tableView.tableHeaderView addSubview:_notice];
@@ -874,11 +873,13 @@
         
         
         if (indexPath.row==2) {
-                UIViewController *communityViewController = [UMCommunity getFeedsViewController];
-                communityViewController.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:communityViewController animated:YES];
-                
+//                UIViewController *communityViewController = [UMCommunity getFeedsViewController];
+//                communityViewController.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:communityViewController animated:YES];
             
+            UMComDiscoverViewController *discover = [[UMComDiscoverViewController alloc]init];
+            discover.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:discover animated:YES];
             
         }
         if (indexPath.row==3) {

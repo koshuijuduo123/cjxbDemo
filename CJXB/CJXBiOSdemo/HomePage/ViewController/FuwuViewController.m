@@ -114,6 +114,15 @@ UITableViewDelegate>
     } enError:^(NSError *error) {
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
+        UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height)];
+        view1.backgroundColor = [UIColor whiteColor];
+        UIImageView *imgVc = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height)];
+        imgVc.image = [UIImage imageNamed:@"请求错误"];
+        imgVc.userInteractionEnabled = YES;
+        
+        [view1 addSubview:imgVc];
+        
+        [self.view addSubview:view1];
     }];
     
     

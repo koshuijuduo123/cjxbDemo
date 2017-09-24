@@ -27,6 +27,9 @@
         self.quButton.clipsToBounds = YES;
         self.quButton.showsTouchWhenHighlighted = YES;
         
+        //页面废除，禁止交互了
+        self.quButton.enabled = NO;
+        
     }
     
     return self;

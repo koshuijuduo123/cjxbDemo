@@ -70,12 +70,7 @@
     self.proTitleList = [[NSArray alloc]initWithObjects:@"大型汽车",@"小型汽车",@"普通摩托车",@"轻便摩托车",@"低速车",@"挂车",@"教练车",nil];
     self.title = @"机动车信息";
     
-    
-    
-    
 }
-
-
 
 
 //确定按钮
@@ -237,11 +232,31 @@ didCompleteWithError:(nullable NSError *)error
             }
             
             [model setValuesForKeysWithDictionary:dic];
+            if ([dic[@"wfjfs"] isKindOfClass:[NSNull class]]){
+                [model setValue:@"<未知>" forKey:@"wfjfs"];
+            }
+            if ([dic[@"fkje"] isKindOfClass:[NSNull class]]){
+                [model setValue:@"<未知>" forKey:@"fkje"];
+            }
+            if ([self deptNumInputShouldNumber:[NSString stringWithFormat:@"%@",dic[@"wfxw"]]]) {
+                [model setValue:[NSString stringWithFormat:@"未知违规行为，违规代号: %@",dic[@"wfxw"]] forKey:@"wfxw"];
+            }
+            
             [self.dasourceArray addObject:model];
             
-            jfs  = jfs+[dic[@"wfjfs"] integerValue];
+            if ([dic[@"wfjfs"] isKindOfClass:[NSNull class]]) {
+                
+            }else{
+                jfs  = jfs+[dic[@"wfjfs"] integerValue];
+                
+            }
             
-            jes = jes + [dic[@"fkje"] integerValue];
+            if ([dic[@"fkje"] isKindOfClass:[NSNull class]]) {
+                
+            }else{
+                jes = jes + [dic[@"fkje"] integerValue];
+                
+            }
             
             
             
@@ -393,6 +408,19 @@ didCompleteWithError:(nullable NSError *)error
     [self.view endEditing:YES];
     
 }
+
+//判断字符串是否全是数字
+- (BOOL) deptNumInputShouldNumber:(NSString *)str
+{
+    NSString *regex = @"[0-9]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
+    }
+    return NO;
+}
+
+
 
 
 - (void)didReceiveMemoryWarning {

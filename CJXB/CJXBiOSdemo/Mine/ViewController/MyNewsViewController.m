@@ -108,6 +108,19 @@
 //点击cell
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WebViewController *webVC = [[WebViewController alloc]init];
+    
+    webVC.releareMyNews = ^(NSString *string){
+       
+        if (string.length) {
+            [self.dataSource removeObjectAtIndex:indexPath.row];
+            
+            [self.tableView reloadData];
+            
+        }
+    };
+    
+    
+    
     webVC.hidesBottomBarWhenPushed = YES;
     webVC.shareHiddnBtn = YES;
     MyLoveNewsEntity *entity = self.dataSource[indexPath.row];
@@ -166,6 +179,7 @@
     webVC.articleId = entity.newId;
     
     webVC.qiandao = @"YES";
+    webVC.isMyNewsIn = YES;//设定收藏列表进入
     
     [self.navigationController pushViewController:webVC animated:YES];
     

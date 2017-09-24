@@ -36,6 +36,11 @@
 #import "UMComComment.h"
 
 
+#import "MyWKWebViewController.h"
+
+
+
+
 @interface UMComFeedTableViewController ()<NSFetchedResultsControllerDelegate,UITextFieldDelegate,UMComClickActionDelegate,UMComScrollViewDelegate,UMComFeedOperationFinishDelegate, UIActionSheetDelegate> {
     
     NSFetchedResultsController *_fetchedResultsController;
@@ -388,11 +393,28 @@
 
 - (void)customObj:(id)obj clickOnURL:(NSString *)url
 {
-    UMComWebViewController * webViewController = [[UMComWebViewController alloc] initWithUrl:url];
-    //使用系统的返回按钮
-    webViewController.isPushWebView = YES;
-    webViewController.hidesBottomBarWhenPushed  =YES;
-    [self.navigationController pushViewController:webViewController animated:YES];
+        MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+     if ([url rangeOfString:@"xiaobang520"].location ==NSNotFound){
+         
+     }else{
+         webVC.aoutMyMessage = @"aboutMyMessage";
+         
+     }
+        webVC.loadUrl = url;
+    webVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:webVC animated:YES];
+//    }else{
+//        UMComWebViewController * webViewController = [[UMComWebViewController alloc] initWithUrl:url];
+//        //使用系统的返回按钮
+//        webViewController.isPushWebView = YES;
+//        webViewController.hidesBottomBarWhenPushed  =YES;
+//        [self.navigationController pushViewController:webViewController animated:YES];
+//        
+//    }
+
+    
+    
+    
 }
 
 - (void)customObj:(id)obj clickOnLocationText:(UMComFeed *)feed

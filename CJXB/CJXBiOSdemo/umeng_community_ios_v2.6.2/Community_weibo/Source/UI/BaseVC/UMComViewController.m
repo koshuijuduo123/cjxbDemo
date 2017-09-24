@@ -36,7 +36,7 @@
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
-    // Do any additional setup after loading the view.
+    
 }
 
 
@@ -70,15 +70,26 @@
 
 - (void)goBack
 {
+    if (self.AppDelegateSele==-1) {
+        if(self.webBack){
+            
+            self.webBack();
+        }
+        
+        
+    }
+    
+    
+    
+    
     if (self.navigationController.viewControllers.count >1) {
         if (self.isPushWebView==YES) {
             if ([self.webView canGoBack]) {
                 [self.webView goBack];
             }else{
-                [self.navigationController popViewControllerAnimated:YES];
+               [self.navigationController popViewControllerAnimated:YES];
             }
         }else{
-            
             [self.navigationController popViewControllerAnimated:YES];
         }
         

@@ -56,8 +56,12 @@
         [self.webView.scrollView.header endRefreshing];
     }];
     
+    
+    
   
 }
+
+
 
 - (instancetype)initWithUrl:(NSString *)url
 {

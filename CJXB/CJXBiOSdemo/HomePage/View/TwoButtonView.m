@@ -21,6 +21,19 @@
             button.clipsToBounds = YES;
         }
         
+        if (size_width>375) {
+            self.carBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
+            self.cardBtn.titleLabel.font = [UIFont systemFontOfSize:18.0];
+             
+        }else if (size_width==375){
+            self.carBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
+            self.cardBtn.titleLabel.font = [UIFont systemFontOfSize:15.0];
+        }else{
+            self.carBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
+            self.cardBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
+        }
+        
+        
     }
     
     return self;

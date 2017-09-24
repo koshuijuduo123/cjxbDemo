@@ -23,6 +23,12 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+
+//iOS10.0的coreData Stack容器
+//@property(nonatomic,strong)NSPersistentContainer *persistentContainer;
+
+
+
 @property(nonatomic,copy)NSString *articleId;//分享文章ID
 
 

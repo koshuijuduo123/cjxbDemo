@@ -78,7 +78,7 @@
     
     [self borderWith:self.maBtn];
     [self borderWith:self.loginBtn];
-    [self borderWith:self.backBtn];
+    //[self borderWith:self.backBtn];
     
     self.phoneTextFirld.delegate = self;
     self.maTextFirld.delegate = self;
@@ -196,7 +196,7 @@ return ;
     self.maTextFirld.text = [self.maTextFirld.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     //测试登录逻辑
     if ([self.phoneTextFirld.text isEqualToString:@"15090356563"]&&[self.maTextFirld.text isEqualToString:@"12345"]) {
-        [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"getuserinfo",@"username":@"XB_100007791",@"password":@"1cb25ef7210542d8cb8cdbee1edd081a"} finish:^(id responseObject) {
+        [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"getuserinfo",@"username":@"XB_100006227",@"password":@"c89de99418d07a11ce2c47cc6b654df1"} finish:^(id responseObject) {
             
             if([responseObject[@"IsError"] integerValue]==1) {
                 [self hidenHUD];

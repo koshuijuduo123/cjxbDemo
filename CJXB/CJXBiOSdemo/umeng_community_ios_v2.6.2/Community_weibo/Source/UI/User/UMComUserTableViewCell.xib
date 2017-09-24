@@ -152,7 +152,7 @@
                 <outlet property="messageCountLabel" destination="lfD-fM-xgr" id="DUS-bv-qzY"/>
                 <outlet property="userNameLabel" destination="sDN-Qd-qK6" id="ONR-YR-8iK"/>
             </connections>
-            <point key="canvasLocation" x="-423" y="459.5"/>
+            <point key="canvasLocation" x="-419" y="325.5"/>
         </tableViewCell>
     </objects>
 </document>

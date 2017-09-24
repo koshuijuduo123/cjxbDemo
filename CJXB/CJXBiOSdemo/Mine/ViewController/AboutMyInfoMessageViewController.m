@@ -48,7 +48,7 @@ static NSString *const MYCell = @"MYCell";
     self.title = @"关于我们";
     self.gongSiName.text = GongSiName;
    
-    _dataSourceArr = @[@"小帮简介",@"我们的网站",@"用户协议",@"隐私政策",@"小帮的感谢信",@"周边汽车服务"].mutableCopy;
+    _dataSourceArr = @[@"小帮简介",@"用户协议",@"隐私政策",@"意见反馈",@"新乡微警务",@"周边汽车服务"].mutableCopy;
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -127,24 +127,25 @@ static NSString *const MYCell = @"MYCell";
             myWebVC.title = @"小帮简介";
         }
         
-        if (indexPath.row==1) {
-            myWebVC.loadUrl = @"http://www.xiaobang520.com";
+        if (indexPath.row==3) {
+            myWebVC.loadUrl = @"https://jinshuju.net/f/Jpe9yK";
+            myWebVC.title = @"意见反馈";
         }
         
-        if (indexPath.row==2) {
+        if (indexPath.row==1) {
             myWebVC.loadUrl =@"https://h5.youzan.com/v2/feature/19w5w0v04";
             myWebVC.title = @"用户协议";
         }
         
-        if (indexPath.row==3) {
+        if (indexPath.row==2) {
             myWebVC.loadUrl = @"https://h5.youzan.com/v2/feature/ihv922pp";
             myWebVC.title = @"隐私声明";
         }
         
         
         if (indexPath.row==4) {
-            myWebVC.loadUrl = @"https://h5.youzan.com/v2/feature/nk5k5ako";
-            myWebVC.title = @"小帮感谢信";
+            myWebVC.loadUrl = @"http://wx.xxgaw.gov.cn/wjw/";
+            myWebVC.title = @"小帮合作服务";
         }
         
         if (indexPath.row==5) {

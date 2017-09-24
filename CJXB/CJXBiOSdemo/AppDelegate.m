@@ -28,14 +28,13 @@
 #import "JWLaunchAd.h"
 #import "MyNewsModel.h"
 
-
-
 #import "MJExtension.h"
 #import "IMYWebView.h"
 #import <SMS_SDK/SMSSDK.h>
 #import "YZSDK.h"
 #import "UMCommunity.h"
-
+#import "MyWKWebViewController.h"
+#import "UMComWebViewController.h"
 static NSString *userAgent = @"1bd1cac4ba73df23c81490580437823";
 static NSString *appID = @"10dc300fbf4f70e851";
 static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
@@ -83,7 +82,7 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
         //等于1说明第一次启动，要添加引导页
         GuideViewController *guideVC = [[GuideViewController alloc]init];
         //设置引导页的图片
-        guideVC.imageArray = @[@"new_feature_1",@"new_feature_2",@"new_feature_3"];  
+        guideVC.imageArray = @[@"bund_1",@"bund_2",@"bund_3"];  
         //将当前的window的根视图设置为定义对象
         self.window.rootViewController = guideVC;
     }else{
@@ -129,7 +128,7 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
                     NSArray *arr = [NSArray arrayWithArray:responseObject[@"Data"]];
                     NSDictionary *dic =[NSDictionary dictionaryWithDictionary:[arr firstObject]];
                     NSString *HomePageImgURL = dic[@"imggg"];
-                    NSString *webId = dic[@"id"];
+                    //NSString *webId = dic[@"id"];
             
             
                 [launchAd setWebImageWithURL:HomePageImgURL options:JWWebImageDefault result:^(UIImage *image, NSURL *url) {
@@ -143,24 +142,96 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
                     WebViewController *webVC = [[WebViewController alloc] init];
                     
                     webVC.hidesBottomBarWhenPushed = YES;
-                    webVC.shareHiddnBtn = YES;
+                    //webVC.shareHiddnBtn = YES;
                     LoginDataModel *model = [UserDefault getUserInfo];
                     NSString *string;
                     
-                    if (![dic[@"jumpurl"] isKindOfClass:[NSNull class]]){
-                        webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 64, size_width, size_height-64-44) usingUIWebView:YES];
-                        webVC.isUIWebView = YES;
-                        if ([dic[@"jumpurl"] hasSuffix:@"?"]) {
-                            string = [NSString stringWithFormat:@"%@&userid=%@&from=timeline&isappinstalled=1",dic[@"jumpurl"],model.myid];
+                    
+                        if (![dic[@"jumpurl"] isKindOfClass:[NSNull class]]){
+                            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 64, size_width, size_height-64-44)];
+                            
+                            [webVC.view addSubview:webVC.webView];
+                            
+                            [webVC.view sendSubviewToBack:webVC.webView];
+                            
+                            //webVC.isUIWebView =YES;
+                            webVC.shareHiddnBtn = YES;
+                            //[webVC.view addSubview:webVC.webView];
+                            
+                            if([dic[@"jumpurl"] rangeOfString:@"youzan"].location !=NSNotFound){
+                                MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+                                webVC.loadUrl = dic[@"jumpurl"];
+                                webVC.title = @"小帮特别推荐";
+                                webVC.hidesBottomBarWhenPushed = YES;
+                                UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:webVC];
+                                self.window.rootViewController = nav;
+                                webVC.AppDelegateSele = -1;
+                                webVC.webBack= ^(){
+                                    //广告展示完成回调,设置window根控制器
+                                    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                    UITabBarController *tabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"RootViewController"];
+                                    
+                                    
+                                    //设置当前APP的window
+                                    self.window.rootViewController =tabBarController;
+                                    
+                                };
+                                
+                                return;
+                                //判断是否链接全是空格
+                            }else if([dic[@"jumpurl"] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]].length==0){
+                                
+                                
+                                string = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",dic[@"id"],model.myid];
+                                
+                                webVC.qiandao = @"YES";
+                                
+                            }else if ([dic[@"jumpurl"] rangeOfString:@"xiaobang520"].location !=NSNotFound){
+                                
+                                
+                                string = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",dic[@"id"],model.myid];
+                                
+                                webVC.qiandao = @"YES";
+                            }else{
+                                UMComWebViewController * webViewController = [[UMComWebViewController alloc] initWithUrl:dic[@"jumpurl"]];
+                                //使用系统的返回按钮
+                                webViewController.isPushWebView = YES;
+                                webViewController.hidesBottomBarWhenPushed  =YES;
+                                UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:webViewController];
+                                self.window.rootViewController = nav;
+                                
+                                webViewController.AppDelegateSele = -1;
+                                webViewController.webBack= ^(){
+                                    //广告展示完成回调,设置window根控制器
+                                    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                    UITabBarController *tabBarController = [storyBoard instantiateViewControllerWithIdentifier:@"RootViewController"];
+                                    
+                                    
+                                    //设置当前APP的window
+                                    self.window.rootViewController =tabBarController;
+                                    
+                                };
+
+                                
+                                
+                                return;
+                                
+                            }
+                            webVC.title = @"最新活动";
                             
                         }else{
-                            string = [NSString stringWithFormat:@"%@?userid=%@&from=timeline&isappinstalled=1",dic[@"jumpurl"],model.myid];
+                            webVC.shareHiddnBtn = YES;
+                            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 64, size_width, size_height-64)];
+                            
+                            //[webVC.view addSubview:webVC.webView];
+                            
+                            //[webVC.view sendSubviewToBack:webVC.webView];
+                            
+                            string = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",dic[@"id"],model.myid];
+                            
+                            webVC.qiandao = @"YES";
+                            
                         }
-                    }else{
-                        
-                        string = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",webId,model.myid];
-                         webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 64, size_width, size_height-64-44) ];
-                    }
                     
                     
                     
@@ -177,7 +248,7 @@ static NSString *appSecret = @"764541f02fca5798d0e20b533c59aaca";
                     
                     [webVC.view addSubview:webVC.webView];
                     
-                    [webVC.view bringSubviewToFront:webVC.backView];
+                   [webVC.view bringSubviewToFront:webVC.backView];
                     
                     //[webVC.view sendSubviewToBack:webVC.backView];
                     

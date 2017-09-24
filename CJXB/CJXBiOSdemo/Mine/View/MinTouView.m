@@ -16,7 +16,8 @@
         self = viewArray[0];
         self.frame =frame;
         
-        
+        //self.jfLab.adjustsFontSizeToFitWidth=YES;
+        //self.moneyLab.adjustsFontSizeToFitWidth = YES;
         
     }
     

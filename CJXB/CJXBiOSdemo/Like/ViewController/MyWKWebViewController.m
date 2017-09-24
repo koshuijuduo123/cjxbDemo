@@ -37,6 +37,19 @@
 
 
 - (BOOL)navigationShouldPopOnBackButton {
+    if (self.AppDelegateSele==-1) {
+        if(self.webBack){
+            
+            self.webBack();
+            return NO;
+        }else{
+            return YES;
+        }
+        
+    }
+    
+    
+    
     if ([self.webView canGoBack]) {
         [self.webView goBack];
         self.navigationItem.leftItemsSupplementBackButton = YES;
@@ -49,12 +62,24 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.translucent  = YES;
+    //self.navigationController.navigationBar.translucent  = YES;
+    if (self.AppDelegateSele==-1) {
+        self.navigationController.navigationBar.translucent = NO;
+    }else{
+        self.navigationController.navigationBar.translucent = YES;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.translucent = NO;
+    //self.navigationController.navigationBar.translucent = NO;
+    
+    if (self.AppDelegateSele==-1) {
+        self.navigationController.navigationBar.translucent = YES;
+    }else{
+        self.navigationController.navigationBar.translucent = NO;
+    }
+
 }
 - (void)viewDidLoad {
     
@@ -69,8 +94,36 @@
         [_webView.scrollView.header endRefreshing];
     }];
     
-    
+    if(_AppDelegateSele==-1){
+        UIButton * backButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        backButton.frame = CGRectMake(0, 0, 25, 25);
+        [backButton setBackgroundImage:[UIImage imageNamed:@"返回1"] forState:UIControlStateNormal];
+        
+        
+        
+        [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithCustomView:backButton];
+        
+        UIBarButtonItem *negative = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        
+        negative.width = -15;
+        self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negative,btn, nil];
+    }
 }
+
+
+-(void)back:(UIBarButtonItem *)sender{
+    
+    if (self.AppDelegateSele==-1) {
+        if(self.webBack){
+            
+            self.webBack();
+        }
+        return;
+        
+    }
+}
+
 
 
 //kvo计算进度条

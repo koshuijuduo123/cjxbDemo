@@ -24,13 +24,16 @@
 #import "MyCarModel.h"
 #import "MyWKWebViewController.h"
 #import "MJRefresh.h"
-@interface WebViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UMSocialUIDelegate,IMYWebViewDelegate,HZPhotoBrowserDelegate,selectIndexPathDelegate>
+#import "InputTextView.h"
+#import "UMComTools.h"
+@interface WebViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UMSocialUIDelegate,IMYWebViewDelegate,HZPhotoBrowserDelegate,selectIndexPathDelegate,InputTextViewDelgate>
 @property (weak, nonatomic) IBOutlet UIButton *sheetBtn;
 @property (weak, nonatomic) IBOutlet UIButton *jfBtn;
 
-@property (weak, nonatomic) IBOutlet UITextField *taskTextFirld;
+@property (weak, nonatomic) IBOutlet UIButton *taskTextBtn;//写评论
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomLine;
+@property (weak, nonatomic) IBOutlet UIButton *gteLinkBtn; //复制链接
+
 
 @property(nonatomic,strong)IMYWebView *webVC;
 
@@ -56,7 +59,7 @@
 @implementation WebViewController
 -(NSArray *)logTypeArrM{
     if (!_logTypeArrM) {
-        self.logTypeArrM = @[@"分享此文章",@"收藏此文章",@"用浏览器打开",@"复制链接"];
+        self.logTypeArrM = @[@"分享此文章",@"收藏此文章",@"用浏览器打开",@"🔗复制链接"];
     }
     return _logTypeArrM;
 }
@@ -83,7 +86,6 @@
     
     
     self.navigationController.navigationBar.hidden = NO;
-    self.bottomLine.constant = 0;
     
 }
 
@@ -114,12 +116,8 @@
             NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url1];
             
             [_webVC loadRequest:request];
-            
-        
         
     }
-    
-
     
 }
 
@@ -194,16 +192,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.automaticallyAdjustsScrollViewInsets = YES;
-    self.sheetBtn.layer.cornerRadius = 10.0;
-    self.sheetBtn.clipsToBounds = YES;
-    
-    self.jfBtn.layer.cornerRadius = 10.0;
-    self.jfBtn.clipsToBounds = YES;
-    
-    self.taskTextFirld.delegate = self;
-    
-    self.taskTextFirld.tag = 888;
+    //默认不是收藏列表进入的
+    self.isMyNewsIn = NO;
     
     if (!self.title.length) {
         self.title = @"小帮发现";
@@ -377,7 +367,7 @@
 
 
 
-
+/*
 //通知触发方法
 -(void)KeyboardWillShow:(NSNotification *)notification
 {
@@ -399,10 +389,7 @@
     self.bottomLine.constant = keyboardHeight;
 }
 
-
-
-
-
+*/
 
 //若是二级的web页面，则返回上一级web界面
 -(void)back:(UIBarButtonItem *)sender{
@@ -427,7 +414,13 @@
         
     }else{
         [self.view resignFirstResponder];
-        [self.navigationController popViewControllerAnimated:YES];
+        AppDelegate *app = CJXBAPP;
+        if ((self.isMyNewsIn==YES)&&(![app searchMyNewsforEntity].count) ) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     
     
@@ -469,6 +462,17 @@
 
 //完成加载
 - (void)webViewDidFinishLoad:(IMYWebView*)webView{
+   
+    AppDelegate *app = CJXBAPP;
+    for (MyLoveNewsEntity *entity in [app searchMyNewsforEntity]) {
+        if ([[NSString stringWithFormat:@"%@",self.articleId]isEqualToString:entity.newId]) {
+            [self.sheetBtn setBackgroundImage:UMComImageWithImageName(@"um_collection+") forState:UIControlStateNormal];
+        }
+    }
+
+    
+    
+    
     if (webView.usingUIWebView) {
         
         UIImageView *imgView = [_hud viewWithTag:7777];
@@ -653,49 +657,99 @@
     return count;
 }
 
-
-
-
-
-//发送
-- (IBAction)sheetButtonAction:(UIButton *)sender {
-    [self.taskTextFirld resignFirstResponder];
+//写评论
+- (IBAction)writeMyIderAction:(UIButton *)sender {
     
     NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
     if (cookies.count==0) {
-        [WebViewController showAlertMessageWithMessage:@"加入小帮参与评论" duration:1.0];
-        return;
+        LoginViewController *logVC = [[LoginViewController alloc]init];
+        
+        [logVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        
+        [self presentViewController:logVC animated:YES completion:nil];
     }else{
-        
-        
-        if (self.taskTextFirld.text.length==0) {
-            [WebViewController showAlertMessageWithMessage:@"内容不能为空" duration:1.0];
-            return;
-        }
-        
-        //发送
         NSHTTPCookieStorage * cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
         for (NSHTTPCookie * cookie in cookies){
             [cookieStorage setCookie: cookie];
         }
-        
-        //让后台识别表情符号
-       // NSString * str1 =  [self.taskTextFirld.text stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<> "].invertedSet];
-       
-        
-       // self.str2 = [str1  stringByRemovingPercentEncoding];
-        
-        [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/article/articlehandler.ashx" parmDic:@{@"exec":@"addpl",@"articleid":self.articleId,@"con":self.taskTextFirld.text} finish:^(id responseObject) {
-            self.taskTextFirld.text = nil;
-            [WebViewController showAlertMessageWithMessage:responseObject[@"Message"] duration:1.0];
-            //刷新界面
-            [self.webView reload];
-            
-        } enError:^(NSError *error) {
-            
-        }];
-        }
+    
+        InputTextView * input=[InputTextView creatInputTextView];
+        input.delegate=self;
+        [input show];
+    
+    }
 }
+
+
+//点击收藏文章下键盘按钮
+- (IBAction)getArticle:(UIButton *)sender {
+    
+    if (_isMyNewsIn==YES) {
+        //改变回调
+        self.releareMyNews(_articleId);
+    }
+    
+    AppDelegate *app = CJXBAPP;
+    
+    for (MyLoveNewsEntity *entity in [app searchMyNewsforEntity]) {
+        if ([[NSString stringWithFormat:@"%@",self.articleId]isEqualToString:entity.newId]) {
+            
+            [app.managedObjectContext deleteObject:entity];
+            
+            [app.managedObjectContext save:nil];
+            
+            [self.sheetBtn setBackgroundImage:UMComImageWithImageName(@"um_collection") forState:UIControlStateNormal];
+            
+            [WebViewController showAlertMessageWithMessage:@"取消收藏" duration:2.0];
+            return;
+        }
+    }
+
+    MyNewsModel *newsModel = [[MyNewsModel alloc]init];
+    
+    LoginDataModel *model = [UserDefault getUserInfo];
+    self.string5 = nil;
+    
+    self.string5 = [NSString stringWithFormat:@"%@",self.webView.URL.absoluteURL];
+    
+    
+    if ([_string5 isEqualToString:@""]) {
+        
+        self.string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",self.articleId,model.myid];
+    }
+    if (!self.imgUrl) {
+        self.imgUrl = UMLoginImgURL;
+    }
+    if (!self.titleLab) {
+        self.titleLab = @"我的收藏页面";
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"添加日期📅:yyyy-MM-dd HH:mm"];
+    NSString *datetime = [formatter stringFromDate:[NSDate date]];
+    
+    newsModel.pushUrl = _string5;
+    newsModel.imgUrl =  self.imgUrl;
+    newsModel.title = self.titleLab;
+    newsModel.newsId = self.articleId;
+    newsModel.timeAdd = datetime;
+    
+    
+    
+    [app addMyLoveNewEntity:newsModel];
+    [self.sheetBtn setBackgroundImage:UMComImageWithImageName(@"um_collection+") forState:UIControlStateNormal];
+    
+    [WebViewController showAlertMessageWithMessage:@"收藏成功" duration:2.0];
+
+}
+
+
+
+
+//点击复制链接下键盘按钮
+- (IBAction)getLink:(UIButton *)sender {
+    [self getLinkAction];
+}
+
 
 //不用点击自动消失的提示框
 +(void)showAlertMessageWithMessage:(NSString*)message duration:(NSTimeInterval)time
@@ -721,7 +775,7 @@
 
 //分享
 - (IBAction)shareButtonAction:(UIButton *)sender {
-    [self.taskTextFirld resignFirstResponder];
+    //[self.taskTextFirld resignFirstResponder];
     [UMSocialData setAppKey:@"57ca6a40e0f55ac3c6003450"];
     //存放当前显示的分享平台，不能强迫用户安装需要分享的应用
     NSMutableArray *plantFormArr = [[NSMutableArray alloc]init];
@@ -840,7 +894,7 @@
 }
 
 
-
+/*
 #pragma mark - UITextFirld代理
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     return [textField resignFirstResponder];
@@ -878,6 +932,28 @@
         
     }];
 }
+*/
+
+#pragma mark-InputTextViewDelgate
+-(void)cancleInput1{
+    
+}
+ 
+-(void)finishedInput1:(InputTextView *)InputTextView{
+    
+    [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/article/articlehandler.ashx" parmDic:@{@"exec":@"addpl",@"articleid":self.articleId,@"con":InputTextView.textView.text} finish:^(id responseObject) {
+        
+        [WebViewController showAlertMessageWithMessage:responseObject[@"Message"] duration:1.0];
+        //刷新界面
+        [self.webView reload];
+        
+    } enError:^(NSError *error) {
+        
+    }];
+}
+
+
+
 
 - (void)selectIndexPathRow:(NSInteger)index{
     [self.shareBtn setTitle:[self.logTypeArrM objectAtIndex:index] forState:UIControlStateNormal];
@@ -887,46 +963,7 @@
     }
     if (index==1) {
         //收藏功能
-        MyNewsModel *newsModel = [[MyNewsModel alloc]init];
-        LoginDataModel *model = [UserDefault getUserInfo];
-        self.string5 = nil;
-        
-        self.string5 = [NSString stringWithFormat:@"%@",self.webView.URL.absoluteURL];
-        
-        
-        if ([_string5 isEqualToString:@""]) {
-            
-            self.string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",self.articleId,model.myid];
-        }
-        if (!self.imgUrl) {
-            self.imgUrl = UMLoginImgURL;
-        }
-        if (!self.titleLab) {
-            self.titleLab = @"我的收藏页面";
-        }
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"添加日期📅:yyyy-MM-dd HH:mm"];
-        NSString *datetime = [formatter stringFromDate:[NSDate date]];
-        
-        newsModel.pushUrl = _string5;
-        newsModel.imgUrl =  self.imgUrl;
-        newsModel.title = self.titleLab;
-        newsModel.newsId = self.articleId;
-        newsModel.timeAdd = datetime;
-        AppDelegate *app = CJXBAPP;
-        
-        for (MyLoveNewsEntity *entity in [app searchMyNewsforEntity]) {
-            if ([[NSString stringWithFormat:@"%@",newsModel.newsId]isEqualToString:entity.newId]) {
-                [WebViewController showAlertMessageWithMessage:@"文章不能重复收藏" duration:2.0];
-                return;
-            }
-        }
-        
-        [app addMyLoveNewEntity:newsModel];
-        
-        [WebViewController showAlertMessageWithMessage:@"收藏成功" duration:2.0];
-        
-        
+        [self collectionArticle];
         }
     
     
@@ -936,20 +973,74 @@
     }
     
     if (index==3) {
-        //复制链接
-        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        pasteboard.string = _webView.URL.absoluteString;
-        if (pasteboard.string.length) {
-            [WebViewController showAlertMessageWithMessage:@"复制成功" duration:1.0];
-            
-        }else{
-            [WebViewController showAlertMessageWithMessage:@"复制失败" duration:1.0];
-        }
-
+        [self getLinkAction];
     }
     
     
 }
+
+
+-(void)collectionArticle{
+    MyNewsModel *newsModel = [[MyNewsModel alloc]init];
+    LoginDataModel *model = [UserDefault getUserInfo];
+    self.string5 = nil;
+    
+    self.string5 = [NSString stringWithFormat:@"%@",self.webView.URL.absoluteURL];
+    
+    
+    if ([_string5 isEqualToString:@""]) {
+        
+        self.string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",self.articleId,model.myid];
+    }
+    if (!self.imgUrl) {
+        self.imgUrl = UMLoginImgURL;
+    }
+    if (!self.titleLab) {
+        self.titleLab = @"我的收藏页面";
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"添加日期📅:yyyy-MM-dd HH:mm"];
+    NSString *datetime = [formatter stringFromDate:[NSDate date]];
+    
+    newsModel.pushUrl = _string5;
+    newsModel.imgUrl =  self.imgUrl;
+    newsModel.title = self.titleLab;
+    newsModel.newsId = self.articleId;
+    newsModel.timeAdd = datetime;
+    AppDelegate *app = CJXBAPP;
+    
+    for (MyLoveNewsEntity *entity in [app searchMyNewsforEntity]) {
+        if ([[NSString stringWithFormat:@"%@",newsModel.newsId]isEqualToString:entity.newId]) {
+            [WebViewController showAlertMessageWithMessage:@"文章不能重复收藏" duration:2.0];
+            return;
+        }
+    }
+    
+    [app addMyLoveNewEntity:newsModel];
+    
+    [WebViewController showAlertMessageWithMessage:@"收藏成功" duration:2.0];
+    
+
+}
+
+
+
+//复制链接
+-(void)getLinkAction{
+    //复制链接
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = _webView.URL.absoluteString;
+    if (pasteboard.string.length) {
+        [WebViewController showAlertMessageWithMessage:@"复制链接成功" duration:1.0];
+        
+    }else{
+        [WebViewController showAlertMessageWithMessage:@"复制链接失败" duration:1.0];
+    }
+
+}
+
+
+
 
 -(void)dealloc{
     

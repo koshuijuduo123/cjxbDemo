@@ -53,4 +53,10 @@
     self.buttonHeaderClick(@"success");
 }
 
+- (IBAction)refreshAction:(UIButton *)sender {
+    sender.showsTouchWhenHighlighted = YES;
+    self.buttonHeaderClick(@"消息刷新");
+
+}
+
 @end

@@ -7,6 +7,7 @@
 //
 typedef void(^ButtonClcik) (NSString *string);
 typedef void (^WebBack)();
+typedef void (^ReleareMyNews)(NSString *string);
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 #import "YZSDK.h"
@@ -25,6 +26,7 @@ typedef void (^WebBack)();
 
 
 @property(nonatomic,copy)ButtonClcik buttonClcik;
+@property(nonatomic,copy)ReleareMyNews releareMyNews;//我的收藏页面回调
 
 @property(nonatomic,copy)NSString *qiandao;
 
@@ -34,5 +36,7 @@ typedef void (^WebBack)();
 @property(nonatomic,assign)int AppDelegateSele;
 
 @property(nonatomic,assign)BOOL isPushExtcl;//是不是跳转了保养表格
+
+@property(nonatomic,assign)BOOL isMyNewsIn;//是否是收藏列表进入的
 
 @end

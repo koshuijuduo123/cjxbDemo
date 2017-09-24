@@ -38,7 +38,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zke-Vo-m9H">
-                    <rect key="frame" x="20" y="162" width="346" height="36"/>
+                    <rect key="frame" x="20" y="172" width="346" height="36"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="RJP-bt-M4P"/>
@@ -72,17 +72,6 @@
                         </mask>
                     </variation>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLW-TV-rMR">
-                    <rect key="frame" x="20" y="218" width="346" height="36"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="返回">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="fanButtonAction:" destination="-1" eventType="touchUpInside" id="Zc7-fy-eTp"/>
-                    </connections>
-                </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="center" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="dUu-4R-HIg" customClass="myTextFirld">
                     <rect key="frame" x="10" y="60" width="276" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -114,7 +103,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新老用户都可以使用短信验证登录" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5d4-3t-3aZ">
-                    <rect key="frame" x="20" y="274" width="210" height="30"/>
+                    <rect key="frame" x="20" y="228" width="210" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="q3z-Ql-wAI"/>
                     </constraints>
@@ -123,7 +112,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可以发表评论参与话题讨论" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZGD-i3-tDv">
-                    <rect key="frame" x="20" y="344" width="168" height="30"/>
+                    <rect key="frame" x="20" y="298" width="168" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="8rw-ke-d0P"/>
                     </constraints>
@@ -132,7 +121,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登陆后可参与助力值赚取和购买商品" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nM-oB-mBq">
-                    <rect key="frame" x="20" y="309" width="224" height="30"/>
+                    <rect key="frame" x="20" y="263" width="224" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="IkL-BZ-3wp"/>
                     </constraints>
@@ -140,23 +129,37 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLW-TV-rMR">
+                    <rect key="frame" x="173" y="356" width="40" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="96m-QR-XYy"/>
+                        <constraint firstAttribute="width" constant="40" id="SeK-s3-th8"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="差号.png">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="fanButtonAction:" destination="-1" eventType="touchUpInside" id="Zc7-fy-eTp"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="zke-Vo-m9H" firstAttribute="leading" secondItem="23b-bc-rWl" secondAttribute="leading" constant="20" id="2Fu-zb-YBk"/>
                 <constraint firstItem="2xP-Kf-lap" firstAttribute="centerY" secondItem="dUu-4R-HIg" secondAttribute="centerY" id="5Zx-nO-dQV"/>
+                <constraint firstItem="5d4-3t-3aZ" firstAttribute="top" secondItem="zke-Vo-m9H" secondAttribute="bottom" constant="20" id="9g1-LD-0Ol"/>
                 <constraint firstItem="dUu-4R-HIg" firstAttribute="top" secondItem="23b-bc-rWl" secondAttribute="top" constant="60" id="AqT-CW-MvG"/>
                 <constraint firstItem="ZGD-i3-tDv" firstAttribute="leading" secondItem="zke-Vo-m9H" secondAttribute="leading" id="Bsx-pp-Xan"/>
                 <constraint firstItem="7nM-oB-mBq" firstAttribute="leading" secondItem="zke-Vo-m9H" secondAttribute="leading" id="CpA-PK-Wig"/>
-                <constraint firstItem="XLW-TV-rMR" firstAttribute="centerX" secondItem="23b-bc-rWl" secondAttribute="centerX" id="DdK-C1-H94"/>
                 <constraint firstItem="5d4-3t-3aZ" firstAttribute="leading" secondItem="zke-Vo-m9H" secondAttribute="leading" id="FcR-2J-gZo"/>
-                <constraint firstItem="5d4-3t-3aZ" firstAttribute="top" secondItem="XLW-TV-rMR" secondAttribute="bottom" constant="20" id="GNc-Pn-lgL"/>
-                <constraint firstItem="XLW-TV-rMR" firstAttribute="leading" secondItem="23b-bc-rWl" secondAttribute="leading" constant="20" id="JZt-oC-uQZ"/>
                 <constraint firstAttribute="bottom" secondItem="10m-s1-nKZ" secondAttribute="bottom" id="JbH-35-q8Z"/>
-                <constraint firstItem="zke-Vo-m9H" firstAttribute="top" secondItem="fBS-cK-Ast" secondAttribute="bottom" constant="20" id="JnJ-5R-SVs"/>
+                <constraint firstItem="zke-Vo-m9H" firstAttribute="top" secondItem="fBS-cK-Ast" secondAttribute="bottom" constant="30" id="JnJ-5R-SVs"/>
                 <constraint firstItem="fBS-cK-Ast" firstAttribute="top" secondItem="dUu-4R-HIg" secondAttribute="bottom" constant="30" id="LuC-Rx-Kgt"/>
                 <constraint firstItem="yII-lF-wdx" firstAttribute="leading" secondItem="dUu-4R-HIg" secondAttribute="leading" id="LxI-jB-RMi"/>
+                <constraint firstItem="XLW-TV-rMR" firstAttribute="centerX" secondItem="zke-Vo-m9H" secondAttribute="centerX" id="RZz-5o-8tW"/>
                 <constraint firstItem="fBS-cK-Ast" firstAttribute="leading" secondItem="dUu-4R-HIg" secondAttribute="leading" id="T8e-Tx-5DM"/>
+                <constraint firstAttribute="bottom" secondItem="XLW-TV-rMR" secondAttribute="bottom" constant="10" id="TQo-Ws-TH1"/>
                 <constraint firstItem="2xP-Kf-lap" firstAttribute="height" secondItem="dUu-4R-HIg" secondAttribute="height" id="VUf-Nu-kgw"/>
                 <constraint firstItem="ZGD-i3-tDv" firstAttribute="top" secondItem="7nM-oB-mBq" secondAttribute="bottom" constant="5" id="cCz-14-NRF"/>
                 <constraint firstAttribute="trailing" secondItem="10m-s1-nKZ" secondAttribute="trailing" id="cpv-uB-cDl"/>
@@ -167,7 +170,6 @@
                 <constraint firstAttribute="trailing" secondItem="2xP-Kf-lap" secondAttribute="trailing" constant="5" id="flT-vN-kvK"/>
                 <constraint firstItem="yII-lF-wdx" firstAttribute="width" secondItem="dUu-4R-HIg" secondAttribute="width" id="iAn-7k-AML"/>
                 <constraint firstItem="d7K-ri-Ryc" firstAttribute="top" secondItem="fBS-cK-Ast" secondAttribute="bottom" id="lC9-cr-t36"/>
-                <constraint firstItem="XLW-TV-rMR" firstAttribute="top" secondItem="zke-Vo-m9H" secondAttribute="bottom" constant="20" id="m4H-c6-Itt"/>
                 <constraint firstItem="d7K-ri-Ryc" firstAttribute="leading" secondItem="fBS-cK-Ast" secondAttribute="leading" id="n0g-td-OTQ"/>
                 <constraint firstItem="2xP-Kf-lap" firstAttribute="leading" secondItem="dUu-4R-HIg" secondAttribute="trailing" constant="5" id="oJ1-kQ-Oal"/>
                 <constraint firstItem="zke-Vo-m9H" firstAttribute="centerX" secondItem="23b-bc-rWl" secondAttribute="centerX" id="oeL-R9-dnm"/>
@@ -182,5 +184,6 @@
     </objects>
     <resources>
         <image name="login_bg6@2x.png" width="430" height="212"/>
+        <image name="差号.png" width="64" height="64"/>
     </resources>
 </document>

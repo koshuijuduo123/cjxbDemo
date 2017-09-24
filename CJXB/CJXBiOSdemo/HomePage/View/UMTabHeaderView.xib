@@ -43,21 +43,34 @@
                         <action selector="umMyMessageAction:" destination="Ip2-P9-3U0" eventType="touchUpInside" id="h0a-1e-j60"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGt-1V-CRE">
+                    <rect key="frame" x="248" y="6" width="35" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="dZX-Xv-WOs"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="即时刷.png"/>
+                    <connections>
+                        <action selector="refreshAction:" destination="Ip2-P9-3U0" eventType="touchUpInside" id="FXa-9M-2mw"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="wvR-Tn-dhT" firstAttribute="leading" secondItem="cGt-1V-CRE" secondAttribute="trailing" constant="20" id="19V-pH-Pce"/>
                 <constraint firstAttribute="trailing" secondItem="UzT-PW-zmi" secondAttribute="trailing" constant="5" id="4fK-3R-iGg"/>
                 <constraint firstItem="UzT-PW-zmi" firstAttribute="leading" secondItem="U6U-Ep-sPH" secondAttribute="trailing" constant="2" id="AT2-k2-ZEK"/>
                 <constraint firstItem="wvR-Tn-dhT" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="EFV-gA-Emz"/>
                 <constraint firstItem="CI5-Q0-YBW" firstAttribute="leading" secondItem="Ip2-P9-3U0" secondAttribute="leading" constant="2" id="Ip7-oK-KdN"/>
                 <constraint firstItem="CI5-Q0-YBW" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="JjF-8k-3FX"/>
                 <constraint firstItem="UzT-PW-zmi" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="Rrb-3d-Q45"/>
+                <constraint firstItem="cGt-1V-CRE" firstAttribute="centerY" secondItem="CI5-Q0-YBW" secondAttribute="centerY" id="Siz-ff-0yY"/>
                 <constraint firstItem="wvR-Tn-dhT" firstAttribute="leading" secondItem="UzT-PW-zmi" secondAttribute="trailing" constant="5" id="Ypz-r2-t4w"/>
                 <constraint firstItem="wvR-Tn-dhT" firstAttribute="top" secondItem="Ip2-P9-3U0" secondAttribute="top" constant="2" id="dPa-kZ-BJ6"/>
                 <constraint firstItem="UzT-PW-zmi" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="iwr-6T-NWV"/>
                 <constraint firstItem="UzT-PW-zmi" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="ml9-7q-EM3"/>
                 <constraint firstItem="U6U-Ep-sPH" firstAttribute="leading" secondItem="CI5-Q0-YBW" secondAttribute="trailing" constant="5" id="re3-sr-MOI"/>
                 <constraint firstAttribute="trailing" secondItem="wvR-Tn-dhT" secondAttribute="trailing" constant="15" id="tGx-Qh-sCn"/>
+                <constraint firstAttribute="bottom" secondItem="cGt-1V-CRE" secondAttribute="bottom" constant="5" id="vds-MZ-lwR"/>
                 <constraint firstItem="U6U-Ep-sPH" firstAttribute="centerY" secondItem="Ip2-P9-3U0" secondAttribute="centerY" id="zI3-Tm-VXe"/>
                 <constraint firstAttribute="bottom" secondItem="wvR-Tn-dhT" secondAttribute="bottom" constant="5" id="zih-Ri-OCT"/>
             </constraints>
@@ -80,6 +93,7 @@
     </objects>
     <resources>
         <image name="分类.png" width="32" height="32"/>
+        <image name="即时刷.png" width="32" height="32"/>
         <image name="空心圆.png" width="16" height="16"/>
     </resources>
 </document>

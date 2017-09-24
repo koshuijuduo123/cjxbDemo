@@ -367,6 +367,12 @@
             }
             weakSelf.userAccount.icon_url = [UMComSession sharedInstance].loginUser.icon_url.small_url_string;
             [weakSelf setUserProfile];
+            NSLog(@"%@,%@,%@",weakSelf.userAccount.name,weakSelf.userAccount.gender,weakSelf.userAccount.icon_url);
+            
+            if (weakSelf.userAccount.icon_url==nil) {
+                weakSelf.userAccount.icon_url = UMLoginImgURL;
+               
+            }
             
             NSDictionary*parSDic = @{@"exec":@"edituserinfo",@"n":weakSelf.userAccount.name,@"sex":weakSelf.userAccount.gender,@"img":weakSelf.userAccount.icon_url};
                 //创建通知

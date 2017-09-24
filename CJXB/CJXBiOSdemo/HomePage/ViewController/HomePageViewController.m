@@ -52,6 +52,7 @@
 #import "OpenGoodsService.h"
 #import "OpenTradeService.h"
 #import "MyWKWebViewController.h"
+#import "UMComWebViewController.h"
 #import <CoreLocation/CoreLocation.h> //核心定位框架
 #import <AudioToolbox/AudioToolbox.h>
 #define KTableView_Height 620 //tableView的高度
@@ -245,17 +246,17 @@ static NSString *const identider = @"cell";
         item.badgeValue=nil;
     }else{
         
-        if (unReadNotice.totalNotiCount>[bageView.badgeText integerValue]) {
-            //系统声音
-            //AudioServicesPlaySystemSound(1007);
-            NSString *path = [[NSBundle mainBundle] pathForResource:@"notice" ofType:@"m4r"];
-            //组装并播放音效
-            SystemSoundID soundID;
-            NSURL *filePath = [NSURL fileURLWithPath:path isDirectory:NO];
-            AudioServicesCreateSystemSoundID((__bridge CFURLRef)filePath, &soundID);
-            AudioServicesPlaySystemSound(soundID);
-            
-        }
+//        if (unReadNotice.totalNotiCount>[bageView.badgeText integerValue]) {
+//            //系统声音
+//            //AudioServicesPlaySystemSound(1007);
+//            NSString *path = [[NSBundle mainBundle] pathForResource:@"notices" ofType:@"mp3"];
+//            //组装并播放音效
+//            SystemSoundID soundID;
+//            NSURL *filePath = [NSURL fileURLWithPath:path isDirectory:NO];
+//            AudioServicesCreateSystemSoundID((__bridge CFURLRef)filePath, &soundID);
+//            AudioServicesPlaySystemSound(soundID);
+//            
+//        }
         
         bageView.badgeText =[NSString stringWithFormat:@"%ld",(long)unReadNotice.totalNotiCount];
         if (unReadNotice.totalNotiCount>99) {
@@ -288,9 +289,6 @@ static NSString *const identider = @"cell";
     
     
 }
-
-
-
 
 
 
@@ -361,7 +359,10 @@ static NSString *const identider = @"cell";
                 
                 self.cycleScrollView.titlesGroup = self.titleArray;
                 
-                [self.tableView.tableHeaderView addSubview:self.cycleScrollView];
+              [self.tableView.tableHeaderView addSubview:self.cycleScrollView];
+                WeatherView *weatherView = [_customNavibarView viewWithTag:7758258];
+                [weatherView loadView];
+                
             } enError:^(NSError *error) {
                 
             }];
@@ -377,6 +378,10 @@ static NSString *const identider = @"cell";
             if (cookies.count) {
                 
                 [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/com/handler.ashx" parmDic:@{@"exec":@"getuserinfo"} finish:^(id responseObject) {
+                    if ([responseObject[@"Data"]isKindOfClass:[NSNull class]]) {
+                        return ;
+                    }
+                    
                     
                     LoginDataModel *model = [[LoginDataModel alloc]init];
                     [model setValuesForKeysWithDictionary:responseObject[@"Data"]];
@@ -536,6 +541,7 @@ static NSString *const identider = @"cell";
     
     WeatherView *weatView = [[WeatherView alloc]initWithFrame:CGRectMake(size_width/2, 20, size_width/2, 40)];
     weatView.backgroundColor = [UIColor clearColor];
+    weatView.tag = 7758258;
     [_customNavibarView addSubview:weatView];
     
     
@@ -658,7 +664,7 @@ static NSString *const identider = @"cell";
     threeButtonView.carImg.image = [UIImage imageNamed:@"签到"];
     threeButtonView.cardImg.image = [UIImage imageNamed:@"圈子"];
     
-    [threeButtonView.carBtn setTitle:@"助力值签到" forState:UIControlStateNormal];
+    [threeButtonView.carBtn setTitle:@"最新活动" forState:UIControlStateNormal];
     [threeButtonView.cardBtn setTitle:@"帮友圈子" forState:UIControlStateNormal];
     
     [headerView addSubview:threeButtonView];
@@ -669,29 +675,30 @@ static NSString *const identider = @"cell";
             NSArray * cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey:@"kUserDefaultsCookie"]];
             
             if (cookies.count) {
-                WebViewController *webVC = [[WebViewController alloc]init];
+//                WebViewController *webVC = [[WebViewController alloc]init];
+//                webVC.hidesBottomBarWhenPushed = YES;
+//                
+//                webVC.isUIWebView = YES;
+//                webVC.title = @"助力值签到";
+//                webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
+//                
+//                [webVC.view addSubview:webVC.webView];
+//                
+//                NSString *string5 = [NSString stringWithFormat:qiandaoCounts];
+//                
+//                NSURL *url1 = [[NSURL alloc]initWithString:string5];
+//                
+//                NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//                [cookieStorage setCookies:cookies forURL:url1 mainDocumentURL:nil];
+//                
+//                
+//                NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:string5]];
+//                [webVC.webView loadRequest:request];
+//                webVC.qiandao = @"qiandao";
+                MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+                webVC.loadUrl = @"https://h5.youzan.com/v2/feature/cz5r3ebb";
                 webVC.hidesBottomBarWhenPushed = YES;
-                
-                webVC.isUIWebView = YES;
-                webVC.title = @"签到送积分";
-                webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-                
-                [webVC.view addSubview:webVC.webView];
-                
-                NSString *string5 = [NSString stringWithFormat:qiandaoCounts];
-                
-                NSURL *url1 = [[NSURL alloc]initWithString:string5];
-                
-                NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                [cookieStorage setCookies:cookies forURL:url1 mainDocumentURL:nil];
-                
-                
-                NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:string5]];
-                [webVC.webView loadRequest:request];
-                webVC.qiandao = @"qiandao";
-//                MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
-//                webVC.loadUrl = @"https://h5.youzan.com/v2/apps/checkin?alias=pyg4ki8j";
-                webVC.hidesBottomBarWhenPushed = YES;
+                webVC.title = @"最新活动";
                 [weakSelf.navigationController pushViewController:webVC animated:YES];
                 }else{
                 
@@ -896,6 +903,7 @@ static NSString *const identider = @"cell";
     _tabFoterView.buttonJuanClick = ^(NSInteger tag){
         MyWKWebViewController *tickVC = [[MyWKWebViewController alloc]init];
         tickVC.hidesBottomBarWhenPushed = YES;
+        tickVC.title = @"每日特惠";
         if (tag==800) {
             
             NSDictionary *dict = arr[0];
@@ -1002,12 +1010,11 @@ static NSString *const identider = @"cell";
                 [weakSelf.navigationController pushViewController:discover animated:YES];
                 
             }
-            
-            
-            
-            
-        }
+            }
         
+        if ([string isEqualToString:@"消息刷新"]) {
+            [weakSelf.realTimeFeedsViewController refreshNewDataFromServer:nil];
+        }
         
         
     };
@@ -1097,9 +1104,6 @@ static NSString *const identider = @"cell";
 //点击cell触发的方法
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WebViewController *webVC = [[WebViewController alloc]init];
-    
-       
-    
     webVC.hidesBottomBarWhenPushed = YES;
     webVC.shareHiddnBtn = YES;
     NSDictionary *dict =self.dataSourceArray[indexPath.row];
@@ -1216,36 +1220,60 @@ static NSString *const identider = @"cell";
     
     NSString *string5 = nil;
     
-    if ([dic[@"id"] integerValue]==2198) {
-        webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-        webVC.isUIWebView = YES;
-        webVC.shareHiddnBtn = YES;
-        [webVC.view addSubview:webVC.webView];
-
-        string5 = [NSString stringWithFormat:@"http://d.eqxiu.com/s/b9z0nK6Y?eqrcode=1&userid=%@&from=timeline&isappinstalled=1",model.myid];
-        webVC.title = @"最新活动";
+    if (![dic[@"jumpurl"] isKindOfClass:[NSNull class]]){
         
-    }else if ([dic[@"id"] integerValue]==1818) {
-        webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-        webVC.isUIWebView = YES;
-        
-        [webVC.view addSubview:webVC.webView];
-
-        string5 = [NSString stringWithFormat:lipinDuiHuanURL,model.myid];
-        webVC.title = @"兑换礼品";
-        
-        webVC.qiandao = @"YES";
-    }else if (![dic[@"jumpurl"] isKindOfClass:[NSNull class]]){
-        webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
-        webVC.isUIWebView = YES;
-        webVC.shareHiddnBtn = YES;
-        [webVC.view addSubview:webVC.webView];
-        
-        if ([dic[@"jumpurl"] hasSuffix:@"?"]) {
-            string5 = [NSString stringWithFormat:@"%@&userid=%@&from=timeline&isappinstalled=1",dic[@"jumpurl"],model.myid];
+        if ([dic[@"jumpurl"] rangeOfString:@"DuiHuanListByUI"].location !=NSNotFound) {
+            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64) usingUIWebView:YES];
+            webVC.isUIWebView =YES;
+            webVC.shareHiddnBtn = YES;
+            [webVC.view addSubview:webVC.webView];
             
+            string5 = [NSString stringWithFormat:lipinDuiHuanURL,model.myid];
+            webVC.title = @"兑换礼品";
+            
+            webVC.qiandao = @"YES";
+            
+        }else if([dic[@"jumpurl"] rangeOfString:@"youzan"].location !=NSNotFound){
+            MyWKWebViewController *webVC = [[MyWKWebViewController alloc]init];
+            webVC.loadUrl = dic[@"jumpurl"];
+            webVC.title = @"小帮特别推荐";
+            webVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:webVC animated:YES];
+            return;
+         //判断是否链接全是空格
+        }else if([dic[@"jumpurl"] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]].length==0){
+            
+            webVC.shareHiddnBtn = YES;
+            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44)];
+            
+            [webVC.view addSubview:webVC.webView];
+            
+            [webVC.view sendSubviewToBack:webVC.webView];
+            
+            string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",dic[@"id"],model.myid];
+            
+            webVC.qiandao = @"YES";
+            
+        }else if ([dic[@"jumpurl"] rangeOfString:@"xiaobang520"].location !=NSNotFound){
+                
+            webVC.shareHiddnBtn = YES;
+            webVC.webView = [[IMYWebView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height-64-44)];
+            
+            [webVC.view addSubview:webVC.webView];
+            
+            [webVC.view sendSubviewToBack:webVC.webView];
+                
+                string5 = [NSString stringWithFormat:@"http://x.xiaobang520.com/article/show.aspx?articleid=%@&userid=%@",dic[@"id"],model.myid];
+                
+                webVC.qiandao = @"YES";
         }else{
-            string5 = [NSString stringWithFormat:@"%@?userid=%@&from=timeline&isappinstalled=1",dic[@"jumpurl"],model.myid];
+            UMComWebViewController * webViewController = [[UMComWebViewController alloc] initWithUrl:dic[@"jumpurl"]];
+            //使用系统的返回按钮
+            webViewController.isPushWebView = YES;
+            webViewController.hidesBottomBarWhenPushed  =YES;
+            [self.navigationController pushViewController:webViewController animated:YES];
+            return;
+
         }
         webVC.title = @"最新活动";
         

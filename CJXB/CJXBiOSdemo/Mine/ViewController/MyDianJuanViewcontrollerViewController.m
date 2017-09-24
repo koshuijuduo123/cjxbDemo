@@ -170,19 +170,12 @@
         page++;
         [self.paramDic setObject:[NSString stringWithFormat:@"%ld",(long)page] forKey:@"p"];
         
-        
-        
         [self requestDataList];
-        
         
         _isUp = YES;
         
-        
     }];
 
-    
-    
-    
 }
 
 
@@ -196,63 +189,76 @@
     [NetworkManger requestPOSTWithURLStr:@"http://x.xiaobang520.com/coupon/couponshandler.ashx" parmDic:self.paramDic finish:^(id responseObject) {
         [self hidenHUD];
         NSDictionary *dic = [NSDictionary dictionaryWithDictionary:responseObject];
-        
-        NSMutableArray *arr = [NSMutableArray arrayWithArray:dic[@"Data"]];
-        
-        if (!_isUp) {
-        //清空之前的数据
-        [self.dataSourceArr removeAllObjects];
-        [self.soureArr removeAllObjects];
-        [self.dictArrObj removeAllObjects];
-        }
-        
-        
-         NSMutableDictionary *addDicts = [NSMutableDictionary dictionary];
-       for (NSDictionary *dict in arr) {
-           if (_isSummary==NO) {
-               [self.soureArr addObject:dict];
-           }else{
-               if (![self.soureArr containsObject:dict]) {
-                   [addDicts setObject:@"0" forKey:dict[@"couponid"]];
-                   [self.dictArrObj setObject:dict forKey:dict[@"couponid"]];
-                   
-                   [self.soureArr addObject:dict];
-               }
-               
-           }
-           
-           
-           
-        }
-        
-        if (_isSummary==YES) {
-            self.dataSourceArr =[NSMutableArray arrayWithArray:_dictArrObj.allValues];
-            for (NSDictionary *dic in self.soureArr) {
-                NSString   *numbers = [addDicts objectForKey:dic[@"couponid"]];
-                NSInteger nums =  [numbers integerValue]+1;
-                [addDicts setObject:[NSString stringWithFormat:@"%ld",(long)nums] forKey:dic[@"couponid"]];
+        if ([dic[@"Data"]isKindOfClass:[NSNull class]]) {
+            return ;
+        }else{
+            NSMutableArray *arr = [NSMutableArray arrayWithArray:dic[@"Data"]];
+            
+            if (!_isUp) {
+                //清空之前的数据
+                [self.dataSourceArr removeAllObjects];
+                [self.soureArr removeAllObjects];
+                [self.dictArrObj removeAllObjects];
             }
             
             
-            self.couponidDic = [NSMutableDictionary dictionaryWithDictionary:addDicts];
+            NSMutableDictionary *addDicts = [NSMutableDictionary dictionary];
+            for (NSDictionary *dict in arr) {
+                if (_isSummary==NO) {
+                    [self.soureArr addObject:dict];
+                }else{
+                    if (![self.soureArr containsObject:dict]) {
+                        [addDicts setObject:@"0" forKey:dict[@"couponid"]];
+                        [self.dictArrObj setObject:dict forKey:dict[@"couponid"]];
+                        
+                        [self.soureArr addObject:dict];
+                    }
+                    
+                }
+                
+                
+                
+            }
             
-        }else{
-            self.dataSourceArr =[NSMutableArray arrayWithArray:_soureArr];
+            if (_isSummary==YES) {
+                self.dataSourceArr =[NSMutableArray arrayWithArray:_dictArrObj.allValues];
+                for (NSDictionary *dic in self.soureArr) {
+                    NSString   *numbers = [addDicts objectForKey:dic[@"couponid"]];
+                    NSInteger nums =  [numbers integerValue]+1;
+                    [addDicts setObject:[NSString stringWithFormat:@"%ld",(long)nums] forKey:dic[@"couponid"]];
+                }
+                
+                
+                self.couponidDic = [NSMutableDictionary dictionaryWithDictionary:addDicts];
+                
+            }else{
+                self.dataSourceArr =[NSMutableArray arrayWithArray:_soureArr];
+            }
+            
+            
+            [self.tableView reloadData];
+            [self.tableView.header endRefreshing];
+            [self.tableView.footer endRefreshing];
         }
         
         
-        [self.tableView reloadData];
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
 } enError:^(NSError *error) {
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
-    }];
     
+    UIView *view1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height)];
+    view1.backgroundColor = [UIColor whiteColor];
+    UIImageView *imgVc = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, size_width, size_height)];
+    imgVc.image = [UIImage imageNamed:@"请求错误"];
+    imgVc.userInteractionEnabled = YES;
+    
+    [view1 addSubview:imgVc];
+    
+    [self.view addSubview:view1];
 
-
+}];
+    
 }
-
 
 
 

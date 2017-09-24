@@ -18,7 +18,7 @@
 
 -(NSArray *)logTypeArrM{
     if (!_logTypeArrM) {
-        self.logTypeArrM = @[@"分享此商品",@"在浏览器打开",@"复制链接"];
+        self.logTypeArrM = @[@"分享此商品",@"在浏览器打开",@"🔗复制链接"];
     }
     return _logTypeArrM;
 }
